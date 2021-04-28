@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
+using RoomsAndSpacesManagerDesktop.DTO.RoomInfrastructure;
+using Row = DocumentFormat.OpenXml.Spreadsheet.Row;
 
-namespace RoomAndSpacesManagerConsole
+namespace RoomsAndSpacesManagerDesktop.Models.XlsModels
 {
-    class Program
+    class MainXlsModel
     {
-        static void Main(string[] args)
+        public List<CategoryDto> GetCategoryes()
         {
+            List<CategoryDto> categoryList = new List<CategoryDto>();
             using (SpreadsheetDocument doc = SpreadsheetDocument.Open(@"C:\Users\ya.goreglyad\Desktop\Помещения.xlsx", false))
             {
                 WorkbookPart bkPart = doc.WorkbookPart;
@@ -34,7 +39,7 @@ namespace RoomAndSpacesManagerConsole
                     categoryList.Add(category);
                 }
             }
-
+            return categoryList;
         }
     }
 }

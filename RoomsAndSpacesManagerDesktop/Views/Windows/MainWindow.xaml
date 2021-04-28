@@ -47,7 +47,7 @@
                 <DataGrid Grid.Row="1" Grid.ColumnSpan="3" SelectedItem="{Binding SelectedRoom}" ItemsSource="{Binding Rooms}" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="1*"/>
-                        <DataGridComboBoxColumn Width="1*" Header="Категория" SelectedItemBinding="{Binding Path=SelectedCategory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <DataGridComboBoxColumn Width="1*" Header="Категория" SelectedItemBinding="{Binding Path=DataContext.SelectedCategory, RelativeSource={RelativeSource AncestorType={x:Type Window}}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <DataGridComboBoxColumn.ElementStyle>
                                 <Style TargetType="{x:Type ComboBox}">
                                     <Setter Property="ItemsSource" Value="{Binding Path=DataContext.CategoriesList, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
@@ -60,7 +60,7 @@
                             </DataGridComboBoxColumn.EditingElementStyle>
                         </DataGridComboBoxColumn>
 
-                        <DataGridComboBoxColumn Width="1*" Header="Подкатегория" SelectedItemBinding="{Binding Path=SelectedSubCategory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <DataGridComboBoxColumn Width="1*" Header="Подкатегория" SelectedItemBinding="{Binding Path=DataContext.SelectedSubCategory, RelativeSource={RelativeSource AncestorType={x:Type Window}}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <DataGridComboBoxColumn.ElementStyle>
                                 <Style TargetType="{x:Type ComboBox}">
                                     <Setter Property="ItemsSource" Value="{Binding Path=DataContext.SubCategoriesList, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />

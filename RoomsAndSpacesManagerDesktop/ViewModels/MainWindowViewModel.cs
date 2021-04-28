@@ -10,6 +10,7 @@ using RoomsAndSpacesManagerDesktop.Data.DataBaseContext;
 using RoomsAndSpacesManagerDesktop.DTO;
 using RoomsAndSpacesManagerDesktop.Infrastructure.Commands;
 using RoomsAndSpacesManagerDesktop.Models.DbModels;
+using RoomsAndSpacesManagerDesktop.Models.XlsModels;
 using RoomsAndSpacesManagerDesktop.ViewModels.Base;
 
 namespace RoomsAndSpacesManagerDesktop.ViewModels
@@ -19,13 +20,20 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         #region филды
 
         ProjectsDbContext projectsDbContext = new ProjectsDbContext();
-
-
+        ObservableCollection<string> timesubCategoriesList;
+        MainXlsModel mainXlsModel = new MainXlsModel();
 
         #endregion
 
         public MainWindowViewModel()
         {
+
+            mainXlsModel.GetCategoryes();
+
+            timesubCategoriesList = new ObservableCollection<string>() { "1.1", "1.2", "1.3", "2.2", "2.2" };
+
+
+
             #region Команды
             AddNewProjectAndBildingCommand = new RelayCommand(OnAddNewProjectAndBildingCommandExecutde, CanAddNewProjectAndBildingCommandExecute);
             #endregion
@@ -83,8 +91,9 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         /// </summary>
         private ObservableCollection<string> categoriesList = new ObservableCollection<string>()
         {
-            "ddd",
-            "112333"
+            "1",
+            "2",
+            "3"
         };
         /// <summary>
         /// Список категорий (взять из БД)
@@ -93,26 +102,47 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         {
             get => categoriesList;
             set => categoriesList = value;
-        } 
+        }
 
-
-
-
+        private string selectedCategory;
+        /// <summary>
+        /// Выбранная категория 
+        /// </summary>
+        public string SelectedCategory
+        {
+            get => selectedCategory;
+            set 
+            { 
+                selectedCategory = value;
+                GetSubCats();
+            }
+        }
         #endregion
 
-        /// <summary>
-        /// Список подкатегорий (взять из БД)
-        /// </summary>
-        private ObservableCollection<string> subCategoriesList = new ObservableCollection<string>() { "subddd", "sub112333" };
+        #region Combobox - список подкатегорий
+        private ObservableCollection<string> subCategoriesList;
         /// <summary>
         /// Список подкатегорий (взять из БД)
         /// </summary>
         public ObservableCollection<string> SubCategoriesList
         {
             get => subCategoriesList;
-            set => subCategoriesList = value;
+            set => Set(ref subCategoriesList, value);
         }
 
+
+        private string selectedSubCategory;
+        /// <summary>
+        /// Выбранная подкатегория 
+        /// </summary>
+        public string SelectedSubCategory
+        {
+            get => selectedSubCategory;
+            set => selectedSubCategory = value;
+        }
+        #endregion
+
+        #region Combobox - список названий помещений
         /// <summary>
         /// Список названий помещений (взять из БД)
         /// </summary>
@@ -125,6 +155,14 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             get => roomNamesList;
             set => roomNamesList = value;
         }
+        #endregion
+
+        #region Методы
+        private void GetSubCats()
+        {
+            SubCategoriesList = new ObservableCollection<string>(timesubCategoriesList.Where(x => x.Contains(SelectedCategory)));
+        }
+        #endregion
 
         #endregion
 

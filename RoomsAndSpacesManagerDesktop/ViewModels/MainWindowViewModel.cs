@@ -17,14 +17,15 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
     class MainWindowViewModel : ViewModel
     {
         #region филды
+
         ProjectsDbContext projectsDbContext = new ProjectsDbContext();
+
+
+
         #endregion
 
         public MainWindowViewModel()
         {
-            
-
-
             #region Команды
             AddNewProjectAndBildingCommand = new RelayCommand(OnAddNewProjectAndBildingCommandExecutde, CanAddNewProjectAndBildingCommandExecute);
             #endregion
@@ -38,7 +39,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         /// <summary> Создать новый проект в бд </summary>
         private void OnAddNewProjectAndBildingCommandExecutde(object p)
         {
-            projectsDbContext.AddProject(new ProjectDto() 
+            projectsDbContext.AddProject(new ProjectDto()
             {
                 Name = NewProjectName
             });
@@ -57,10 +58,77 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         #endregion
         /*TubControl2 - таблица данных~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
         #region DataGrid - Rooms
-        public ObservableCollection<RoomDto> rooms { get; set; } = new ObservableCollection<RoomDto>();
+        /// <summary>
+        /// Привязка DataGrid к коллекции Rooms
+        /// </summary>
+        public ObservableCollection<RoomDto> Rooms { get; set; } = new ObservableCollection<RoomDto>();
+
+        #region Выбранная комната из DataGrid Rooms
+        private RoomDto selectedRoom;
+        /// <summary>
+        /// SelectedItem DataGrid Rooms
+        /// </summary>
+        public RoomDto SelectedRoom
+        {
+            get => selectedRoom;
+            set => selectedRoom = value;
+        }
         #endregion
 
+        #region Список категорий, подкатегорий и помещений
 
+        #region Combobox - список категорий
+        /// <summary>
+        /// Список категорий (взять из БД)
+        /// </summary>
+        private ObservableCollection<string> categoriesList = new ObservableCollection<string>()
+        {
+            "ddd",
+            "112333"
+        };
+        /// <summary>
+        /// Список категорий (взять из БД)
+        /// </summary>
+        public ObservableCollection<string> CategoriesList
+        {
+            get => categoriesList;
+            set => categoriesList = value;
+        } 
+
+
+
+
+        #endregion
+
+        /// <summary>
+        /// Список подкатегорий (взять из БД)
+        /// </summary>
+        private ObservableCollection<string> subCategoriesList = new ObservableCollection<string>() { "subddd", "sub112333" };
+        /// <summary>
+        /// Список подкатегорий (взять из БД)
+        /// </summary>
+        public ObservableCollection<string> SubCategoriesList
+        {
+            get => subCategoriesList;
+            set => subCategoriesList = value;
+        }
+
+        /// <summary>
+        /// Список названий помещений (взять из БД)
+        /// </summary>
+        private ObservableCollection<string> roomNamesList = new ObservableCollection<string>() { "subddd", "sub112333" };
+        /// <summary>
+        /// Список названий помещений (взять из БД)
+        /// </summary>
+        public ObservableCollection<string> RoomNamesList
+        {
+            get => roomNamesList;
+            set => roomNamesList = value;
+        }
+
+        #endregion
+
+        #endregion
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     }
 }

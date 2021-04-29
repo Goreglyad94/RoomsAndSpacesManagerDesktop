@@ -47,32 +47,23 @@
                 <DataGrid Grid.Row="1" Grid.ColumnSpan="3" SelectedItem="{Binding SelectedRoom}" ItemsSource="{Binding Rooms}" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="1*"/>
-                        <DataGridComboBoxColumn Width="1*" Header="Категория" SelectedItemBinding="{Binding Path=DataContext.SelectedCategory, RelativeSource={RelativeSource AncestorType={x:Type Window}}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                            <DataGridComboBoxColumn.ElementStyle>
-                                <Style TargetType="{x:Type ComboBox}">
-                                    <Setter Property="ItemsSource" Value="{Binding Path=DataContext.CategoriesList, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
-                                </Style>
-                            </DataGridComboBoxColumn.ElementStyle>
-                            <DataGridComboBoxColumn.EditingElementStyle>
-                                <Style TargetType="{x:Type ComboBox}">
-                                    <Setter Property="ItemsSource" Value="{Binding Path=DataContext.CategoriesList, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
-                                </Style>
-                            </DataGridComboBoxColumn.EditingElementStyle>
-                        </DataGridComboBoxColumn>
 
-                        <DataGridComboBoxColumn Width="1*" Header="Подкатегория" SelectedItemBinding="{Binding Path=DataContext.SelectedSubCategory, RelativeSource={RelativeSource AncestorType={x:Type Window}}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                            <DataGridComboBoxColumn.ElementStyle>
-                                <Style TargetType="{x:Type ComboBox}">
-                                    <Setter Property="ItemsSource" Value="{Binding Path=DataContext.SubCategoriesList, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
-                                </Style>
-                            </DataGridComboBoxColumn.ElementStyle>
-                            <DataGridComboBoxColumn.EditingElementStyle>
-                                <Style TargetType="{x:Type ComboBox}">
-                                    <Setter Property="ItemsSource" Value="{Binding Path=DataContext.SubCategoriesList, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
-                                </Style>
-                            </DataGridComboBoxColumn.EditingElementStyle>
-                        </DataGridComboBoxColumn>
+                        <DataGridTemplateColumn Header="Категория" Width="1*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ComboBox ItemsSource="{Binding CategoryList}" SelectedItem="{Binding SelectedCategory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
 
+                        <DataGridTemplateColumn Header="Подкатегория" Width="1*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ComboBox ItemsSource="{Binding SubCategoryList,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedSubCategory}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        
                         <DataGridComboBoxColumn Width="1*" Header="Наименование" SelectedItemBinding="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <DataGridComboBoxColumn.ElementStyle>
                                 <Style TargetType="{x:Type ComboBox}">

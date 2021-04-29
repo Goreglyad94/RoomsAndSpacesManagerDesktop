@@ -28,7 +28,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         public MainWindowViewModel()
         {
 
-            mainXlsModel.GetCategoryes();
+            //mainXlsModel.GetCategoryes();
 
             timesubCategoriesList = new ObservableCollection<string>() { "1.1", "1.2", "1.3", "2.2", "2.2" };
 
@@ -79,90 +79,96 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         public RoomDto SelectedRoom
         {
             get => selectedRoom;
-            set => selectedRoom = value;
-        }
-        #endregion
-
-        #region Список категорий, подкатегорий и помещений
-
-        #region Combobox - список категорий
-        /// <summary>
-        /// Список категорий (взять из БД)
-        /// </summary>
-        private ObservableCollection<string> categoriesList = new ObservableCollection<string>()
-        {
-            "1",
-            "2",
-            "3"
-        };
-        /// <summary>
-        /// Список категорий (взять из БД)
-        /// </summary>
-        public ObservableCollection<string> CategoriesList
-        {
-            get => categoriesList;
-            set => categoriesList = value;
-        }
-
-        private string selectedCategory;
-        /// <summary>
-        /// Выбранная категория 
-        /// </summary>
-        public string SelectedCategory
-        {
-            get => selectedCategory;
             set 
             { 
-                selectedCategory = value;
-                GetSubCats();
+                selectedRoom = value; 
+
             }
         }
         #endregion
 
-        #region Combobox - список подкатегорий
-        private ObservableCollection<string> subCategoriesList;
-        /// <summary>
-        /// Список подкатегорий (взять из БД)
-        /// </summary>
-        public ObservableCollection<string> SubCategoriesList
-        {
-            get => subCategoriesList;
-            set => Set(ref subCategoriesList, value);
-        }
+
+        #region Старый код. Для работы с DataGridComboBoxColumn
+
+        //#region Combobox - список категорий
+        ///// <summary>
+        ///// Список категорий (взять из БД)
+        ///// </summary>
+        //private ObservableCollection<string> categoriesList = new ObservableCollection<string>()
+        //{
+        //    "1",
+        //    "2",
+        //    "3"
+        //};
+        ///// <summary>
+        ///// Список категорий (взять из БД)
+        ///// </summary>
+        //public ObservableCollection<string> CategoriesList
+        //{
+        //    get => categoriesList;
+        //    set => categoriesList = value;
+        //}
+
+        //private string selectedCategory;
+        ///// <summary>
+        ///// Выбранная категория 
+        ///// </summary>
+        //public string SelectedCategory
+        //{
+        //    get => selectedCategory;
+        //    set 
+        //    { 
+        //        selectedCategory = value;
+        //        GetSubCats();
+        //    }
+        //}
+        //#endregion
+
+        //#region Combobox - список подкатегорий
+        //private ObservableCollection<string> subCategoriesList;
+        ///// <summary>
+        ///// Список подкатегорий (взять из БД)
+        ///// </summary>
+        //public ObservableCollection<string> SubCategoriesList
+        //{
+        //    get => subCategoriesList;
+        //    set => Set(ref subCategoriesList, value);
+        //}
 
 
-        private string selectedSubCategory;
-        /// <summary>
-        /// Выбранная подкатегория 
-        /// </summary>
-        public string SelectedSubCategory
-        {
-            get => selectedSubCategory;
-            set => selectedSubCategory = value;
-        }
-        #endregion
+        //private string selectedSubCategory;
+        ///// <summary>
+        ///// Выбранная подкатегория 
+        ///// </summary>
+        //public string SelectedSubCategory
+        //{
+        //    get => selectedSubCategory;
+        //    set => selectedSubCategory = value;
+        //}
+        //#endregion
 
-        #region Combobox - список названий помещений
-        /// <summary>
-        /// Список названий помещений (взять из БД)
-        /// </summary>
-        private ObservableCollection<string> roomNamesList = new ObservableCollection<string>() { "subddd", "sub112333" };
-        /// <summary>
-        /// Список названий помещений (взять из БД)
-        /// </summary>
-        public ObservableCollection<string> RoomNamesList
-        {
-            get => roomNamesList;
-            set => roomNamesList = value;
-        }
-        #endregion
+        //#region Combobox - список названий помещений
+        ///// <summary>
+        ///// Список названий помещений (взять из БД)
+        ///// </summary>
+        //private ObservableCollection<string> roomNamesList = new ObservableCollection<string>() { "subddd", "sub112333" };
+        ///// <summary>
+        ///// Список названий помещений (взять из БД)
+        ///// </summary>
+        //public ObservableCollection<string> RoomNamesList
+        //{
+        //    get => roomNamesList;
+        //    set => roomNamesList = value;
+        //}
+        //#endregion
 
-        #region Методы
-        private void GetSubCats()
-        {
-            SubCategoriesList = new ObservableCollection<string>(timesubCategoriesList.Where(x => x.Contains(SelectedCategory)));
-        }
-        #endregion
+        //#region Методы
+        //private void GetSubCats()
+        //{
+        //    if (SelectedRoom.SelectedCategory != null)
+        //        SubCategoriesList = new ObservableCollection<string>(timesubCategoriesList.Where(x => x.Contains(SelectedRoom.SelectedCategory)));
+        //}
+        //#endregion
 
         #endregion
 

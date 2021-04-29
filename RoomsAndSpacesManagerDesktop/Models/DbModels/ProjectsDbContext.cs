@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using RoomsAndSpacesManagerDataBase;
 using RoomsAndSpacesManagerDesktop.DTO;
 using RoomsAndSpacesManagerDesktop.Models.DbModels.Base;
+
 
 namespace RoomsAndSpacesManagerDesktop.Models.DbModels
 {

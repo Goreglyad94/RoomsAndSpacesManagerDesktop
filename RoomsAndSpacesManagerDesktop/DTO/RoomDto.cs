@@ -14,6 +14,9 @@ namespace RoomsAndSpacesManagerDesktop.DTO
         public RoomDto()
         {
             CategoryList = MainCsvModel.GetCategoties();
+            SelectedCategory = CategoryList[0];
+            SelectedSubCategory = SubCategoryList[3];
+
         }
 
 
@@ -26,7 +29,9 @@ namespace RoomsAndSpacesManagerDesktop.DTO
         public string ShortName { get; set; }
         public string RoomNumber { get; set; }
         public double Area { get; set; }
+        public string Equipment { get; set; }
         public int BuildingId { get; set; }
+
 
         public virtual BuildingDto Building { get; set; }
         #endregion
@@ -66,7 +71,7 @@ namespace RoomsAndSpacesManagerDesktop.DTO
             set
             {
                 selectedSubCategory = value;
-                SubCategory = SelectedSubCategory.Name;
+                SubCategory = SelectedSubCategory?.Name;
                 GetRoomsNsmes();
             }
         }
@@ -83,7 +88,7 @@ namespace RoomsAndSpacesManagerDesktop.DTO
             set 
             { 
                 selectedRoomName = value;
-                Name = SelectedRoomName.Name;
+                Name = SelectedRoomName?.Name;
             }
         }
 

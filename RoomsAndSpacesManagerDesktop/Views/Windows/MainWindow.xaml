@@ -35,12 +35,12 @@
 
                 <DockPanel Grid.Row="0" Grid.Column="0">
                     <TextBlock Text="Проект: " DockPanel.Dock="Left"  VerticalAlignment="Center"/>
-                    <ComboBox DockPanel.Dock="Left" Height="25" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <ComboBox ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject}" DockPanel.Dock="Left" Height="25" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 </DockPanel>
 
                 <DockPanel Grid.Row="0" Grid.Column="1">
                     <TextBlock Text="Модель: " DockPanel.Dock="Left"  VerticalAlignment="Center"/>
-                    <ComboBox DockPanel.Dock="Left" Width="150" HorizontalAlignment="Left" Height="25" VerticalAlignment="Center"/>
+                    <ComboBox ItemsSource="{Binding Buildings}" SelectedItem="{Binding SelectedBuilding}" DockPanel.Dock="Left" Width="150" HorizontalAlignment="Left" Height="25" VerticalAlignment="Center"/>
                 </DockPanel>
 
 
@@ -77,6 +77,13 @@
                         <DataGridTextColumn Header="Площадь" Width="1*" Binding="{Binding Area}"/>
                     </DataGrid.Columns>
                 </DataGrid>
+
+                <DockPanel Grid.Row="2" Grid.Column="2">
+                    <Button Command="{Binding SynhronizeCommand}" Content="Push" Width="50" Height="25" DockPanel.Dock="Right"/>
+                    <Button Command="{Binding SynhronizeCommand}" Content="Pull" Width="50" Height="25" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"/>
+                
+                </DockPanel>
+
             </Grid>
         </TabItem>
     </TabControl>

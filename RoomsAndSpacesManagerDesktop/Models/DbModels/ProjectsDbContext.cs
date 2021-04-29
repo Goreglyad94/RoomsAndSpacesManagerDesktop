@@ -9,33 +9,32 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
 {
     public class ProjectsDbContext : MainDbContext
     {
-        public List<ProjectDto> GetProjects()
+        public void DB()
         {
-            if (context.RaSM_Projects != null)
-                return context.RaSM_Projects.ToList();
-
-            else return null;
+            foreach (var item in context.RaSM_Projects.ToList())
+            {
+                context.RaSM_Models.Add(new BuildingDto() 
+                {
+                    ProjectId = item.Id,
+                    Name = "Здание " + item.Id.ToString() + ".1"
+                });
+                context.RaSM_Models.Add(new BuildingDto()
+                {
+                    ProjectId = item.Id,
+                    Name = "Здание " + item.Id.ToString() + ".2"
+                });
+            }
+            context.SaveChanges();
         }
 
-        public void AddProject(ProjectDto proj)
+        public List<ProjectDto> GetProjects()
         {
+            return context.RaSM_Projects.ToList();
+        }
 
-            //if (context.RaSM_Projects.Where(x => x.Name == proj.Name).Count() == 0)
-            //{
-                context.RaSM_Projects.Add(proj);
-                context.SaveChanges();
-
-            //    if (context.RaSM_Projects != null)
-            //    {
-            //        return context.RaSM_Projects.ToList();
-            //    }
-            //    else return null;
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Такой проект уже есть", "Статус");
-            //    return context.RaSM_Projects.ToList();
-            //}
+        public List<BuildingDto> GetModels(ProjectDto projDto)
+        {
+            return context.RaSM_Models.Where(x => x.ProjectId == projDto.Id).ToList();
         }
     }
 }

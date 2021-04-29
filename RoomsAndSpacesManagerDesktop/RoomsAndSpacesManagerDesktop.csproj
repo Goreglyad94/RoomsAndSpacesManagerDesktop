@@ -81,6 +81,15 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104291336495_InitialCreate.cs" />
+    <Compile Include="Migrations\202104291336495_InitialCreate.designer.cs">
+      <DependentUpon>202104291336495_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104291401314_AddEquipmentField.cs" />
+    <Compile Include="Migrations\202104291401314_AddEquipmentField.designer.cs">
+      <DependentUpon>202104291401314_AddEquipmentField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CsvModels\MainCsvModel.cs" />
     <Compile Include="Models\DbModels\Base\MainDbContext.cs" />
     <Compile Include="Models\DbModels\ProjectsDbContext.cs" />
@@ -116,6 +125,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Migrations\202104291336495_InitialCreate.resx">
+      <DependentUpon>202104291336495_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104291401314_AddEquipmentField.resx">
+      <DependentUpon>202104291401314_AddEquipmentField.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

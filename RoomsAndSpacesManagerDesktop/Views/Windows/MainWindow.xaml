@@ -44,7 +44,7 @@
                 </DockPanel>
 
 
-                <DataGrid Grid.Row="1" Grid.ColumnSpan="3" SelectedItem="{Binding SelectedRoom}" ItemsSource="{Binding Rooms}" AutoGenerateColumns="False">
+                <DataGrid CanUserAddRows="False" Grid.Row="1" Grid.ColumnSpan="3" SelectedItem="{Binding SelectedRoom}" ItemsSource="{Binding Rooms, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="1*"/>
 
@@ -78,10 +78,11 @@
                     </DataGrid.Columns>
                 </DataGrid>
 
+                <Button Content="Add new row" Command="{Binding AddNewRowCommand}" HorizontalAlignment="Left" Margin="10 0 0 0" Grid.Column="0" Grid.Row="2" Width="80" Height="25"/>
+
                 <DockPanel Grid.Row="2" Grid.Column="2">
-                    <Button Command="{Binding SynhronizeCommand}" Content="Push" Width="50" Height="25" DockPanel.Dock="Right"/>
-                    <Button Command="{Binding SynhronizeCommand}" Content="Pull" Width="50" Height="25" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"/>
-                
+                    <Button Command="{Binding PushToDbCommand}" Content="Push" Width="50" Height="25" DockPanel.Dock="Right" Margin="0 0 10 0"/>
+                    <Button Command="{Binding PullFromDbCommand}" Content="Pull" Width="50" Height="25" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"/>
                 </DockPanel>
 
             </Grid>

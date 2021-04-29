@@ -11,20 +11,7 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
     {
         public void DB()
         {
-            foreach (var item in context.RaSM_Projects.ToList())
-            {
-                context.RaSM_Models.Add(new BuildingDto() 
-                {
-                    ProjectId = item.Id,
-                    Name = "Здание " + item.Id.ToString() + ".1"
-                });
-                context.RaSM_Models.Add(new BuildingDto()
-                {
-                    ProjectId = item.Id,
-                    Name = "Здание " + item.Id.ToString() + ".2"
-                });
-            }
-            context.SaveChanges();
+            
         }
 
         public List<ProjectDto> GetProjects()
@@ -35,6 +22,22 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
         public List<BuildingDto> GetModels(ProjectDto projDto)
         {
             return context.RaSM_Models.Where(x => x.ProjectId == projDto.Id).ToList();
+        }
+
+
+
+        public void AddNewRooms(BuildingDto buildDto, List<RoomDto> rooms)
+        {
+            context.RaSM_Rooms.AddRange(rooms);
+            context.SaveChanges();
+        }
+
+        public List<RoomDto> GetRooms(BuildingDto buildDto)
+        {
+            if (buildDto != null)
+                return context.RaSM_Rooms.Where(x => x.Building.Id == buildDto.Id).ToList();
+            else
+                return null;
         }
     }
 }

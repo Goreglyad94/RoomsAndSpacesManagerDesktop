@@ -89,6 +89,10 @@
     <Compile Include="Migrations\202104291401314_AddEquipmentField.designer.cs">
       <DependentUpon>202104291401314_AddEquipmentField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104291430441_RenameRoomsTable.cs" />
+    <Compile Include="Migrations\202104291430441_RenameRoomsTable.designer.cs">
+      <DependentUpon>202104291430441_RenameRoomsTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CsvModels\MainCsvModel.cs" />
     <Compile Include="Models\DbModels\Base\MainDbContext.cs" />
@@ -130,6 +134,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202104291401314_AddEquipmentField.resx">
       <DependentUpon>202104291401314_AddEquipmentField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104291430441_RenameRoomsTable.resx">
+      <DependentUpon>202104291430441_RenameRoomsTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

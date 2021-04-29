@@ -92,5 +92,8 @@ namespace RoomsAndSpacesManagerDesktop.Models.CsvModels
             return roomNamesDto.Where(x => x.Key == subCategoryDto?.Key).ToList();
         }
 
+
+
+
     }
 }

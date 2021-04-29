@@ -27,18 +27,21 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             Projects = context.GetProjects();
 
             #region Команды
-
+            PushToDbCommand = new RelayCommand(OnDPushToDbCommandExecutde, CanPushToDbCommandExecute);
+            AddNewRowCommand = new RelayCommand(OnAddNewRowCommandExecutde, CanAddNewRowCommandExecute);
             #endregion
         }
         /*TabControl1 - Создание нового проекта и здания~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 
 
-        
-        
+
+
 
 
         /*TabControl2 - Список проектов и таблица из бд~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+        #region Верхняя панель. Список проектов и зданий
+        #region Список проектов. Выбранный проект
         private List<ProjectDto> projects;
         /// <summary>
         /// Список проектов. Из БД
@@ -53,16 +56,18 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         public ProjectDto SelectedProject
         {
             get { return selectedProject; }
-            set 
-            { 
+            set
+            {
                 selectedProject = value;
-                Buildings = context.GetModels(SelectedProject);
+                Buildings = SelectedProject.Buildings.ToList();
             }
         }
+        #endregion
 
 
 
 
+        #region Список зданий. (Добавить выбранное здание)
         private List<BuildingDto> buildings;
         /// <summary>
         /// Список проектов. Из БД
@@ -73,6 +78,22 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             set => Set(ref buildings, value);
         }
 
+        private BuildingDto selectedBuilding;
+
+        public BuildingDto SelectedBuilding
+        {
+            get { return selectedBuilding; }
+            set 
+            {
+                selectedBuilding = value;
+                Rooms = new ObservableCollection<RoomDto>(context.GetRooms(SelectedBuilding));
+            }
+        }
+
+
+        #endregion
+
+        #endregion
 
 
         /*TubControl2 - таблица данных~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -80,10 +101,20 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         /// <summary>
         /// Привязка DataGrid к коллекции Rooms
         /// </summary>
-        public List<RoomDto> Rooms { get; set; } = new List<RoomDto>();
+
+
+
+        private ObservableCollection<RoomDto> rooms = new ObservableCollection<RoomDto>();
+        public ObservableCollection<RoomDto> Rooms 
+        { 
+            get => rooms; 
+            set => Set(ref rooms,value); 
+        }
 
         #region Выбранная комната из DataGrid Rooms
         private RoomDto selectedRoom;
+        
+
         /// <summary>
         /// SelectedItem DataGrid Rooms
         /// </summary>
@@ -98,6 +129,39 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         #endregion
 
         #endregion
+
+
+        /*TubControl2 - Нижняя панель. Кнопки синхронизации с БД~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+        #region Добавить новую строку комнаты с Айдишником здания
+        public ICommand AddNewRowCommand { get; set; }
+        private void OnAddNewRowCommandExecutde(object p)
+        {
+            if (SelectedBuilding != null)
+            {
+                Rooms.Add(new RoomDto()
+                {
+                    BuildingId = SelectedBuilding.Id
+                });
+                OnPropertyChanged(nameof(Rooms));
+            }
+        }
+        private bool CanAddNewRowCommandExecute(object p) => true;
+        #endregion
+
+        #region Комманд. Закинуть обновления пространств в БД
+        public ICommand PushToDbCommand { get; set; }
+        private void OnDPushToDbCommandExecutde(object p)
+        {
+            context.AddNewRooms(SelectedBuilding, Rooms.ToList());
+        }
+        private bool CanPushToDbCommandExecute(object p) => true;
+        #endregion
+
+
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+
+
+
     }
 }

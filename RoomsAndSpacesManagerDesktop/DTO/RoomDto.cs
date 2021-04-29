@@ -14,16 +14,26 @@ namespace RoomsAndSpacesManagerDesktop.DTO
         public RoomDto()
         {
             CategoryList = MainCsvModel.GetCategoties();
-            SelectedCategory = CategoryList[0];
-            SelectedSubCategory = SubCategoryList[3];
-
+            if (SelectedCategory == null)
+                SelectedCategory = CategoryList.Where(x => x.Name == Category).FirstOrDefault();
         }
 
 
 
         #region Поля для выгрузки
         public int Id { get; set; }
-        public string Category { get; set; }
+
+        private string category;
+        public string Category 
+        { 
+            get => category;
+            set 
+            { 
+                category = value;
+                
+            }
+        }
+
         public string SubCategory { get; set; }
         public string Name { get; set; }
         public string ShortName { get; set; }
@@ -31,7 +41,6 @@ namespace RoomsAndSpacesManagerDesktop.DTO
         public double Area { get; set; }
         public string Equipment { get; set; }
         public int BuildingId { get; set; }
-
 
         public virtual BuildingDto Building { get; set; }
         #endregion
@@ -45,14 +54,14 @@ namespace RoomsAndSpacesManagerDesktop.DTO
 
         private CategoryDto selectedCategory;
         [NotMapped]
-        
+
         public CategoryDto SelectedCategory
         {
             get => selectedCategory;
             set
             {
                 selectedCategory = value;
-                Category = SelectedCategory.Name;
+                //Category = SelectedCategory.Name;
                 GetSubCats();
             }
         }
@@ -62,7 +71,7 @@ namespace RoomsAndSpacesManagerDesktop.DTO
 
 
         private SubCategoryDto selectedSubCategory;
-        
+
 
         [NotMapped]
         public SubCategoryDto SelectedSubCategory
@@ -81,12 +90,14 @@ namespace RoomsAndSpacesManagerDesktop.DTO
 
 
         private RoomNameDto selectedRoomName;
+        
+
         [NotMapped]
         public RoomNameDto SelectedRoomName
-        { 
+        {
             get => selectedRoomName;
-            set 
-            { 
+            set
+            {
                 selectedRoomName = value;
                 Name = SelectedRoomName?.Name;
             }

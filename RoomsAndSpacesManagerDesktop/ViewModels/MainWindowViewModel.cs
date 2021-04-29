@@ -10,7 +10,6 @@ using RoomsAndSpacesManagerDesktop.Data.DataBaseContext;
 using RoomsAndSpacesManagerDesktop.DTO;
 using RoomsAndSpacesManagerDesktop.Infrastructure.Commands;
 using RoomsAndSpacesManagerDesktop.Models.DbModels;
-using RoomsAndSpacesManagerDesktop.Models.XlsModels;
 using RoomsAndSpacesManagerDesktop.ViewModels.Base;
 
 namespace RoomsAndSpacesManagerDesktop.ViewModels
@@ -21,7 +20,6 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
 
         ProjectsDbContext projectsDbContext = new ProjectsDbContext();
         ObservableCollection<string> timesubCategoriesList;
-        MainXlsModel mainXlsModel = new MainXlsModel();
 
         #endregion
 

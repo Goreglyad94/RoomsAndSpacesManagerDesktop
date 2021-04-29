@@ -4,14 +4,12 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RoomsAndSpacesManagerDesktop.DTO;
-using RoomsAndSpacesManagerDesktop.DTO.RoomInfrastructure;
 
-namespace RoomsAndSpacesManagerDesktop.Data.DataBaseContext
+namespace RoomsAndSpacesManagerDataBase
 {
-    public class RoomAndSpacesDbContext : DbContext
+    public class DataBaseContext : DbContext
     {
-        public RoomAndSpacesDbContext()
+        public DataBaseContext()
         {
             this.Database.Connection.ConnectionString = @"Data Source=nt-db01.ukkalita.local;Initial Catalog=M1_Revit;integrated security=True;MultipleActiveResultSets=True";
         }
@@ -22,6 +20,8 @@ namespace RoomsAndSpacesManagerDesktop.Data.DataBaseContext
         public DbSet<CategoryDto> RaSM_RoomCategories { get; set; }
         public DbSet<SubCategoryDto> RaSM_RoomSubCategories { get; set; }
         public DbSet<RoomNameDto> RaSM_RoomNames { get; set; }
+
+        
 
 
     }

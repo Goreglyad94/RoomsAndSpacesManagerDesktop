@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsAndSpacesManagerDeskto
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomAndSpacesManagerConsole", "RoomAndSpacesManagerConsole\RoomAndSpacesManagerConsole.csproj", "{F6DB6271-D474-44A3-9A6B-60132491B643}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsAndSpacesManagerDataBase", "RoomsAndSpacesManagerDataBase\RoomsAndSpacesManagerDataBase.csproj", "{C14B3531-39F8-46D1-B6A2-CF690B0C5BDC}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{F6DB6271-D474-44A3-9A6B-60132491B643}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6DB6271-D474-44A3-9A6B-60132491B643}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6DB6271-D474-44A3-9A6B-60132491B643}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C14B3531-39F8-46D1-B6A2-CF690B0C5BDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C14B3531-39F8-46D1-B6A2-CF690B0C5BDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C14B3531-39F8-46D1-B6A2-CF690B0C5BDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C14B3531-39F8-46D1-B6A2-CF690B0C5BDC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

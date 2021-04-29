@@ -51,13 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataBaseContextBlaBlaBla.cs" />
-    <Compile Include="DTO\BuildingDto.cs" />
-    <Compile Include="DTO\ProjectDto.cs" />
-    <Compile Include="DTO\RoomDto.cs" />
-    <Compile Include="DTO\RoomInfrastructure\CategoryDto.cs" />
-    <Compile Include="DTO\RoomInfrastructure\SubCategoryDto.cs" />
-    <Compile Include="DTO\RoomInfrastructure\Class3.cs" />
+    <Compile Include="DataBaseContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

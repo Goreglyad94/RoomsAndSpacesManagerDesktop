@@ -15,5 +15,10 @@ namespace RoomsAndSpacesManagerDesktop.DTO.RoomInfrastructure
         public string Name { get; set; }
         public int SubCategotyId { get; set; }
         public virtual SubCategoryDto SubCategory { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

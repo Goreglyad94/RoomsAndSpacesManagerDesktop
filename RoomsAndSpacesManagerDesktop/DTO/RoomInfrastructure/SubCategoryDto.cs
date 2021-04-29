@@ -19,5 +19,10 @@ namespace RoomsAndSpacesManagerDesktop.DTO.RoomInfrastructure
         public virtual CategoryDto Category { get; set; }
 
         public virtual ICollection<RoomNameDto> RoomNames { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

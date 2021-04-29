@@ -34,12 +34,12 @@
                 </Grid.RowDefinitions>
 
                 <DockPanel Grid.Row="0" Grid.Column="0">
-                    <TextBlock Text="Категория: " DockPanel.Dock="Left"  VerticalAlignment="Center"/>
+                    <TextBlock Text="Проект: " DockPanel.Dock="Left"  VerticalAlignment="Center"/>
                     <ComboBox DockPanel.Dock="Left" Height="25" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 </DockPanel>
 
                 <DockPanel Grid.Row="0" Grid.Column="1">
-                    <TextBlock Text="Подкатегория: " DockPanel.Dock="Left"  VerticalAlignment="Center"/>
+                    <TextBlock Text="Модель: " DockPanel.Dock="Left"  VerticalAlignment="Center"/>
                     <ComboBox DockPanel.Dock="Left" Width="150" HorizontalAlignment="Left" Height="25" VerticalAlignment="Center"/>
                 </DockPanel>
 
@@ -59,23 +59,18 @@
                         <DataGridTemplateColumn Header="Подкатегория" Width="1*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <ComboBox ItemsSource="{Binding SubCategoryList,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedSubCategory}"/>
+                                    <ComboBox ItemsSource="{Binding SubCategoryList,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedSubCategory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        
-                        <DataGridComboBoxColumn Width="1*" Header="Наименование" SelectedItemBinding="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                            <DataGridComboBoxColumn.ElementStyle>
-                                <Style TargetType="{x:Type ComboBox}">
-                                    <Setter Property="ItemsSource" Value="{Binding Path=DataContext.RoomNamesList, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
-                                </Style>
-                            </DataGridComboBoxColumn.ElementStyle>
-                            <DataGridComboBoxColumn.EditingElementStyle>
-                                <Style TargetType="{x:Type ComboBox}">
-                                    <Setter Property="ItemsSource" Value="{Binding Path=DataContext.RoomNamesList, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
-                                </Style>
-                            </DataGridComboBoxColumn.EditingElementStyle>
-                        </DataGridComboBoxColumn>
+
+                        <DataGridTemplateColumn Header="Наименование" Width="1*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ComboBox ItemsSource="{Binding RoomNamesList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedRoomName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
 
                         <DataGridTextColumn Header="Краткое наименование" Width="1*" Binding="{Binding ShortName}"/>
                         <DataGridTextColumn Header="Номер помещения" Width="1*" Binding="{Binding RoomNumber}"/>

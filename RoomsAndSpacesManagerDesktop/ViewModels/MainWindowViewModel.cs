@@ -86,7 +86,10 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             set 
             {
                 selectedBuilding = value;
-                Rooms = new ObservableCollection<RoomDto>(context.GetRooms(SelectedBuilding));
+                if (SelectedBuilding != null)
+                    Rooms = new ObservableCollection<RoomDto>(context.GetRooms(SelectedBuilding));
+                else
+                    Rooms = null;
             }
         }
 
@@ -152,6 +155,10 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         public ICommand PushToDbCommand { get; set; }
         private void OnDPushToDbCommandExecutde(object p)
         {
+            foreach (var item in Rooms)
+            {
+                item.Category = item.SelectedCategory?.Name;
+            }
             context.AddNewRooms(SelectedBuilding, Rooms.ToList());
         }
         private bool CanPushToDbCommandExecute(object p) => true;

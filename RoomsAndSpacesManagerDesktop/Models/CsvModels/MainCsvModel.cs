@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic.FileIO;
+using RoomsAndSpacesManagerDesktop.DTO;
 using RoomsAndSpacesManagerDesktop.DTO.RoomInfrastructure;
 using System;
 using System.Collections.Generic;
@@ -8,67 +9,27 @@ using System.Threading.Tasks;
 
 namespace RoomsAndSpacesManagerDesktop.Models.CsvModels
 {
-    class MainCsvModel
+    static class MainCsvModel
     {
-
-        public static List<CategoryDto> GetCategoties()
+        private static List<CategoryDto> categories = new List<CategoryDto>();
+        private static List<string[]> ListOfarray = new List<string[]>();
+        private static List<string[]> ListOfNames = new List<string[]>();
+        static MainCsvModel()
         {
-            List<CategoryDto> categoryDtos = new List<CategoryDto>();
             using (TextFieldParser parser = new TextFieldParser(@"C:\Users\ya.goreglyad\Desktop\Помещения - Категории.csv"))
             {
                 parser.TextFieldType = FieldType.Delimited;
                 parser.SetDelimiters(",");
                 while (!parser.EndOfData)
                 {
-                    //Process row
-                    string[] fields = parser.ReadFields();
-                    CategoryDto categoryDto = new CategoryDto()
-                    {
-                        Name = fields[0],
-                        Key = fields[1]
-                    };
 
-                    if (categoryDtos.Where(x => x.Name == categoryDto.Name).Count() == 0)
-                        categoryDtos.Add(categoryDto);
+                    ListOfarray.Add(parser.ReadFields());
+
+                    ////Process row
+                    //string[] fields = parser.ReadFields();
+                    
                 }
-
             }
-
-            List<CategoryDto> uniq = categoryDtos.Distinct().ToList();
-
-            return uniq;
-        }
-
-
-        public static List<SubCategoryDto> GetSubCategoties(CategoryDto categoryDto)
-        {
-            List<SubCategoryDto> subCategoryDtos = new List<SubCategoryDto>();
-
-            using (TextFieldParser parser = new TextFieldParser(@"C:\Users\ya.goreglyad\Desktop\Помещения - Категории.csv"))
-            {
-                parser.TextFieldType = FieldType.Delimited;
-                parser.SetDelimiters(",");
-                while (!parser.EndOfData)
-                {
-                    //Process row
-                    string[] fields = parser.ReadFields();
-                    SubCategoryDto subCategoryDto = new SubCategoryDto()
-                    {
-                        Name = fields[2],
-                        Key = fields[3]
-                    };
-                    subCategoryDtos.Add(subCategoryDto);
-
-
-                }
-               
-            }
-            return subCategoryDtos.Where(x => x.Key.Contains(categoryDto.Key)).ToList();
-        }
-
-        public static List<RoomNameDto> GetRoomNames(SubCategoryDto subCategoryDto)
-        {
-            List<RoomNameDto> roomNamesDto = new List<RoomNameDto>();
 
             using (TextFieldParser parser = new TextFieldParser(@"C:\Users\ya.goreglyad\Desktop\Помещения - Помещения.csv"))
             {
@@ -78,18 +39,130 @@ namespace RoomsAndSpacesManagerDesktop.Models.CsvModels
                 {
                     //Process row
                     string[] fields = parser.ReadFields();
-                    RoomNameDto roomNameDto = new RoomNameDto()
-                    {
-                        Name = fields[1],
-                        Key = fields[0]
-                    };
-                    roomNamesDto.Add(roomNameDto);
-
-
+                    ListOfNames.Add(fields);
                 }
             }
 
-            return roomNamesDto.Where(x => x.Key == subCategoryDto?.Key).ToList();
+
+
+
+            foreach (var item in ListOfarray)
+            {
+                CategoryDto categoryDto = new CategoryDto()
+                {
+                    Name = item[0],
+                    Key = item[1]
+                };
+
+                if (categories.Where(x => x.Name == categoryDto.Name).Count() == 0)
+                    categories.Add(categoryDto);
+            }
+
+            foreach (CategoryDto cats in categories)
+            {
+                foreach (string[] item in ListOfarray)
+                {
+                    if (item[3].Contains(cats.Key))
+                    {
+                        cats.subCategoryDtos.Add(new SubCategoryDto()
+                        {
+                            Name = item[2],
+                            Key = item[3]
+                        });
+                    }
+                }
+                
+            }
+
+            foreach (CategoryDto cats in categories)
+            {
+                foreach (SubCategoryDto subCats in cats.subCategoryDtos)
+                {
+                    foreach (var item in ListOfNames)
+                    {
+                        if (item[0] == subCats.Key)
+                            subCats.roomNameDtos.Add(new RoomNameDto() 
+                            {
+                                Key = item[0],
+                                Name = item[1]
+                            });
+                    }
+                }
+            }
+        }
+        public static List<string> GetCategoties()
+        {
+            List<string> categoryDtos = new List<string>();
+            using (TextFieldParser parser = new TextFieldParser(@"C:\Users\ya.goreglyad\Desktop\Помещения - Категории.csv"))
+            {
+                parser.TextFieldType = FieldType.Delimited;
+                parser.SetDelimiters(",");
+                while (!parser.EndOfData)
+                {
+                    ////Process row
+                    string[] fields = parser.ReadFields();
+                    //CategoryDto categoryDto = new CategoryDto()
+                    //{
+                    //    Name = fields[0],
+                    //    Key = fields[1]
+                    //};
+                    categoryDtos.Add(fields[0]);
+                }
+            }
+
+            //List<CategoryDto> uniq = categoryDtos.Distinct().ToList();
+
+            return new HashSet<string>(categoryDtos).ToList();
+        }
+
+
+        public static List<string> GetSubCategoties(string categoryDto)
+        {
+            //List<SubCategoryDto> subCategoryDtos = new List<SubCategoryDto>();
+
+            //using (TextFieldParser parser = new TextFieldParser(@"C:\Users\ya.goreglyad\Desktop\Помещения - Категории.csv"))
+            //{
+            //    parser.TextFieldType = FieldType.Delimited;
+            //    parser.SetDelimiters(",");
+            //    while (!parser.EndOfData)
+            //    {
+            //        //Process row
+            //        string[] fields = parser.ReadFields();
+            //        SubCategoryDto subCategoryDto = new SubCategoryDto()
+            //        {
+            //            Name = fields[2],
+            //            Key = fields[3]
+            //        };
+            //        subCategoryDtos.Add(subCategoryDto);
+
+
+            //    }
+            //}
+            List<string> vs = new List<string>();
+
+            foreach (var item in categories.First(x => x.Name == categoryDto).subCategoryDtos)
+            {
+                vs.Add(item.Name);
+            }
+
+            return vs;
+        }
+
+        public static List<string> GetRoomNames(string categoryDto, string subCategoryDto)
+        {
+
+
+
+            List<string> vs = new List<string>();
+
+            foreach (var item in categories.First(x => x.Name == categoryDto).subCategoryDtos.First(x => x.Name == subCategoryDto).roomNameDtos)
+            {
+                vs.Add(item.Name);
+            }
+
+
+
+            return vs;
         }
 
 

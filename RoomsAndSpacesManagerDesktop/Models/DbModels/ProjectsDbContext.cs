@@ -28,7 +28,7 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
 
         public void AddNewRooms(BuildingDto buildDto, List<RoomDto> rooms)
         {
-            context.RaSM_Rooms.AddRange(rooms);
+            context.RaSM_Rooms.AddRange(rooms.Where(x => x.Id == default).ToList());
             context.SaveChanges();
         }
 

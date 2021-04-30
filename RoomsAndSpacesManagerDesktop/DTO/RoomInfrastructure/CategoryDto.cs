@@ -13,6 +13,11 @@ namespace RoomsAndSpacesManagerDesktop.DTO.RoomInfrastructure
         public int Id { get; set; }
         public string Key { get; set; }
         public string Name { get; set; }
+        [NotMapped]
+        public List<SubCategoryDto> subCategoryDtos { get; set; } = new List<SubCategoryDto>();
+
+
+
         public virtual ICollection<SubCategoryDto> SubCategories { get; set; }
 
         public override string ToString()

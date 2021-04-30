@@ -13,10 +13,26 @@
     <TabControl>
         <TabItem Header="Создать новый проект и модель">
             <Grid>
-                <DockPanel>
-                    <TextBox Text="{Binding NewProjectName}" Width="100" Height="50" DockPanel.Dock="Top"/>
-                    <TextBox Text="{Binding NewBildingName}" Width="100" Height="50" DockPanel.Dock="Top"/>
-                    <Button Width="100" Height="50" DockPanel.Dock="Top" Command="{Binding AddNewProjectAndBildingCommand}" />
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                <DockPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3">
+                    <DockPanel DockPanel.Dock="Top">
+                        <TextBlock Text="Имя нового проекта: " VerticalAlignment="Top" DockPanel.Dock="Left"/>
+                        <TextBox Text="{Binding NewProjectName}" Width="100" Height="20" DockPanel.Dock="Left" VerticalAlignment="Top"/>
+                    </DockPanel>
+
+                    <DockPanel DockPanel.Dock="Top">
+                        <TextBlock Text="Имя новой модели:   " VerticalAlignment="Top" DockPanel.Dock="Left"/>
+                        <TextBox Text="{Binding NewProjectName}" Width="100" Height="20" DockPanel.Dock="Left" VerticalAlignment="Top"/>
+                    </DockPanel>
                 </DockPanel>
             </Grid>
         </TabItem>
@@ -36,6 +52,7 @@
                 <DockPanel Grid.Row="0" Grid.Column="0">
                     <TextBlock Text="Проект: " DockPanel.Dock="Left"  VerticalAlignment="Center"/>
                     <ComboBox ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject}" DockPanel.Dock="Left" Height="25" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <Button Content="+" Command="{Binding AddNewProjectCommand}" Width="25" Height="25" VerticalAlignment="Center" DockPanel.Dock="Left"/>
                 </DockPanel>
 
                 <DockPanel Grid.Row="0" Grid.Column="1">
@@ -51,7 +68,7 @@
                         <DataGridTemplateColumn Header="Категория" Width="1*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <ComboBox ItemsSource="{Binding CategoryList}" SelectedItem="{Binding SelectedCategory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <ComboBox ItemsSource="{Binding CategoryList}" SelectedItem="{Binding Category, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -59,7 +76,7 @@
                         <DataGridTemplateColumn Header="Подкатегория" Width="1*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <ComboBox ItemsSource="{Binding SubCategoryList,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedSubCategory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <ComboBox ItemsSource="{Binding SubCategoryList,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SubCategory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -67,7 +84,7 @@
                         <DataGridTemplateColumn Header="Наименование" Width="1*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <ComboBox ItemsSource="{Binding RoomNamesList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedRoomName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <ComboBox ItemsSource="{Binding RoomNamesList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

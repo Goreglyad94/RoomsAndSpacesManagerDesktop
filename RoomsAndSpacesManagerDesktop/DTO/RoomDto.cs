@@ -11,9 +11,11 @@ namespace RoomsAndSpacesManagerDesktop.DTO
     [Table("RaSM_Rooms")]
     public class RoomDto : ViewModel
     {
+        static List<CategoryDto> CatsList { get; set; }
         public RoomDto()
         {
             CategoryList = MainCsvModel.GetCategoties();
+
         }
 
 
@@ -27,16 +29,31 @@ namespace RoomsAndSpacesManagerDesktop.DTO
             get => category;
             set
             {
-                category = value;
+                Set(ref category, value);
+                SubCategoryList = MainCsvModel.GetSubCategoties(Category);
             }
         }
 
-        public string SubCategory { get; set; }
+
+        private string subCategory;
+
+        public string SubCategory 
+        { 
+            get => subCategory;
+            set 
+            { 
+                subCategory = value;
+                RoomNamesList = MainCsvModel.GetRoomNames(Category, SubCategory);
+            }
+        }
+
+
+
         public string Name { get; set; }
 
         private string shortName;
-        public string ShortName 
-        { 
+        public string ShortName
+        {
             get => shortName;
             set => Set(ref shortName, value);
         }
@@ -53,59 +70,27 @@ namespace RoomsAndSpacesManagerDesktop.DTO
 
         #region Вспомогательные поля для интерфейса
         [NotMapped]
-        public List<CategoryDto> CategoryList { get; set; }
+        public List<string> CategoryList { get; set; }
+
+        private List<string> subCategoryList;
 
 
-        private CategoryDto selectedCategory;
         [NotMapped]
-
-        public CategoryDto SelectedCategory
+        public List<string> SubCategoryList
         {
-            get => selectedCategory;
-            set
-            {
-                selectedCategory = value;
-                GetSubCats();
-            }
+            get => subCategoryList;
+            set => Set(ref subCategoryList, value);
         }
 
-        [NotMapped]
-        public List<SubCategoryDto> SubCategoryList { get; set; }
 
-
-        private SubCategoryDto selectedSubCategory;
-
-
-        [NotMapped]
-        public SubCategoryDto SelectedSubCategory
-        {
-            get => selectedSubCategory;
-            set
-            {
-                selectedSubCategory = value;
-                SubCategory = SelectedSubCategory?.Name;
-                GetRoomsNsmes();
-            }
-        }
-
-        [NotMapped]
-        public List<RoomNameDto> RoomNamesList { get; set; }
-
-
-        private RoomNameDto selectedRoomName;
+        private List<string> roomNamesList;
         
-
         [NotMapped]
-        public RoomNameDto SelectedRoomName
+        public List<string> RoomNamesList
         {
-            get => selectedRoomName;
-            set
-            {
-                selectedRoomName = value;
-                ShortName = SelectedRoomName?.Name;
-            }
+            get => roomNamesList;
+            set => Set(ref roomNamesList, value);
         }
-
         #endregion
 
 
@@ -118,13 +103,13 @@ namespace RoomsAndSpacesManagerDesktop.DTO
         #region Методы получения данных по подкатегориям и именам. Потом сделать через SQL
         private void GetSubCats()
         {
-            SubCategoryList = MainCsvModel.GetSubCategoties(SelectedCategory);
+            //SubCategoryList = MainCsvModel.GetSubCategoties(SelectedCategory);
             OnPropertyChanged(nameof(SubCategoryList));
         }
 
         private void GetRoomsNsmes()
         {
-            RoomNamesList = MainCsvModel.GetRoomNames(SelectedSubCategory);
+            //RoomNamesList = MainCsvModel.GetRoomNames(SelectedSubCategory);
             OnPropertyChanged(nameof(RoomNamesList));
         }
         #endregion

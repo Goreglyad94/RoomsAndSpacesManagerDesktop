@@ -15,6 +15,8 @@ namespace RoomsAndSpacesManagerDesktop.DTO.RoomInfrastructure
         public string Name { get; set; }
         public int CategotyId { get; set; }
 
+        [NotMapped]
+        public List<RoomNameDto> roomNameDtos { get; set; } = new List<RoomNameDto>();
 
         public virtual CategoryDto Category { get; set; }
 

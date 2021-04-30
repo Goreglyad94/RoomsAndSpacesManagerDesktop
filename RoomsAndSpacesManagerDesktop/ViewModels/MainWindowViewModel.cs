@@ -11,6 +11,7 @@ using RoomsAndSpacesManagerDesktop.DTO;
 using RoomsAndSpacesManagerDesktop.Infrastructure.Commands;
 using RoomsAndSpacesManagerDesktop.Models.DbModels;
 using RoomsAndSpacesManagerDesktop.ViewModels.Base;
+using RoomsAndSpacesManagerDesktop.Views.Windows;
 
 namespace RoomsAndSpacesManagerDesktop.ViewModels
 {
@@ -27,8 +28,9 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             Projects = context.GetProjects();
 
             #region Команды
-            PushToDbCommand = new RelayCommand(OnDPushToDbCommandExecutde, CanPushToDbCommandExecute);
+            PushToDbCommand = new RelayCommand(OnPushToDbCommandExecutde, CanPushToDbCommandExecute);
             AddNewRowCommand = new RelayCommand(OnAddNewRowCommandExecutde, CanAddNewRowCommandExecute);
+            AddNewProjectCommand = new RelayCommand(OnAddNewProjectCommandExecutde, CanAddNewProjectCommandExecute);
             #endregion
         }
         /*TabControl1 - Создание нового проекта и здания~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -62,8 +64,18 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                 Buildings = SelectedProject.Buildings.ToList();
             }
         }
+
+
         #endregion
 
+        #region Комманда. Создать новый проект
+        public ICommand AddNewProjectCommand { get; set; }
+        private void OnAddNewProjectCommandExecutde(object p)
+        {
+            
+        }
+        private bool CanAddNewProjectCommandExecute(object p) => true;
+        #endregion
 
 
 
@@ -153,13 +165,10 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
 
         #region Комманд. Закинуть обновления пространств в БД
         public ICommand PushToDbCommand { get; set; }
-        private void OnDPushToDbCommandExecutde(object p)
+        private void OnPushToDbCommandExecutde(object p)
         {
-            foreach (var item in Rooms)
-            {
-                item.Category = item.SelectedCategory?.Name;
-            }
             context.AddNewRooms(SelectedBuilding, Rooms.ToList());
+            Rooms = new ObservableCollection<RoomDto>(context.GetRooms(SelectedBuilding));
         }
         private bool CanPushToDbCommandExecute(object p) => true;
         #endregion

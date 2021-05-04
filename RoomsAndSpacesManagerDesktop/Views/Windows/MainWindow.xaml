@@ -3,6 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:ii="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:local="clr-namespace:RoomsAndSpacesManagerDesktop.Views.Windows"
         xmlns:vm="clr-namespace:RoomsAndSpacesManagerDesktop.ViewModels"
         mc:Ignorable="d"
@@ -23,17 +25,23 @@
                     <RowDefinition/>
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
-                <DockPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3">
-                    <DockPanel DockPanel.Dock="Top">
-                        <TextBlock Text="Имя нового проекта: " VerticalAlignment="Top" DockPanel.Dock="Left"/>
-                        <TextBox Text="{Binding NewProjectName}" Width="100" Height="20" DockPanel.Dock="Left" VerticalAlignment="Top"/>
-                    </DockPanel>
+                <DockPanel Grid.Column="0" Grid.Row="1">
+                    <TextBlock Text="Имя нового проекта: " DockPanel.Dock="Top" HorizontalAlignment="Right" Height="25" VerticalAlignment="Top"/>
+                    <TextBlock Text="Имя новой модели: " DockPanel.Dock="Top"  HorizontalAlignment="Right" Height="25" VerticalAlignment="Top"/>
+                </DockPanel>
 
-                    <DockPanel DockPanel.Dock="Top">
-                        <TextBlock Text="Имя новой модели:   " VerticalAlignment="Top" DockPanel.Dock="Left"/>
-                        <TextBox Text="{Binding NewProjectName}" Width="100" Height="20" DockPanel.Dock="Left" VerticalAlignment="Top"/>
+                <DockPanel Grid.Column="1" Grid.Row="1">
+                    <DockPanel DockPanel.Dock="Top" HorizontalAlignment="Left">
+                        <TextBox Text="{Binding NewProjectName}" Width="200" DockPanel.Dock="Left" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top"/>
+                        <Button Command="{Binding AddNewProjectCommand}" Content="+" DockPanel.Dock="Left" Width="25" Height="25" Margin="5 0 0 0"/>
+                    </DockPanel>
+                    <DockPanel DockPanel.Dock="Top" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top">
+                        <TextBox Text="{Binding NewBuildingName}" Width="100" DockPanel.Dock="Left" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top"/>
+                        <ComboBox ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProjectForAdd}" Width="100" DockPanel.Dock="Left" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top"/>
+                        <Button Command="{Binding AddNewBuildingCommand}"  Content="+" DockPanel.Dock="Left" Width="25" Height="25" Margin="5 0 0 0"/>
                     </DockPanel>
                 </DockPanel>
+
             </Grid>
         </TabItem>
         <TabItem Header="Сводная таблица" IsSelected="True">
@@ -52,7 +60,6 @@
                 <DockPanel Grid.Row="0" Grid.Column="0">
                     <TextBlock Text="Проект: " DockPanel.Dock="Left"  VerticalAlignment="Center"/>
                     <ComboBox ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject}" DockPanel.Dock="Left" Height="25" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <Button Content="+" Command="{Binding AddNewProjectCommand}" Width="25" Height="25" VerticalAlignment="Center" DockPanel.Dock="Left"/>
                 </DockPanel>
 
                 <DockPanel Grid.Row="0" Grid.Column="1">
@@ -61,11 +68,12 @@
                 </DockPanel>
 
 
-                <DataGrid CanUserAddRows="False" Grid.Row="1" Grid.ColumnSpan="3" SelectedItem="{Binding SelectedRoom}" ItemsSource="{Binding Rooms, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
+                <DataGrid AlternatingRowBackground="LightGray" GridLinesVisibility="Vertical" SelectionMode="Extended"  CanUserAddRows="False" Grid.Row="1" Grid.ColumnSpan="3" SelectedItem="{Binding SelectedRoom}" ItemsSource="{Binding Rooms, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="True">
+                    
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="1*"/>
+                        <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="30" IsReadOnly="True"/>
 
-                        <DataGridTemplateColumn Header="Категория" Width="1*">
+                        <DataGridTemplateColumn Header="Категория" Width="80">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <ComboBox ItemsSource="{Binding CategoryList}" SelectedItem="{Binding Category, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -73,7 +81,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="Подкатегория" Width="1*">
+                        <DataGridTemplateColumn Header="Подкатегория" Width="80">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <ComboBox ItemsSource="{Binding SubCategoryList,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SubCategory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -81,7 +89,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="Наименование" Width="1*">
+                        <DataGridTemplateColumn Header="Наименование" Width="80">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <ComboBox ItemsSource="{Binding RoomNamesList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -89,9 +97,9 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTextColumn Header="Краткое наименование" Width="1*" Binding="{Binding ShortName}"/>
-                        <DataGridTextColumn Header="Номер помещения" Width="1*" Binding="{Binding RoomNumber}"/>
-                        <DataGridTextColumn Header="Площадь" Width="1*" Binding="{Binding Area}"/>
+                        <DataGridTextColumn Header="Краткое наименование" Width="80" Binding="{Binding ShortName}"/>
+                        <DataGridTextColumn Header="Номер помещения" Width="80" Binding="{Binding RoomNumber}"/>
+                        <DataGridTextColumn Header="Площадь" Width="80" Binding="{Binding Area}"/>
                     </DataGrid.Columns>
                 </DataGrid>
 

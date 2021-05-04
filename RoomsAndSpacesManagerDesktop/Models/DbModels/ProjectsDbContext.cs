@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows;
 using RoomsAndSpacesManagerDesktop.DTO;
+using RoomsAndSpacesManagerDesktop.DTO.RoomInfrastructure;
 using RoomsAndSpacesManagerDesktop.Models.DbModels.Base;
 
 
@@ -14,14 +15,29 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
             
         }
 
+        public void AddNewProjects(ProjectDto proj)
+        {
+            context.RaSM_Projects.Add(proj);
+            context.SaveChanges();
+        }
+
+
+        public void AddNewBuilding(BuildingDto proj)
+        {
+            context.RaSM_Buildings.Add(proj);
+            context.SaveChanges(); 
+        }
+
         public List<ProjectDto> GetProjects()
         {
             return context.RaSM_Projects.ToList();
         }
 
+
+
         public List<BuildingDto> GetModels(ProjectDto projDto)
         {
-            return context.RaSM_Models.Where(x => x.ProjectId == projDto.Id).ToList();
+            return context.RaSM_Buildings.Where(x => x.ProjectId == projDto.Id).ToList();
         }
 
 

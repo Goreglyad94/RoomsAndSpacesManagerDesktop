@@ -118,50 +118,29 @@ namespace RoomsAndSpacesManagerDesktop.Models.CsvModels
 
         public static List<string> GetSubCategoties(string categoryDto)
         {
-            //List<SubCategoryDto> subCategoryDtos = new List<SubCategoryDto>();
-
-            //using (TextFieldParser parser = new TextFieldParser(@"C:\Users\ya.goreglyad\Desktop\Помещения - Категории.csv"))
-            //{
-            //    parser.TextFieldType = FieldType.Delimited;
-            //    parser.SetDelimiters(",");
-            //    while (!parser.EndOfData)
-            //    {
-            //        //Process row
-            //        string[] fields = parser.ReadFields();
-            //        SubCategoryDto subCategoryDto = new SubCategoryDto()
-            //        {
-            //            Name = fields[2],
-            //            Key = fields[3]
-            //        };
-            //        subCategoryDtos.Add(subCategoryDto);
-
-
-            //    }
-            //}
             List<string> vs = new List<string>();
-
-            foreach (var item in categories.First(x => x.Name == categoryDto).subCategoryDtos)
+            if (categoryDto != null)
             {
-                vs.Add(item.Name);
+                foreach (var item in categories.First(x => x.Name == categoryDto).subCategoryDtos)
+                {
+                    vs.Add(item.Name);
+                }
             }
+            
 
             return vs;
         }
 
         public static List<string> GetRoomNames(string categoryDto, string subCategoryDto)
         {
-
-
-
             List<string> vs = new List<string>();
-
-            foreach (var item in categories.First(x => x.Name == categoryDto).subCategoryDtos.First(x => x.Name == subCategoryDto).roomNameDtos)
+            if (categoryDto != null && subCategoryDto != null)
             {
-                vs.Add(item.Name);
+                foreach (var item in categories.First(x => x.Name == categoryDto).subCategoryDtos.First(x => x.Name == subCategoryDto).roomNameDtos)
+                {
+                    vs.Add(item.Name);
+                }
             }
-
-
-
             return vs;
         }
 

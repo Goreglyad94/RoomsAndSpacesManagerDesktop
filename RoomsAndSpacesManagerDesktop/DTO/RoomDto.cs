@@ -50,16 +50,12 @@ namespace RoomsAndSpacesManagerDesktop.DTO
 
 
         public string Name { get; set; }
-
-        private string shortName;
-        public string ShortName
-        {
-            get => shortName;
-            set => Set(ref shortName, value);
-        }
-
+        public string ShortName { get; set; }
         public string RoomNumber { get; set; }
-        public double Area { get; set; }
+
+
+        
+
         public string Equipment { get; set; }
         public int BuildingId { get; set; }
 

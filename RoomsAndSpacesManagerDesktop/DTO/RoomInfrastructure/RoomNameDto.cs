@@ -49,7 +49,7 @@ namespace RoomsAndSpacesManagerDesktop.DTO.RoomInfrastructure
 
         public override string ToString()
         {
-            return Key;
+            return Name;
         }
     }
 }

@@ -4,7 +4,7 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels.Base
 {
     public class MainDbContext
     {
-        protected RoomAndSpacesDbContext context;
+        public RoomAndSpacesDbContext context;
         public MainDbContext()
         {
             context = new RoomAndSpacesDbContext();

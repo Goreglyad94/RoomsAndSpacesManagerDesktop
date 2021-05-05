@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RoomsAndSpacesManagerDataBase.Data.DataBaseContext
 {
-    class RoomAndSpacesDbContext : DbContext
+    public class RoomAndSpacesDbContext : DbContext
     {
         public RoomAndSpacesDbContext()
         {

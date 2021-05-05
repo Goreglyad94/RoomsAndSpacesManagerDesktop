@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomAndSpacesManagerConsole
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsAndSpacesManagerDataBase", "RoomsAndSpacesManagerDataBase\RoomsAndSpacesManagerDataBase.csproj", "{99734086-64C1-43AF-9F99-2DEA19BE6CB6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsAndSpacesManagerLib", "RoomsAndSpacesManagerLib\RoomsAndSpacesManagerLib.csproj", "{F71CCC75-3FC2-47B2-8C95-A9D7EDDF354E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{99734086-64C1-43AF-9F99-2DEA19BE6CB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99734086-64C1-43AF-9F99-2DEA19BE6CB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99734086-64C1-43AF-9F99-2DEA19BE6CB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F71CCC75-3FC2-47B2-8C95-A9D7EDDF354E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F71CCC75-3FC2-47B2-8C95-A9D7EDDF354E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F71CCC75-3FC2-47B2-8C95-A9D7EDDF354E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F71CCC75-3FC2-47B2-8C95-A9D7EDDF354E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

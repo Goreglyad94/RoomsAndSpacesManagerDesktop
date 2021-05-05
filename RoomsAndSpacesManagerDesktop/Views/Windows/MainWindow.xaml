@@ -9,7 +9,7 @@
         xmlns:vm="clr-namespace:RoomsAndSpacesManagerDesktop.ViewModels"
        xmlns:roomsProp="clr-namespace:RoomsAndSpacesManagerDesktop.Views.UserControls"
         mc:Ignorable="d"
-        Title="Window1" Height="450" Width="800">
+        Title="Window1" Height="600" Width="1200">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="b2v" />
     </Window.Resources>
@@ -105,9 +105,8 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTextColumn Header="Краткое наименование" Width="80" Binding="{Binding ShortName}"/>
-                        <DataGridTextColumn Header="Номер помещения" Width="80" Binding="{Binding RoomNumber}"/>
-                        <DataGridTextColumn Header="Температура" Width="80" Binding="{Binding RoomNameDto.T_calc, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn Header="Краткое наименование" Width="1*" Binding="{Binding ShortName}"/>
+                        <DataGridTextColumn Header="Номер помещения" Width="1*" Binding="{Binding RoomNumber}"/>
                     </DataGrid.Columns>
                 </DataGrid>
 

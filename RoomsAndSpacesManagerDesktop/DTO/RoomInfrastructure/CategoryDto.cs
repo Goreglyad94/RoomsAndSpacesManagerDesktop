@@ -13,8 +13,9 @@ namespace RoomsAndSpacesManagerDesktop.DTO.RoomInfrastructure
         public int Id { get; set; }
         public string Key { get; set; }
         public string Name { get; set; }
-        [NotMapped]
-        public List<SubCategoryDto> subCategoryDtos { get; set; } = new List<SubCategoryDto>();
+
+        //[NotMapped]
+        //public List<SubCategoryDto> subCategoryDtos { get; set; } = new List<SubCategoryDto>();
 
 
 

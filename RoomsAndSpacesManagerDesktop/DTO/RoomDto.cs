@@ -12,11 +12,11 @@ namespace RoomsAndSpacesManagerDesktop.DTO
     [Table("RaSM_Rooms")]
     public class RoomDto : ViewModel
     {
-        MainDbContext context = new MainDbContext();
-        public RoomDto()
-        {
-            CategoryList = context.context.RaSM_RoomCategories.ToList();
-        }
+        static MainDbContext context = new MainDbContext();
+        //public RoomDto()
+        //{
+        //    CategoryList = context.context.RaSM_RoomCategories.ToList();
+        //}
 
 
 
@@ -39,9 +39,7 @@ namespace RoomsAndSpacesManagerDesktop.DTO
             }
         }
 
-
         private string subCategory;
-
         public string SubCategory
         {
             get => subCategory;
@@ -71,11 +69,7 @@ namespace RoomsAndSpacesManagerDesktop.DTO
         }
         public string ShortName { get; set; }
         public string RoomNumber { get; set; }
-
-
-
-
-        public string Equipment { get; set; }
+        
         public int BuildingId { get; set; }
 
         public virtual BuildingDto Building { get; set; }
@@ -85,7 +79,7 @@ namespace RoomsAndSpacesManagerDesktop.DTO
 
         #region Вспомогательные поля для интерфейса
         [NotMapped]
-        public List<CategoryDto> CategoryList { get; set; }
+        public List<CategoryDto> CategoryList { get; set; } = context.context.RaSM_RoomCategories.ToList();
 
 
 
@@ -110,9 +104,5 @@ namespace RoomsAndSpacesManagerDesktop.DTO
         [NotMapped]
         public RoomNameDto RoomNameDto { get; set; }
         #endregion
-
-
-
-
     }
 }

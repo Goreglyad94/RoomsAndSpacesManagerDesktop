@@ -5,7 +5,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C14B3531-39F8-46D1-B6A2-CF690B0C5BDC}</ProjectGuid>
+    <ProjectGuid>{99734086-64C1-43AF-9F99-2DEA19BE6CB6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RoomsAndSpacesManagerDataBase</RootNamespace>
@@ -51,14 +51,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataBaseContext.cs" />
+    <Compile Include="ViewModel.cs" />
+    <Compile Include="Data\DataBaseContext\RoomAndSpacesDbContext.cs" />
+    <Compile Include="Dto\BuildingDto.cs" />
+    <Compile Include="Dto\ProjectDto.cs" />
+    <Compile Include="Dto\RoomDto.cs" />
+    <Compile Include="Dto\RoomInfrastructure\CategoryDto.cs" />
+    <Compile Include="Dto\RoomInfrastructure\RoomNameDto.cs" />
+    <Compile Include="Dto\RoomInfrastructure\SubCategoryDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

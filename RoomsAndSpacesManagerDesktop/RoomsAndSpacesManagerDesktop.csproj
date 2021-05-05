@@ -59,6 +59,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2021\RevitAPIUI.dll</HintPath>
     </Reference>
+    <Reference Include="RoomsAndSpacesManagerDataBase">
+      <HintPath>..\RoomsAndSpacesManagerDataBase\bin\Debug\RoomsAndSpacesManagerDataBase.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />

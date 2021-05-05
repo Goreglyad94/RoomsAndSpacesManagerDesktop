@@ -42,7 +42,7 @@
                 </DockPanel>
                 <DockPanel Grid.Row="0" Grid.Column="2">
                     <TextBlock VerticalAlignment="Center" Text="Добавить новый проект/модель: "/>
-                    <CheckBox x:Name="chk" VerticalAlignment="Center" IsChecked="True"/>
+                    <CheckBox x:Name="chk" VerticalAlignment="Center" IsChecked="False"/>
                 </DockPanel>
 
 

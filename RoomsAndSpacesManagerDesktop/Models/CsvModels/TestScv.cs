@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualBasic.FileIO;
-using RoomsAndSpacesManagerDesktop.DTO.RoomInfrastructure;
+using RoomsAndSpacesManagerDataBase.Dto.RoomInfrastructure;
 using RoomsAndSpacesManagerDesktop.Models.DbModels;
 using RoomsAndSpacesManagerDesktop.Models.DbModels.Base;
 using System;

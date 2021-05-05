@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.VisualBasic.FileIO;
-using RoomsAndSpacesManagerDesktop.DTO.RoomInfrastructure;
 
 namespace RoomAndSpacesManagerConsole
 {

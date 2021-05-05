@@ -1,4 +1,5 @@
-﻿using RoomsAndSpacesManagerDataBase.Dto.RoomInfrastructure;
+﻿using RoomsAndSpacesManagerDataBase.Data.DataBaseContext;
+using RoomsAndSpacesManagerDataBase.Dto.RoomInfrastructure;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,7 +12,12 @@ namespace RoomsAndSpacesManagerDataBase.Dto
     [Table("RaSM_Rooms")]
     public class RoomDto : ViewModel
     {
+        static RoomAndSpacesDbContext context = new RoomAndSpacesDbContext();
 
+        public RoomDto()
+        {
+
+        }
 
         #region Поля для выгрузки
         public int Id { get; set; }
@@ -26,7 +32,7 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                 if (Category != null)
                 {
                     int catId = CategoryList.FirstOrDefault(x => x?.Name == Category).Id;
-                    //SubCategoryList = context.context.RaSM_RoomSubCategories.Where(x => x.CategotyId == catId).ToList();
+                    SubCategoryList = context.RaSM_RoomSubCategories.Where(x => x.CategotyId == catId).ToList();
                 }
 
             }
@@ -42,7 +48,7 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                 if (SubCategory != null)
                 {
                     int catId = SubCategoryList.FirstOrDefault(x => x?.Name == SubCategory).Id;
-                    //RoomNamesList = context.context.RaSM_RoomNames.Where(x => x.SubCategotyId == catId).ToList();
+                    RoomNamesList = context.RaSM_RoomNames.Where(x => x.SubCategotyId == catId).ToList();
                 }
 
             }
@@ -72,7 +78,7 @@ namespace RoomsAndSpacesManagerDataBase.Dto
 
         #region Вспомогательные поля для интерфейса
         [NotMapped]
-        public List<CategoryDto> CategoryList { get; set; } /*= context.context.RaSM_RoomCategories.ToList();*/
+        public List<CategoryDto> CategoryList { get; set; } = context.RaSM_RoomCategories.ToList();
 
 
 

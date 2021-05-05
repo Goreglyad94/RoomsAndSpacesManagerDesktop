@@ -88,12 +88,6 @@
     </ApplicationDefinition>
     <Compile Include="Cmd.cs" />
     <Compile Include="Data\DataBaseContext\RoomAndSpacesDbContext.cs" />
-    <Compile Include="DTO\BuildingDto.cs" />
-    <Compile Include="DTO\ProjectDto.cs" />
-    <Compile Include="DTO\RoomDto.cs" />
-    <Compile Include="DTO\RoomInfrastructure\CategoryDto.cs" />
-    <Compile Include="DTO\RoomInfrastructure\RoomNameDto.cs" />
-    <Compile Include="DTO\RoomInfrastructure\SubCategoryDto.cs" />
     <Compile Include="Infrastructure\Commands\Base\Command.cs" />
     <Compile Include="Infrastructure\Commands\RelayCommand.cs" />
     <Compile Include="MainWindow.xaml.cs">

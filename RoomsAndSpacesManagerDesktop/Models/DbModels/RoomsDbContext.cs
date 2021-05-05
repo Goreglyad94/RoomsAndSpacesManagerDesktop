@@ -1,4 +1,4 @@
-﻿using RoomsAndSpacesManagerDesktop.DTO.RoomInfrastructure;
+﻿using RoomsAndSpacesManagerDataBase.Dto.RoomInfrastructure;
 using RoomsAndSpacesManagerDesktop.Models.DbModels.Base;
 using System;
 using System.Collections.Generic;

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using RoomsAndSpacesManagerDataBase.Dto;
+using RoomsAndSpacesManagerDataBase.Dto.RoomInfrastructure;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RoomsAndSpacesManagerDesktop.DTO;
-using RoomsAndSpacesManagerDesktop.DTO.RoomInfrastructure;
+
 
 namespace RoomsAndSpacesManagerDesktop.Data.DataBaseContext
 {

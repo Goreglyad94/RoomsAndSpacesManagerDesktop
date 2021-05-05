@@ -1,4 +1,4 @@
-﻿using RoomsAndSpacesManagerDesktop.DTO.RoomInfrastructure;
+﻿using RoomsAndSpacesManagerDataBase.Dto.RoomInfrastructure;
 using RoomsAndSpacesManagerDesktop.Infrastructure.Commands;
 using RoomsAndSpacesManagerDesktop.Models.DbModels.Base;
 using RoomsAndSpacesManagerDesktop.ViewModels.Base;

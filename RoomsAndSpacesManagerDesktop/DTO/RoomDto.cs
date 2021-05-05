@@ -30,33 +30,50 @@ namespace RoomsAndSpacesManagerDesktop.DTO
             set
             {
                 category = value;
-                int catId = CategoryList.FirstOrDefault(x => x?.Name == Category).Id;
-                SubCategoryList = context.context.RaSM_RoomSubCategories.Where(x => x.CategotyId == catId).ToList();
+                if (Category != null)
+                {
+                    int catId = CategoryList.FirstOrDefault(x => x?.Name == Category).Id;
+                    SubCategoryList = context.context.RaSM_RoomSubCategories.Where(x => x.CategotyId == catId).ToList();
+                }
+                    
             }
         }
 
 
         private string subCategory;
 
-        public string SubCategory 
-        { 
+        public string SubCategory
+        {
             get => subCategory;
-            set 
-            { 
+            set
+            {
                 subCategory = value;
-                int catId = SubCategoryList.FirstOrDefault(x => x?.Name == SubCategory).Id;
-                RoomNamesList = context.context.RaSM_RoomNames.Where(x => x.SubCategotyId == catId).ToList();
+                if (SubCategory != null)
+                {
+                    int catId = SubCategoryList.FirstOrDefault(x => x?.Name == SubCategory).Id;
+                    RoomNamesList = context.context.RaSM_RoomNames.Where(x => x.SubCategotyId == catId).ToList();
+                }
+                
             }
         }
 
 
-
-        public string Name { get; set; }
+        private string name;
+        public string Name
+        {
+            get => name;
+            set 
+            {
+                name = value;
+                if (Name != null)
+                    RoomNameDto = RoomNamesList.FirstOrDefault(x => x.Name == Name);
+            }
+        }
         public string ShortName { get; set; }
         public string RoomNumber { get; set; }
 
 
-        
+
 
         public string Equipment { get; set; }
         public int BuildingId { get; set; }
@@ -82,12 +99,20 @@ namespace RoomsAndSpacesManagerDesktop.DTO
 
 
         private List<RoomNameDto> roomNamesList;
+
+
         [NotMapped]
         public List<RoomNameDto> RoomNamesList
         {
             get => roomNamesList;
             set => Set(ref roomNamesList, value);
         }
+        [NotMapped]
+        public RoomNameDto RoomNameDto { get; set; }
         #endregion
+
+
+
+
     }
 }

@@ -11,6 +11,7 @@ using RoomsAndSpacesManagerDesktop.DTO;
 using RoomsAndSpacesManagerDesktop.Infrastructure.Commands;
 using RoomsAndSpacesManagerDesktop.Models.CsvModels;
 using RoomsAndSpacesManagerDesktop.Models.DbModels;
+using RoomsAndSpacesManagerDesktop.Models.DbModels.Base;
 using RoomsAndSpacesManagerDesktop.ViewModels.Base;
 using RoomsAndSpacesManagerDesktop.Views.Windows;
 
@@ -20,13 +21,13 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
     {
         #region филды
         ProjectsDbContext context = new ProjectsDbContext();
-
+        MainDbContext mainContext = new MainDbContext();
         #endregion
 
         public MainWindowViewModel()
         {
             //context.DB();
-            Projects = context.GetProjects();
+            Projects = mainContext.context.RaSM_Projects.ToList();
 
             #region Команды
             PushToDbCommand = new RelayCommand(OnPushToDbCommandExecutde, CanPushToDbCommandExecute);
@@ -37,23 +38,12 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         }
         /*TabControl1 - Создание нового проекта и здания~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-        #region MyRegion
+        #region Имена новых проекта и здания
         public string NewProjectName { get; set; }
         public string NewBuildingName { get; set; }
         #endregion
 
-        #region Комманда. Создать новый проект
-        public ICommand AddNewProjectCommand { get; set; }
-        private void OnAddNewProjectCommandExecutde(object p)
-        {
-            context.AddNewProjects(new ProjectDto()
-            {
-                Name = NewProjectName
-            });
-            Projects = context.GetProjects();
-        }
-        private bool CanAddNewProjectCommandExecute(object p) => true;
-        #endregion
+        
 
         #region СелектедПроджект для добавления новых проектов
         private ProjectDto selectedProjectForAdd;
@@ -68,18 +58,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         }
         #endregion
 
-        #region Комманда. Создать новую модель
-        public ICommand AddNewBuildingCommand { get; set; }
-        private void OnAddNewBuildingCommandExecutde(object p)
-        {
-            context.AddNewBuilding(new BuildingDto()
-            {
-                ProjectId = SelectedProjectForAdd.Id,
-                Name = NewBuildingName
-            });
-        }
-        private bool CanAddNewBuildingCommandExecute(object p) => true;
-        #endregion
+        
 
         /*TabControl2 - Список проектов и таблица из бд~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
         #region Верхняя панель. Список проектов и зданий
@@ -101,15 +80,39 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             set
             {
                 selectedProject = value;
-                Buildings = SelectedProject.Buildings.ToList();
+                if (SelectedProject.Buildings != null && SelectedProject.Buildings.Count != 0)
+                    Buildings = context.GetModels(SelectedProject);
             }
         }
-
         #endregion
 
-        
+        #region Комманда. Создать новый проект
+        public ICommand AddNewProjectCommand { get; set; }
+        private void OnAddNewProjectCommandExecutde(object p)
+        {
+            context.AddNewProjects(new ProjectDto()
+            {
+                Name = NewProjectName
+            });
+            Projects = context.GetProjects();
+        }
+        private bool CanAddNewProjectCommandExecute(object p) => true;
+        #endregion
 
+        #region Комманда. Создать новую модель
+        public ICommand AddNewBuildingCommand { get; set; }
+        private void OnAddNewBuildingCommandExecutde(object p)
+        {
+            context.AddNewBuilding(new BuildingDto()
+            {
+                ProjectId = SelectedProject.Id,
+                Name = NewBuildingName
+            });
 
+            Buildings = context.GetModels(SelectedProject);
+        }
+        private bool CanAddNewBuildingCommandExecute(object p) => true;
+        #endregion
 
         #region Список зданий. (Добавить выбранное здание)
         private List<BuildingDto> buildings;
@@ -136,8 +139,6 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                     Rooms = null;
             }
         }
-
-
         #endregion
 
         #endregion
@@ -204,8 +205,6 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         }
         private bool CanPushToDbCommandExecute(object p) => true;
         #endregion
-
-
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 

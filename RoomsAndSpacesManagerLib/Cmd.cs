@@ -16,6 +16,9 @@ namespace RoomsAndSpacesManagerLib
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
+
+            Document doc = commandData.Application.ActiveUIDocument.Document;
+
             MainWindow mainWindow = new MainWindow();
             mainWindow.DataContext = new MainWindowViewModel();
             mainWindow.Show();

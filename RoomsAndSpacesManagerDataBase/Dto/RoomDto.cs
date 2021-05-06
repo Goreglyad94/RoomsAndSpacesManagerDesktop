@@ -31,8 +31,11 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                 category = value;
                 if (Category != null)
                 {
-                    int catId = CategoryList.FirstOrDefault(x => x?.Name == Category).Id;
-                    SubCategoryList = context.RaSM_RoomSubCategories.Where(x => x.CategotyId == catId).ToList();
+
+                    SubCategoryList = context.RaSM_RoomSubCategories.
+                        Where(x => x.CategotyId == CategoryList.
+                        FirstOrDefault(y => y.Name == Category).Id)
+                        .ToList();
                 }
 
             }
@@ -47,8 +50,12 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                 subCategory = value;
                 if (SubCategory != null)
                 {
-                    int catId = SubCategoryList.FirstOrDefault(x => x?.Name == SubCategory).Id;
-                    RoomNamesList = context.RaSM_RoomNames.Where(x => x.SubCategotyId == catId).ToList();
+                    if (SubCategoryList.FirstOrDefault(x => x?.Name == SubCategory) != null)
+                    {
+                        int catId = SubCategoryList.FirstOrDefault(x => x?.Name == SubCategory).Id;
+                        RoomNamesList = context.RaSM_RoomNames.Where(x => x.SubCategotyId == catId).ToList();
+                    }
+                    
                 }
 
             }
@@ -68,7 +75,7 @@ namespace RoomsAndSpacesManagerDataBase.Dto
         }
         public string ShortName { get; set; }
         public string RoomNumber { get; set; }
-
+        public int ArRoomId { get; set; }
         public int BuildingId { get; set; }
 
         public virtual BuildingDto Building { get; set; }

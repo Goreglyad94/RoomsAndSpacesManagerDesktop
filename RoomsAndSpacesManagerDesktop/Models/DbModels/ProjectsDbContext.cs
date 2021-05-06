@@ -73,5 +73,11 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
             else
                 return null;
         }
+
+        public void SaveChanges()
+        {
+            context.SaveChanges();
+        }
+
     }
 }

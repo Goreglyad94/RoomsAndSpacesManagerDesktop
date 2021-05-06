@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using RoomsAndSpacesManagerDataBase.Dto;
 using RoomsAndSpacesManagerDesktop.Data.DataBaseContext;
@@ -21,6 +23,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
     {
         #region филды
         ProjectsDbContext projContext = new ProjectsDbContext();
+        List<RoomDto> roomDtos; 
         #endregion
 
         public CreateIssueViewModel()
@@ -79,7 +82,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             set
             {
                 selectedProject = value;
-                if (SelectedProject != null && SelectedProject.Buildings != null && SelectedProject.Buildings.Count != 0)
+                if (SelectedProject.Buildings != null)
                     Buildings = projContext.GetModels(SelectedProject);
             }
         }
@@ -94,6 +97,12 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                 Name = NewProjectName
             });
             Projects = projContext.GetProjects();
+            if (Buildings != null && Buildings.Count != 0)
+            {
+                Buildings.Clear();
+                OnPropertyChanged(nameof(Buildings));
+            }
+
         }
         private bool CanAddNewProjectCommandExecute(object p) => true;
         #endregion
@@ -150,7 +159,12 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             {
                 selectedBuilding = value;
                 if (SelectedBuilding != null)
-                    Rooms = new ObservableCollection<RoomDto>(projContext.GetRooms(SelectedBuilding));
+                {
+                    roomDtos = projContext.GetRooms(SelectedBuilding);
+                    Rooms = CollectionViewSource.GetDefaultView(roomDtos);
+                    Rooms.Refresh();
+                }
+                    
                 else
                     Rooms = null;
             }
@@ -160,28 +174,39 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         /*DataGrid помещений~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 
-        #region Список помещений. Выбранное помещение
-        private ObservableCollection<RoomDto> rooms = new ObservableCollection<RoomDto>();
-        /// <summary> Привязка DataGrid к коллекции Rooms </summary>
-        public ObservableCollection<RoomDto> Rooms 
-        { 
-            get => rooms; 
-            set => Set(ref rooms,value); 
-        }
-
-        
-        private RoomDto selectedRoom;
-        
-
-        /// <summary> SelectedItem DataGrid Rooms </summary>
-        public RoomDto SelectedRoom
+        private ICollectionView rooms;
+        public ICollectionView Rooms
         {
-            get => selectedRoom;
-            set
-            {
-                selectedRoom = value;
-            }
+            get => rooms;
+            set => Set(ref rooms, value);
         }
+
+
+
+
+
+        #region Список помещений. Выбранное помещение
+        //private ObservableCollection<RoomDto> rooms = new ObservableCollection<RoomDto>();
+        ///// <summary> Привязка DataGrid к коллекции Rooms </summary>
+        //public ObservableCollection<RoomDto> Rooms 
+        //{ 
+        //    get => rooms; 
+        //    set => Set(ref rooms,value); 
+        //}
+
+        
+        //private RoomDto selectedRoom;
+        
+
+        ///// <summary> SelectedItem DataGrid Rooms </summary>
+        //public RoomDto SelectedRoom
+        //{
+        //    get => selectedRoom;
+        //    set
+        //    {
+        //        selectedRoom = value;
+        //    }
+        //}
 
         #endregion
 
@@ -198,11 +223,12 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         {
             if (SelectedBuilding != null)
             {
-                Rooms.Add(new RoomDto()
+                roomDtos.Add(new RoomDto()
                 {
                     BuildingId = SelectedBuilding.Id
                 });
-                OnPropertyChanged(nameof(Rooms));
+                Rooms = CollectionViewSource.GetDefaultView(roomDtos);
+                Rooms.Refresh();
             }
         }
         private bool CanAddNewRowCommandExecute(object p) 
@@ -216,8 +242,12 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         public ICommand PushToDbCommand { get; set; }
         private void OnPushToDbCommandExecutde(object p)
         {
-            projContext.AddNewRooms(SelectedBuilding, Rooms.ToList());
-            Rooms = new ObservableCollection<RoomDto>(projContext.GetRooms(SelectedBuilding));
+            projContext.AddNewRooms(SelectedBuilding, roomDtos);
+            projContext.SaveChanges();
+            roomDtos = projContext.GetRooms(SelectedBuilding);
+            Rooms = CollectionViewSource.GetDefaultView(roomDtos);
+            Rooms.Refresh();
+
         }
         private bool CanPushToDbCommandExecute(object p) => true;
         #endregion

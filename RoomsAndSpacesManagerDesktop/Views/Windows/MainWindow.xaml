@@ -7,12 +7,9 @@
         xmlns:ii="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:local="clr-namespace:RoomsAndSpacesManagerDesktop.Views.Windows"
         xmlns:vm="clr-namespace:RoomsAndSpacesManagerDesktop.ViewModels"
-       xmlns:ucs="clr-namespace:RoomsAndSpacesManagerDesktop.Views.UserControls"
+        xmlns:ucs="clr-namespace:RoomsAndSpacesManagerDesktop.Views.UserControls"
         mc:Ignorable="d"
         Title="Window1" Height="600" Width="1200">
-    <Window.Resources>
-        <BooleanToVisibilityConverter x:Key="b2v" />
-    </Window.Resources>
     <Window.DataContext>
         <vm:CreateIssueViewModel/>
     </Window.DataContext>

@@ -40,6 +40,17 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
             return context.RaSM_Projects.ToList();
         }
 
+        public void RemoveProject(ProjectDto projDto)
+        {
+            context.RaSM_Projects.Remove(projDto);
+            context.SaveChanges();
+        }
+
+        public void RemoveBuilding(BuildingDto buildDto)
+        {
+            context.RaSM_Buildings.Remove(buildDto);
+            context.SaveChanges();
+        }
 
 
         public List<BuildingDto> GetModels(ProjectDto projDto)

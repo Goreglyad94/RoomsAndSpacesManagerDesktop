@@ -28,14 +28,16 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             //context.DB();
             Projects = projContext.GetProjects();
 
+
             #region Команды
             PushToDbCommand = new RelayCommand(OnPushToDbCommandExecutde, CanPushToDbCommandExecute);
             AddNewRowCommand = new RelayCommand(OnAddNewRowCommandExecutde, CanAddNewRowCommandExecute);
             AddNewProjectCommand = new RelayCommand(OnAddNewProjectCommandExecutde, CanAddNewProjectCommandExecute);
             AddNewBuildingCommand = new RelayCommand(OnAddNewBuildingCommandExecutde, CanAddNewBuildingCommandExecute);
+            DeleteCommand = new RelayCommand(OnDeleteCommandExecutde, CanDeleteCommandExecute);
             #endregion
         }
-        /*TabControl1 - Создание нового проекта и здания~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+        /*Создание нового проекта и здания~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
         #region Имена новых проекта и здания
         public string NewProjectName { get; set; }
@@ -77,7 +79,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             set
             {
                 selectedProject = value;
-                if (SelectedProject.Buildings != null && SelectedProject.Buildings.Count != 0)
+                if (SelectedProject != null && SelectedProject.Buildings != null && SelectedProject.Buildings.Count != 0)
                     Buildings = projContext.GetModels(SelectedProject);
             }
         }
@@ -109,6 +111,25 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             Buildings = projContext.GetModels(SelectedProject);
         }
         private bool CanAddNewBuildingCommandExecute(object p) => true;
+        #endregion
+
+        #region Комманда
+        public ICommand DeleteCommand { get; set; }
+        private void OnDeleteCommandExecutde(object p)
+        {
+            if (p is ProjectDto)
+            {
+                projContext.RemoveProject(p as ProjectDto);
+                Projects = projContext.GetProjects();
+            }
+            if (p is BuildingDto)
+            {
+                projContext.RemoveBuilding(p as BuildingDto);
+                Buildings = projContext.GetModels(SelectedProject);
+            }
+            
+        }
+        private bool CanDeleteCommandExecute(object p) => true;
         #endregion
 
         #region Список зданий
@@ -201,9 +222,5 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         private bool CanPushToDbCommandExecute(object p) => true;
         #endregion
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
-
-
-
     }
 }

@@ -28,12 +28,38 @@
 
         <DockPanel Grid.Row="0" Grid.Column="0">
             <TextBlock Width="50" Text="Проект: " DockPanel.Dock="Left"  VerticalAlignment="Center"/>
-            <ComboBox ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject}" DockPanel.Dock="Left" Height="25" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2 2"/>
+            <ComboBox ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject}" DockPanel.Dock="Left" Height="25" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2 2">
+                <ComboBox.ItemContainerStyle>
+                    <Style TargetType="ComboBoxItem">
+                        <Setter Property="Tag" Value="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ComboBox}}}" />
+                        <Setter Property="ContextMenu">
+                            <Setter.Value>
+                                <ContextMenu>
+                                    <MenuItem Header="Delete" Command="{Binding PlacementTarget.Tag.DeleteCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding }" />
+                                </ContextMenu>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ComboBox.ItemContainerStyle>
+            </ComboBox>
         </DockPanel>
 
         <DockPanel Grid.Row="0" Grid.Column="1">
             <TextBlock Width="50" Text="Модель: " DockPanel.Dock="Left"  VerticalAlignment="Center"/>
-            <ComboBox ItemsSource="{Binding Buildings}" SelectedItem="{Binding SelectedBuilding}" DockPanel.Dock="Left" Width="150" HorizontalAlignment="Left" Height="25" VerticalAlignment="Center" Margin="2 2"/>
+            <ComboBox ItemsSource="{Binding Buildings}" SelectedItem="{Binding SelectedBuilding}" DockPanel.Dock="Left" Width="150" HorizontalAlignment="Left" Height="25" VerticalAlignment="Center" Margin="2 2">
+                <ComboBox.ItemContainerStyle>
+                    <Style TargetType="ComboBoxItem">
+                        <Setter Property="Tag" Value="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ComboBox}}}" />
+                        <Setter Property="ContextMenu">
+                            <Setter.Value>
+                                <ContextMenu>
+                                    <MenuItem Header="Delete" Command="{Binding PlacementTarget.Tag.DeleteCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding }" />
+                                </ContextMenu>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ComboBox.ItemContainerStyle>
+            </ComboBox>
         </DockPanel>
         <DockPanel Grid.Row="0" Grid.Column="2">
             <TextBlock VerticalAlignment="Center" Text="Добавить новый проект/модель: "/>

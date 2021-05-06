@@ -10,32 +10,71 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
 {
     class RoomsDbContext : MainDbContext
     {
+        #region Добавление в БД
+        /// <summary>
+        /// Добавить категории в БД (не актуален)
+        /// </summary>
+        /// <param name="subCategoryDtos"></param>
         public void AddCategoties(List<CategoryDto> subCategoryDtos)
         {
             context.RaSM_RoomCategories.AddRange(subCategoryDtos);
             context.SaveChanges();
         }
 
-        public List<CategoryDto> GetCategotyes()
-        {
-            return context.RaSM_RoomCategories.ToList();
-        }
+        /// <summary>
+        /// Добавить подкатегории в БД (не актуален)
+        /// </summary>
+        /// <param name="subCategoryDtos"></param>
         public void AddSubCategoties(List<SubCategoryDto> subCategoryDtos)
         {
             context.RaSM_RoomSubCategories.AddRange(subCategoryDtos);
             context.SaveChanges();
         }
-        public List<SubCategoryDto> GetSubCategotyes()
-        {
-            return context.RaSM_RoomSubCategories.ToList();
-        }
+
+        /// <summary>
+        /// Добавить имена комнат в БД (не актуален)
+        /// </summary>
+        /// <param name="subCategoryDtos"></param>
         public void AddRooms(List<RoomNameDto> roomNameDtos)
         {
             context.RaSM_RoomNames.AddRange(roomNameDtos);
             context.SaveChanges();
         }
 
+        public void SaveChanges()
+        {
+            context.SaveChanges();
+        }
+        #endregion
 
+        #region Получение из БД
+        /// <summary>
+        /// Получить список категорий
+        /// </summary>
+        /// <returns></returns>
+        public List<CategoryDto> GetCategories()
+        {
+            return context.RaSM_RoomCategories.ToList();
+        }
+
+        /// <summary>
+        /// Получить список подкатегорий
+        /// </summary>
+        /// <returns></returns>
+        public List<SubCategoryDto> GetSubCategotyes(CategoryDto cat)
+        {
+            return context.RaSM_RoomSubCategories.Where(x => x.CategotyId == cat.Id).ToList();
+        }
+
+        /// <summary>
+        /// Получить список имен комнат
+        /// </summary>
+        /// <returns></returns>
+        public List<RoomNameDto> GetRoomNames(SubCategoryDto subCat)
+        {
+            return context.RaSM_RoomNames.Where(x => x.SubCategotyId == subCat.Id).ToList();
+        } 
+        #endregion
 
 
     }

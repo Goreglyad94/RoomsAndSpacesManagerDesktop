@@ -1,5 +1,6 @@
 ﻿using RoomsAndSpacesManagerDataBase.Dto.RoomInfrastructure;
 using RoomsAndSpacesManagerDesktop.Infrastructure.Commands;
+using RoomsAndSpacesManagerDesktop.Models.DbModels;
 using RoomsAndSpacesManagerDesktop.Models.DbModels.Base;
 using RoomsAndSpacesManagerDesktop.ViewModels.Base;
 using System;
@@ -13,10 +14,11 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
 {
     class RoomsPropertiesViewModel : ViewModel
     {
-        MainDbContext context = new MainDbContext();
+        //MainDbContext context = new MainDbContext();
+        RoomsDbContext roomsContext = new RoomsDbContext();
         public RoomsPropertiesViewModel()
         {
-            Categories = context.context.RaSM_RoomCategories.ToList();
+            Categories = roomsContext.GetCategories();
 
             #region Комманды
             PushToDbCommand = new RelayCommand(OnPushToDbCommandExecutde, CanPushToDbCommandExecute);
@@ -31,7 +33,6 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             set { categories = value; }
         }
 
-
         private CategoryDto selectedCategoties;
         /// <summary>
         /// Выбранная категория помещений
@@ -42,7 +43,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             set
             {
                 Set(ref selectedCategoties, value);
-                SubCategories = context.context.RaSM_RoomSubCategories.Where(x => x.CategotyId == SelectedCategoties.Id).ToList();
+                SubCategories = roomsContext.GetSubCategotyes(SelectedCategoties);
             }
         }
         #endregion
@@ -71,7 +72,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             {
                 selectedSubCategoties = value;
                 if (SelectedSubCategoties != null)
-                    Rooms = context.context.RaSM_RoomNames.Where(x => x.SubCategotyId == SelectedSubCategoties.Id).ToList();
+                    Rooms = roomsContext.GetRoomNames(SelectedSubCategoties);
             }
         }
 
@@ -92,7 +93,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         public ICommand PushToDbCommand { get; set; }
         private void OnPushToDbCommandExecutde(object p)
         {
-            context.context.SaveChanges();
+            roomsContext.SaveChanges();
             Status = "Изменения успешно сохранены";
         }
         private bool CanPushToDbCommandExecute(object p) => true;

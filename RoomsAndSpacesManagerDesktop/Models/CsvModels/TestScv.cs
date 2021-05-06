@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace RoomsAndSpacesManagerDesktop.Models.CsvModels
 {
+    /// <summary>
+    /// Выгрузка из CSV в бд
+    /// </summary>
     class TestScv
     {
         RoomsDbContext context = new RoomsDbContext();

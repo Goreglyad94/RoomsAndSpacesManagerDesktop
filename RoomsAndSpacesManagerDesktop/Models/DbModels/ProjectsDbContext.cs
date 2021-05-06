@@ -14,18 +14,26 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
             
         }
 
+        /// <summary>
+        /// Добавить новый проект в БД
+        /// </summary>
+        /// <param name="proj"></param>
         public void AddNewProjects(ProjectDto proj)
         {
             context.RaSM_Projects.Add(proj);
             context.SaveChanges();
         }
 
-
+        /// <summary>
+        /// Добавить новое здание в БД
+        /// </summary>
+        /// <param name="proj"></param>
         public void AddNewBuilding(BuildingDto proj)
         {
             context.RaSM_Buildings.Add(proj);
             context.SaveChanges(); 
         }
+
 
         public List<ProjectDto> GetProjects()
         {

@@ -100,11 +100,10 @@
                           SelectedItem="{Binding SelectedRoom}" 
                           ItemsSource="{Binding Rooms, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                           AutoGenerateColumns="False">
-
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="30" IsReadOnly="True"/>
 
-                <DataGridTemplateColumn Header="Наименование" Width="1*">
+                <DataGridTemplateColumn Header="Наименование" Width="250">
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
                             <ComboBox Height="20" ItemsSource="{Binding Path=DataContext.RoomsNames, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" SelectedItem="{Binding Path=DataContext.SelectedRoomName, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
@@ -123,8 +122,320 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTextColumn Header="Краткое наименование" Width="1*" Binding="{Binding ShortName}"/>
-                <DataGridTextColumn Header="Номер помещения" Width="1*" Binding="{Binding RoomNumber}"/>
+                <DataGridTextColumn Header="Краткое наименование" Width="100" Binding="{Binding ShortName}"/>
+                
+                <DataGridTextColumn Header="Номер помещения" Width="100" Binding="{Binding RoomNumber}"/>
+
+                <DataGridTextColumn Header="Мин. площадь" Binding="{Binding Min_area, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" Value="{Binding Min_area_color}"/>
+                            <Style.Triggers>
+                                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{Binding Min_area_color}"/>
+                                    <Setter Property="Foreground"  Value="Black"/>
+                                    <Setter Property="BorderBrush" Value="Blue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Класс чистоты по СанПиН" Binding="{Binding Class_chistoti_SanPin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" Value="{Binding Class_chistoti_SanPin_color}"/>
+                            <Style.Triggers>
+                                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{Binding Class_chistoti_SanPin_color}"/>
+                                    <Setter Property="Foreground"  Value="Black"/>
+                                    <Setter Property="BorderBrush" Value="Blue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                        
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Класс чистоты по СП 158" Binding="{Binding Class_chistoti_SP_158, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" Value="{Binding Class_chistoti_SP_158_color}"/>
+                            <Style.Triggers>
+                                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{Binding Class_chistoti_SP_158_color}"/>
+                                    <Setter Property="Foreground"  Value="Black"/>
+                                    <Setter Property="BorderBrush" Value="Blue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Класс чистоты по GMP" Binding="{Binding Class_chistoti_GMP, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" Value="{Binding Class_chistoti_GMP_color}"/>
+                            <Style.Triggers>
+                                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{Binding Class_chistoti_GMP_color}"/>
+                                    <Setter Property="Foreground"  Value="Black"/>
+                                    <Setter Property="BorderBrush" Value="Blue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Температура расчётная, °C" Binding="{Binding T_calc, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" Value="{Binding T_calc_color}"/>
+                            <Style.Triggers>
+                                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{Binding T_calc_color}"/>
+                                    <Setter Property="Foreground"  Value="Black"/>
+                                    <Setter Property="BorderBrush" Value="Blue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Температура мин, °C" Binding="{Binding T_min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" Value="{Binding T_min_color}"/>
+                            <Style.Triggers>
+                                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{Binding T_min_color}"/>
+                                    <Setter Property="Foreground"  Value="Black"/>
+                                    <Setter Property="BorderBrush" Value="Blue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Температура макс, °C" Binding="{Binding T_max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" Value="{Binding T_max_color}"/>
+                            <Style.Triggers>
+                                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{Binding T_max_color}"/>
+                                    <Setter Property="Foreground"  Value="Black"/>
+                                    <Setter Property="BorderBrush" Value="Blue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Приток" Binding="{Binding Pritok, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" Value="{Binding Pritok_color}"/>
+                            <Style.Triggers>
+                                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{Binding Pritok_color}"/>
+                                    <Setter Property="Foreground"  Value="Black"/>
+                                    <Setter Property="BorderBrush" Value="Blue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Вытяжка" Binding="{Binding Vityazhka, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" Value="{Binding Vityazhka_color}"/>
+                            <Style.Triggers>
+                                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{Binding Vityazhka_color}"/>
+                                    <Setter Property="Foreground"  Value="Black"/>
+                                    <Setter Property="BorderBrush" Value="Blue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Относительная влажность,%" Binding="{Binding Ot_vlazhnost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" Value="{Binding Ot_vlazhnost_color}"/>
+                            <Style.Triggers>
+                                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{Binding Ot_vlazhnost_color}"/>
+                                    <Setter Property="Foreground"  Value="Black"/>
+                                    <Setter Property="BorderBrush" Value="Blue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="КЕО при бок. ест. осв." Binding="{Binding KEO_est_osv, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" Value="{Binding KEO_est_osv_color}"/>
+                            <Style.Triggers>
+                                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{Binding KEO_est_osv_color}"/>
+                                    <Setter Property="Foreground"  Value="Black"/>
+                                    <Setter Property="BorderBrush" Value="Blue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="КЕО при бок. совм. осв." Binding="{Binding KEO_sovm_osv, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" Value="{Binding KEO_sovm_osv_color}"/>
+                            <Style.Triggers>
+                                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{Binding KEO_sovm_osv_color}"/>
+                                    <Setter Property="Foreground"  Value="Black"/>
+                                    <Setter Property="BorderBrush" Value="Blue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Примечание ОВ" Binding="{Binding Discription_OV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" Value="{Binding Discription_OV_color}"/>
+                            <Style.Triggers>
+                                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{Binding Discription_OV_color}"/>
+                                    <Setter Property="Foreground"  Value="Black"/>
+                                    <Setter Property="BorderBrush" Value="Blue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Освещенность при общем освещении, лк" Binding="{Binding Osveshennost_pro_obshem_osvech, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" Value="{Binding Osveshennost_pro_obshem_osvech_color}"/>
+                            <Style.Triggers>
+                                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{Binding Osveshennost_pro_obshem_osvech_color}"/>
+                                    <Setter Property="Foreground"  Value="Black"/>
+                                    <Setter Property="BorderBrush" Value="Blue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Группа по электробезопасности" Binding="{Binding Group_el_bez, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" Value="{Binding Group_el_bez_color}"/>
+                            <Style.Triggers>
+                                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{Binding Group_el_bez_color}"/>
+                                    <Setter Property="Foreground"  Value="Black"/>
+                                    <Setter Property="BorderBrush" Value="Blue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Примечание ЭОМ" Binding="{Binding Discription_EOM, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" Value="{Binding Discription_EOM_color}"/>
+                            <Style.Triggers>
+                                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{Binding Discription_EOM_color}"/>
+                                    <Setter Property="Foreground"  Value="Black"/>
+                                    <Setter Property="BorderBrush" Value="Blue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Примечание АР" Binding="{Binding Discription_AR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" Value="{Binding Discription_AR_color}"/>
+                            <Style.Triggers>
+                                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{Binding Discription_AR_color}"/>
+                                    <Setter Property="Foreground"  Value="Black"/>
+                                    <Setter Property="BorderBrush" Value="Blue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Оборудование ВК" Binding="{Binding Equipment_VK, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" Value="{Binding Equipment_VK_color}"/>
+                            <Style.Triggers>
+                                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{Binding Equipment_VK_color}"/>
+                                    <Setter Property="Foreground"  Value="Black"/>
+                                    <Setter Property="BorderBrush" Value="Blue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Примечание СС" Binding="{Binding Discription_SS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" Value="{Binding Discription_SS_color}"/>
+                            <Style.Triggers>
+                                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{Binding Discription_SS_color}"/>
+                                    <Setter Property="Foreground"  Value="Black"/>
+                                    <Setter Property="BorderBrush" Value="Blue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Примечание АК, АТХ" Binding="{Binding Discription_AK_ATH, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" Value="{Binding Discription_AK_ATH_color}"/>
+                            <Style.Triggers>
+                                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{Binding Discription_AK_ATH_color}"/>
+                                    <Setter Property="Foreground"  Value="Black"/>
+                                    <Setter Property="BorderBrush" Value="Blue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Примечание ГСВ" Binding="{Binding Discription_GSV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" Value="{Binding Discription_GSV_color}"/>
+                            <Style.Triggers>
+                                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{Binding Discription_GSV_color}"/>
+                                    <Setter Property="Foreground"  Value="Black"/>
+                                    <Setter Property="BorderBrush" Value="Blue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Примечание ХС" Binding="{Binding Discription_HS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" Value="{Binding Discription_HS_color}"/>
+                            <Style.Triggers>
+                                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{Binding Discription_HS_color}"/>
+                                    <Setter Property="Foreground"  Value="Black"/>
+                                    <Setter Property="BorderBrush" Value="Blue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+
             </DataGrid.Columns>
         </DataGrid>
 

@@ -16,7 +16,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
     class RoomsPropertiesViewModel : ViewModel
     {
         //MainDbContext context = new MainDbContext();
-        RoomsDbContext roomsContext = new RoomsDbContext();
+        public static RoomsDbContext roomsContext = new RoomsDbContext();
         public RoomsPropertiesViewModel()
         {
             Categories = roomsContext.GetCategories();

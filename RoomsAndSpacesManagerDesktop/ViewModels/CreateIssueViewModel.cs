@@ -48,17 +48,17 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
 
         #region Имена новых проекта и здания
         private string newProjectName;
-        public string NewProjectName 
-        { 
-            get => newProjectName; 
-            set => Set(ref newProjectName, value); 
+        public string NewProjectName
+        {
+            get => newProjectName;
+            set => Set(ref newProjectName, value);
         }
 
         private string newBuildingName;
-        public string NewBuildingName 
-        { 
-            get => newBuildingName; 
-            set => Set(ref newBuildingName, value); 
+        public string NewBuildingName
+        {
+            get => newBuildingName;
+            set => Set(ref newBuildingName, value);
         }
         #endregion
 
@@ -265,12 +265,37 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             set
             {
                 selectedRoomName = value;
-                SelectedRoom.RoomNameId = SelectedRoomName.Id;
+                AddRoomInfo();
                 selectedRoomName = null;
             }
         }
 
-
+        private void AddRoomInfo()
+        {
+            SelectedRoom.RoomNameId = SelectedRoomName.Id;
+            SelectedRoom.Min_area = SelectedRoomName.Min_area;
+            SelectedRoom.Class_chistoti_GMP = SelectedRoomName.Class_chistoti_GMP;
+            SelectedRoom.Class_chistoti_SanPin = SelectedRoomName.Class_chistoti_SanPin;
+            SelectedRoom.Class_chistoti_SP_158 = SelectedRoomName.Class_chistoti_SP_158;
+            SelectedRoom.T_calc = SelectedRoomName.T_calc;
+            SelectedRoom.T_max = SelectedRoomName.T_max;
+            SelectedRoom.T_min = SelectedRoomName.T_min;
+            SelectedRoom.Pritok = SelectedRoomName.Pritok;
+            SelectedRoom.Vityazhka = SelectedRoomName.Vityazhka;
+            SelectedRoom.Ot_vlazhnost = SelectedRoomName.Ot_vlazhnost;
+            SelectedRoom.KEO_est_osv = SelectedRoomName.KEO_est_osv;
+            SelectedRoom.KEO_sovm_osv = SelectedRoomName.KEO_sovm_osv;
+            SelectedRoom.Discription_OV = SelectedRoomName.Discription_OV;
+            SelectedRoom.Osveshennost_pro_obshem_osvech = SelectedRoomName.Osveshennost_pro_obshem_osvech;
+            SelectedRoom.Group_el_bez = SelectedRoomName.Group_el_bez;
+            SelectedRoom.Discription_EOM = SelectedRoomName.Discription_EOM;
+            SelectedRoom.Discription_AR = SelectedRoomName.Discription_AR;
+            SelectedRoom.Equipment_VK = SelectedRoomName.Equipment_VK;
+            SelectedRoom.Discription_SS = SelectedRoomName.Discription_SS;
+            SelectedRoom.Discription_AK_ATH = SelectedRoomName.Discription_AK_ATH;
+            SelectedRoom.Discription_GSV = SelectedRoomName.Discription_GSV;
+            SelectedRoom.Discription_HS = SelectedRoomName.Discription_HS;
+        }
 
         #endregion
 
@@ -286,11 +311,11 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         {
             if (p != null)
             {
-                roomsNamesList = roomsContext.GetRoomNames(p as SubCategoryDto);
+                roomsNamesList = RoomsPropertiesViewModel.roomsContext.GetRoomNames(p as SubCategoryDto);
                 RoomsNames = CollectionViewSource.GetDefaultView(roomsNamesList);
                 RoomsNames.Refresh();
             }
-            
+
         }
         private bool CanRenderComboboxCommandExecute(object p) => true;
 
@@ -315,7 +340,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         }
 
         private static RoomDto selectedRoom;
-        
+
 
         public static RoomDto SelectedRoom
         {

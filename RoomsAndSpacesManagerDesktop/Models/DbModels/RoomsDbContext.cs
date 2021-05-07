@@ -72,10 +72,9 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
         /// <returns></returns>
         public List<RoomNameDto> GetRoomNames(SubCategoryDto subCat)
         {
-            return context.RaSM_RoomNames.Where(x => x.SubCategotyId == subCat.Id).ToList();
-        } 
+            var ddf = context.RaSM_RoomNames.Where(x => x.SubCategotyId == subCat.Id).ToList();
+            return ddf;
+        }
         #endregion
-
-
     }
 }

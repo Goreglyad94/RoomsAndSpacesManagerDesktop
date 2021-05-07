@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using RoomsAndSpacesManagerDataBase.Dto;
+using RoomsAndSpacesManagerDataBase.Dto.RoomInfrastructure;
 using RoomsAndSpacesManagerDesktop.Data.DataBaseContext;
 using RoomsAndSpacesManagerDesktop.Infrastructure.Commands;
 using RoomsAndSpacesManagerDesktop.Models.CsvModels;
@@ -23,14 +24,16 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
     {
         #region филды
         ProjectsDbContext projContext = new ProjectsDbContext();
-        List<RoomDto> roomDtos; 
+        List<RoomDto> roomDtos;
+        RoomsDbContext roomsContext = new RoomsDbContext();
+        List<RoomNameDto> roomsNamesList;
         #endregion
 
         public CreateIssueViewModel()
         {
             //context.DB();
             Projects = projContext.GetProjects();
-
+            Categories = roomsContext.GetCategories();
 
             #region Команды
             PushToDbCommand = new RelayCommand(OnPushToDbCommandExecutde, CanPushToDbCommandExecute);
@@ -38,16 +41,26 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             AddNewProjectCommand = new RelayCommand(OnAddNewProjectCommandExecutde, CanAddNewProjectCommandExecute);
             AddNewBuildingCommand = new RelayCommand(OnAddNewBuildingCommandExecutde, CanAddNewBuildingCommandExecute);
             DeleteCommand = new RelayCommand(OnDeleteCommandExecutde, CanDeleteCommandExecute);
+            RenderComboboxCommand = new RelayCommand(OnRenderComboboxCommandExecutde, CanRenderComboboxCommandExecute);
             #endregion
         }
         /*Создание нового проекта и здания~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
         #region Имена новых проекта и здания
-        public string NewProjectName { get; set; }
-        public string NewBuildingName { get; set; }
-        #endregion
+        private string newProjectName;
+        public string NewProjectName 
+        { 
+            get => newProjectName; 
+            set => Set(ref newProjectName, value); 
+        }
 
-        
+        private string newBuildingName;
+        public string NewBuildingName 
+        { 
+            get => newBuildingName; 
+            set => Set(ref newBuildingName, value); 
+        }
+        #endregion
 
         #region СелектедПроджект для добавления новых проектов
         private ProjectDto selectedProjectForAdd;
@@ -61,8 +74,6 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             }
         }
         #endregion
-
-
 
         /*Верхняя панель. Список проектов и зданий~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -82,8 +93,16 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             set
             {
                 selectedProject = value;
-                if (SelectedProject.Buildings != null)
-                    Buildings = projContext.GetModels(SelectedProject);
+                if (SelectedProject != null)
+                {
+                    if (SelectedProject.Buildings != null)
+                        Buildings = projContext.GetModels(SelectedProject);
+                }
+                else
+                {
+                    Buildings = new List<BuildingDto>();
+                }
+
             }
         }
         #endregion
@@ -97,6 +116,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                 Name = NewProjectName
             });
             Projects = projContext.GetProjects();
+            NewProjectName = string.Empty;
             if (Buildings != null && Buildings.Count != 0)
             {
                 Buildings.Clear();
@@ -111,18 +131,22 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         public ICommand AddNewBuildingCommand { get; set; }
         private void OnAddNewBuildingCommandExecutde(object p)
         {
-            projContext.AddNewBuilding(new BuildingDto()
+            if (p != null)
             {
-                ProjectId = SelectedProject.Id,
-                Name = NewBuildingName
-            });
+                projContext.AddNewBuilding(new BuildingDto()
+                {
+                    ProjectId = (p as ProjectDto).Id,
+                    Name = NewBuildingName
+                });
+                Buildings = projContext.GetModels(p as ProjectDto);
+            }
+            NewBuildingName = string.Empty;
 
-            Buildings = projContext.GetModels(SelectedProject);
         }
         private bool CanAddNewBuildingCommandExecute(object p) => true;
         #endregion
 
-        #region Комманда
+        #region Комманда удаления проектов и зданий
         public ICommand DeleteCommand { get; set; }
         private void OnDeleteCommandExecutde(object p)
         {
@@ -136,7 +160,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                 projContext.RemoveBuilding(p as BuildingDto);
                 Buildings = projContext.GetModels(SelectedProject);
             }
-            
+
         }
         private bool CanDeleteCommandExecute(object p) => true;
         #endregion
@@ -155,7 +179,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         public BuildingDto SelectedBuilding
         {
             get { return selectedBuilding; }
-            set 
+            set
             {
                 selectedBuilding = value;
                 if (SelectedBuilding != null)
@@ -164,16 +188,127 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                     Rooms = CollectionViewSource.GetDefaultView(roomDtos);
                     Rooms.Refresh();
                 }
-                    
+
                 else
                     Rooms = null;
             }
         }
         #endregion
 
-        /*DataGrid помещений~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+        /*Верхняя панель. Список категорий~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+        #region Список категорий и подкатегорий
+
+        #region Combobox - Список категорий
+        private List<CategoryDto> categories;
+        public List<CategoryDto> Categories
+        {
+            get { return categories; }
+            set { categories = value; }
+        }
+
+        private CategoryDto selectedCategoties;
+        /// <summary>
+        /// Выбранная категория помещений
+        /// </summary>
+        public CategoryDto SelectedCategoties
+        {
+            get { return selectedCategoties; }
+            set
+            {
+                Set(ref selectedCategoties, value);
+                SubCategories = roomsContext.GetSubCategotyes(SelectedCategoties);
+            }
+        }
+        #endregion
+
+        #region Combobox - список подкатегорий
+
+        private List<SubCategoryDto> subCategories;
+        public List<SubCategoryDto> SubCategories
+        {
+            get { return subCategories; }
+            set
+            {
+                Set(ref subCategories, value);
+            }
+        }
 
 
+        private SubCategoryDto selectedSubCategoties;
+        /// <summary>
+        /// Выбранная подкатегория помещений
+        /// </summary>
+        public SubCategoryDto SelectedSubCategoties
+        {
+            get { return selectedSubCategoties; }
+            set
+            {
+                selectedSubCategoties = value;
+            }
+        }
+
+        #endregion
+
+        #region Список исходных помещений
+        private ICollectionView roomsNames;
+        public ICollectionView RoomsNames
+        {
+            get => roomsNames;
+            set => Set(ref roomsNames, value);
+        }
+
+        private RoomNameDto selectedRoomName;
+
+        public RoomNameDto SelectedRoomName
+        {
+            get { return selectedRoomName; }
+            set
+            {
+                selectedRoomName = value;
+                SelectedRoom.Name = SelectedRoomName.Name;
+                SelectedRoom.RoomNameId = SelectedRoomName.Id;
+                selectedRoomName = null;
+            }
+        }
+
+
+
+        #endregion
+
+        #region Комманда при отрисовке комбобокса
+        private ICommand renderComboboxCommand;
+        public ICommand RenderComboboxCommand
+        {
+            get => renderComboboxCommand;
+            set => renderComboboxCommand = value;
+        }
+
+        private void OnRenderComboboxCommandExecutde(object p)
+        {
+            if (p != null)
+            {
+                roomsNamesList = roomsContext.GetRoomNames(p as SubCategoryDto);
+                RoomsNames = CollectionViewSource.GetDefaultView(roomsNamesList);
+                RoomsNames.Refresh();
+            }
+            
+        }
+        private bool CanRenderComboboxCommandExecute(object p) => true;
+
+        #endregion
+
+        #endregion
+
+        /*Верхняя панель. Список проектов и зданий~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+
+
+
+
+
+
+        #region Список помещений. Выбранное помещение
         private ICollectionView rooms;
         public ICollectionView Rooms
         {
@@ -181,32 +316,17 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             set => Set(ref rooms, value);
         }
 
-
-
-
-
-        #region Список помещений. Выбранное помещение
-        //private ObservableCollection<RoomDto> rooms = new ObservableCollection<RoomDto>();
-        ///// <summary> Привязка DataGrid к коллекции Rooms </summary>
-        //public ObservableCollection<RoomDto> Rooms 
-        //{ 
-        //    get => rooms; 
-        //    set => Set(ref rooms,value); 
-        //}
-
-        
-        //private RoomDto selectedRoom;
+        private static RoomDto selectedRoom;
         
 
-        ///// <summary> SelectedItem DataGrid Rooms </summary>
-        //public RoomDto SelectedRoom
-        //{
-        //    get => selectedRoom;
-        //    set
-        //    {
-        //        selectedRoom = value;
-        //    }
-        //}
+        public static RoomDto SelectedRoom
+        {
+            get => selectedRoom;
+            set
+            {
+                selectedRoom = value;
+            }
+        }
 
         #endregion
 
@@ -229,9 +349,12 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                 });
                 Rooms = CollectionViewSource.GetDefaultView(roomDtos);
                 Rooms.Refresh();
+
+                //RoomsNames = CollectionViewSource.GetDefaultView(roomsNamesList);
+                //RoomsNames.Refresh();
             }
         }
-        private bool CanAddNewRowCommandExecute(object p) 
+        private bool CanAddNewRowCommandExecute(object p)
         {
             if (SelectedBuilding == null) return false;
             else return true;
@@ -247,7 +370,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             roomDtos = projContext.GetRooms(SelectedBuilding);
             Rooms = CollectionViewSource.GetDefaultView(roomDtos);
             Rooms.Refresh();
-
+            MessageBox.Show("Данные успешно загруженны в базу данных", "Статус");
         }
         private bool CanPushToDbCommandExecute(object p) => true;
         #endregion

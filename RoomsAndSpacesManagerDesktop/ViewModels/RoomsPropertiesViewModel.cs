@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace RoomsAndSpacesManagerDesktop.ViewModels
@@ -44,6 +45,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             {
                 Set(ref selectedCategoties, value);
                 SubCategories = roomsContext.GetSubCategotyes(SelectedCategoties);
+                Rooms = new List<RoomNameDto>();
             }
         }
         #endregion
@@ -94,7 +96,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         private void OnPushToDbCommandExecutde(object p)
         {
             roomsContext.SaveChanges();
-            Status = "Изменения успешно сохранены";
+            MessageBox.Show("Данные успешно загруженны в базу данных", "Статус");
         }
         private bool CanPushToDbCommandExecute(object p) => true;
         #endregion

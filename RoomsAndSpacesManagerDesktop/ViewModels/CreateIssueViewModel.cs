@@ -188,7 +188,6 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                     Rooms = CollectionViewSource.GetDefaultView(roomDtos);
                     Rooms.Refresh();
                 }
-
                 else
                     Rooms = null;
             }
@@ -266,7 +265,6 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             set
             {
                 selectedRoomName = value;
-                SelectedRoom.Name = SelectedRoomName.Name;
                 SelectedRoom.RoomNameId = SelectedRoomName.Id;
                 selectedRoomName = null;
             }

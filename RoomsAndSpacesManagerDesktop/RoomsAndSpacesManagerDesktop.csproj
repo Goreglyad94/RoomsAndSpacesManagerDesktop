@@ -185,6 +185,10 @@
     <Compile Include="Migrations\202105070822032_AddRoomNameId.designer.cs">
       <DependentUpon>202105070822032_AddRoomNameId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105071121041_AddInIssueRoomNamesProp.cs" />
+    <Compile Include="Migrations\202105071121041_AddInIssueRoomNamesProp.designer.cs">
+      <DependentUpon>202105071121041_AddInIssueRoomNamesProp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CsvModels\MainCsvModel.cs" />
     <Compile Include="Models\CsvModels\TestScv.cs" />
@@ -267,6 +271,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105070822032_AddRoomNameId.resx">
       <DependentUpon>202105070822032_AddRoomNameId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105071121041_AddInIssueRoomNamesProp.resx">
+      <DependentUpon>202105071121041_AddInIssueRoomNamesProp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

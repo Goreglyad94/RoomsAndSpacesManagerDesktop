@@ -25,11 +25,11 @@
 
             <DockPanel Grid.Row="0" Grid.Column="0">
                 <TextBlock Text="Категория: " DockPanel.Dock="Left"  VerticalAlignment="Center"/>
-                <ComboBox ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategoties}" DockPanel.Dock="Left" Height="25" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <ComboBox ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategoties}" SelectedIndex="0" DockPanel.Dock="Left" Height="25" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             </DockPanel>
 
             <DockPanel Grid.Row="0" Grid.Column="1">
-                <TextBlock Text="Подкатегория: " DockPanel.Dock="Left"  VerticalAlignment="Center"/>
+                <TextBlock Text="Подкатегория: "  DockPanel.Dock="Left"  VerticalAlignment="Center"/>
                 <ComboBox ItemsSource="{Binding SubCategories}" SelectedItem="{Binding SelectedSubCategoties}" DockPanel.Dock="Left" Width="150" HorizontalAlignment="Left" Height="25" VerticalAlignment="Center"/>
             </DockPanel>
 
@@ -40,10 +40,35 @@
                           Grid.Row="1" Grid.ColumnSpan="3"
                           SelectedItem="{Binding SelectedRoom}" 
                           ItemsSource="{Binding Rooms, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                          AutoGenerateColumns="True">
+                          AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Наименвоание помещений" Binding="{Binding Name}" Width="auto"/>
+                    <DataGridTextColumn Header="Мин. площадь" Binding="{Binding Min_area}" Width="70"/>
+                    <DataGridTextColumn Header="Класс чистоты по СанПиН" Binding="{Binding Class_chistoti_SanPin}"/>
+                    <DataGridTextColumn Header="Класс чистоты по СП 158" Binding="{Binding Class_chistoti_SP_158}"/>
+                    <DataGridTextColumn Header="Класс чистоты по GMP" Binding="{Binding Class_chistoti_GMP}"/>
+                    <DataGridTextColumn Header="Температура расчётная, °C" Binding="{Binding T_calc}"/>
+                    <DataGridTextColumn Header="Температура мин, °C" Binding="{Binding T_min}"/>
+                    <DataGridTextColumn Header="Температура макс, °C" Binding="{Binding T_max}"/>
+                    <DataGridTextColumn Header="Приток" Binding="{Binding Pritok}"/>
+                    <DataGridTextColumn Header="Вытяжка" Binding="{Binding Vityazhka}"/>
+                    <DataGridTextColumn Header="Относительная влажность,%" Binding="{Binding Ot_vlazhnost}"/>
+                    <DataGridTextColumn Header="КЕО при бок. ест. осв." Binding="{Binding KEO_est_osv}"/>
+                    <DataGridTextColumn Header="КЕО при бок. совм. осв." Binding="{Binding KEO_sovm_osv}"/>
+                    <DataGridTextColumn Header="Примечание ОВ" Binding="{Binding Discription_OV}"/>
+                    <DataGridTextColumn Header="Освещенность при общем освещении, лк" Binding="{Binding Osveshennost_pro_obshem_osvech}"/>
+                    <DataGridTextColumn Header="Группа по электробезопасности" Binding="{Binding Group_el_bez}"/>
+                    <DataGridTextColumn Header="Примечание ЭОМ" Binding="{Binding Discription_EOM}"/>
+                    <DataGridTextColumn Header="Примечание АР" Binding="{Binding Discription_AR}"/>
+                    <DataGridTextColumn Header="Оборудование ВК" Binding="{Binding Equipment_VK}"/>
+                    <DataGridTextColumn Header="Примечание СС" Binding="{Binding Discription_SS}"/>
+                    <DataGridTextColumn Header="Примечание АК, АТХ" Binding="{Binding Discription_AK_ATH}"/>
+                    <DataGridTextColumn Header="Примечание ГСВ" Binding="{Binding Discription_GSV}"/>
+                    <DataGridTextColumn Header="Примечание ХС" Binding="{Binding Discription_HS}"/>
+                </DataGrid.Columns>
             </DataGrid>
 
-            <Button Content="Add new row" Command="{Binding AddNewRowCommand}" HorizontalAlignment="Left" Margin="10 0 0 0" Grid.Column="0" Grid.Row="2" Width="80" Height="25"/>
+            <!--<Button Content="Add new row" Command="{Binding AddNewRowCommand}" HorizontalAlignment="Left" Margin="10 0 0 0" Grid.Column="0" Grid.Row="2" Width="80" Height="25"/>-->
 
             <DockPanel Grid.Row="2" Grid.Column="2">
                 <Button Command="{Binding PushToDbCommand}" Content="Push" Width="50" Height="25" DockPanel.Dock="Right" Margin="0 0 10 0"/>

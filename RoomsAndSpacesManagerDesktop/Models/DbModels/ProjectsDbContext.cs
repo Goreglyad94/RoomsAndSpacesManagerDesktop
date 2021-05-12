@@ -74,6 +74,12 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
                 return null;
         }
 
+        public void RemoveRoom(RoomDto room)
+        {
+            context.RaSM_Rooms.Remove(room);
+            context.SaveChanges();
+        }
+
         public void SaveChanges()
         {
             context.SaveChanges();

@@ -140,6 +140,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Data\DataBaseContext\RoomAndSpacesDbContext.cs" />
+    <Compile Include="Infrastructure\Behaviors\DataGridCellColorBehavior.cs" />
     <Compile Include="Infrastructure\Commands\Base\Command.cs" />
     <Compile Include="Infrastructure\Commands\RelayCommand.cs" />
     <Compile Include="MainWindow.xaml.cs">

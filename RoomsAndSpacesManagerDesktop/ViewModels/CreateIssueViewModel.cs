@@ -37,10 +37,14 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
 
             #region Команды
             PushToDbCommand = new RelayCommand(OnPushToDbCommandExecutde, CanPushToDbCommandExecute);
+            PullFromDbCommand = new RelayCommand(OnPullFromDbCommandExecutde, CanPullFromDbCommandExecute);
             AddNewRowCommand = new RelayCommand(OnAddNewRowCommandExecutde, CanAddNewRowCommandExecute);
             AddNewProjectCommand = new RelayCommand(OnAddNewProjectCommandExecutde, CanAddNewProjectCommandExecute);
             AddNewBuildingCommand = new RelayCommand(OnAddNewBuildingCommandExecutde, CanAddNewBuildingCommandExecute);
             DeleteCommand = new RelayCommand(OnDeleteCommandExecutde, CanDeleteCommandExecute);
+            DeleteIssueCommand = new RelayCommand(OnDeleteIssueCommandExecutde, CanDeleteIssueCommandExecute);
+            SetDefaultValueCommand = new RelayCommand(OnSetDefaultValueCommandExecutde, CanSetDefaultValueCommandExecute);
+
             RenderComboboxCommand = new RelayCommand(OnRenderComboboxCommandExecutde, CanRenderComboboxCommandExecute);
             #endregion
         }
@@ -143,7 +147,14 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             NewBuildingName = string.Empty;
 
         }
-        private bool CanAddNewBuildingCommandExecute(object p) => true;
+        private bool CanAddNewBuildingCommandExecute(object p)
+        {
+            if (p != null)
+            {
+                return true;
+            }
+            else { return false; }
+        }
         #endregion
 
         #region Комманда удаления проектов и зданий
@@ -323,13 +334,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
 
         #endregion
 
-        /*Верхняя панель. Список проектов и зданий~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
-
-
-
-
-
+        /*Центральная панель. Список проектов и зданий~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
         #region Список помещений. Выбранное помещение
         private ICollectionView rooms;
@@ -340,8 +345,6 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         }
 
         private static RoomDto selectedRoom;
-
-
         public static RoomDto SelectedRoom
         {
             get => selectedRoom;
@@ -353,6 +356,71 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
 
         #endregion
 
+
+        #region Комманд. Удаление строк из списка
+
+        public ICommand DeleteIssueCommand { get; set; }
+
+        private void OnDeleteIssueCommandExecutde(object p)
+        {
+
+            if ((p as RoomDto).Id == default)
+            {
+                roomDtos.Remove(p as RoomDto);
+                Rooms = CollectionViewSource.GetDefaultView(roomDtos);
+                Rooms.Refresh();
+            }
+            else
+            {
+                projContext.RemoveRoom(p as RoomDto);
+
+                roomDtos = projContext.GetRooms(SelectedBuilding);
+                Rooms = CollectionViewSource.GetDefaultView(roomDtos);
+                Rooms.Refresh();
+            }
+            
+        }
+        private bool CanDeleteIssueCommandExecute(object p) => true;
+
+        #endregion
+
+
+        #region MyRegion
+        public ICommand SetDefaultValueCommand { get; set; }
+
+        private void OnSetDefaultValueCommandExecutde(object p)
+        {
+            RoomDto room = p as RoomDto;
+
+            room.RoomNameId = room.RoomName.Id;
+            room.Min_area = room.RoomName.Min_area;
+            room.Class_chistoti_GMP = room.RoomName.Class_chistoti_GMP;
+            room.Class_chistoti_SanPin = room.RoomName.Class_chistoti_SanPin;
+            room.Class_chistoti_SP_158 = room.RoomName.Class_chistoti_SP_158;
+            room.T_calc = room.RoomName.T_calc;
+            room.T_max = room.RoomName.T_max;
+            room.T_min = room.RoomName.T_min;
+            room.Pritok = room.RoomName.Pritok;
+            room.Vityazhka = room.RoomName.Vityazhka;
+            room.Ot_vlazhnost = room.RoomName.Ot_vlazhnost;
+            room.KEO_est_osv = room.RoomName.KEO_est_osv;
+            room.KEO_sovm_osv = room.RoomName.KEO_sovm_osv;
+            room.Discription_OV = room.RoomName.Discription_OV;
+            room.Osveshennost_pro_obshem_osvech = room.RoomName.Osveshennost_pro_obshem_osvech;
+            room.Group_el_bez = room.RoomName.Group_el_bez;
+            room.Discription_EOM = room.RoomName.Discription_EOM;
+            room.Discription_AR = room.RoomName.Discription_AR;
+            room.Equipment_VK = room.RoomName.Equipment_VK;
+            room.Discription_SS = room.RoomName.Discription_SS;
+            room.Discription_AK_ATH = room.RoomName.Discription_AK_ATH;
+            room.Discription_GSV = room.RoomName.Discription_GSV;
+            room.Discription_HS = room.RoomName.Discription_HS;
+
+            Rooms = CollectionViewSource.GetDefaultView(roomDtos);
+            //Rooms.Refresh();
+        }
+        private bool CanSetDefaultValueCommandExecute(object p) => true;
+        #endregion
 
         /*Нижняя панель. Интерфейс добавления строки и синхронизации с БД~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
         #region Добавить новую строку комнаты с Айдишником здания
@@ -396,6 +464,17 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             MessageBox.Show("Данные успешно загруженны в базу данных", "Статус");
         }
         private bool CanPushToDbCommandExecute(object p) => true;
+        #endregion
+
+
+
+        #region Комманд. Закинуть обновления пространств в БД
+        public ICommand PullFromDbCommand { get; set; }
+        private void OnPullFromDbCommandExecutde(object p)
+        {
+            //Пока нет реализации
+        }
+        private bool CanPullFromDbCommandExecute(object p) => false;
         #endregion
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     }

@@ -25,7 +25,7 @@
 
             <DockPanel Grid.Row="0" Grid.Column="0">
                 <TextBlock Text="Категория: " DockPanel.Dock="Left"  VerticalAlignment="Center"/>
-                <ComboBox ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategoties}" SelectedIndex="0" DockPanel.Dock="Left" Height="25" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <ComboBox ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategoties}" DockPanel.Dock="Left" Height="25" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             </DockPanel>
 
             <DockPanel Grid.Row="0" Grid.Column="1">

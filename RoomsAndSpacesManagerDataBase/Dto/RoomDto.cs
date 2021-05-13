@@ -508,6 +508,11 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                 }
             }
         }
+
+        public string Categoty_pizharoopasnosti { get; set; }
+        public string Rab_mesta_posetiteli { get; set; }
+        public string Nagruzki_na_perekririe { get; set; }
+        public string El_Nagruzka { get; set; }
         #endregion
 
         public int ArRoomId { get; set; }

@@ -194,6 +194,10 @@
     <Compile Include="Migrations\202105071148576_DeleteNamfeFromDbIssues.designer.cs">
       <DependentUpon>202105071148576_DeleteNamfeFromDbIssues.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105130908344_dd.cs" />
+    <Compile Include="Migrations\202105130908344_dd.designer.cs">
+      <DependentUpon>202105130908344_dd.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CsvModels\MainCsvModel.cs" />
     <Compile Include="Models\CsvModels\TestScv.cs" />
@@ -282,6 +286,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105071148576_DeleteNamfeFromDbIssues.resx">
       <DependentUpon>202105071148576_DeleteNamfeFromDbIssues.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105130908344_dd.resx">
+      <DependentUpon>202105130908344_dd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

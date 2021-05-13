@@ -94,41 +94,6 @@
 
 
         <DockPanel Grid.Row="3" Grid.ColumnSpan="3">
-            <DockPanel DockPanel.Dock="Left"  Margin="0 15 0 0">
-                <DockPanel DockPanel.Dock="Top" Margin="2 5 2 5">
-                    <CheckBox VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
-                    <TextBlock Text="АР" VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
-                </DockPanel>
-                <DockPanel DockPanel.Dock="Top" Margin="2 5 2 5">
-                    <CheckBox VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
-                    <TextBlock Text="ВК" VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
-                </DockPanel>
-                <DockPanel DockPanel.Dock="Top" Margin="2 5 2 5">
-                    <CheckBox VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
-                    <TextBlock Text="МГТГ" VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
-                </DockPanel>
-                <DockPanel DockPanel.Dock="Top" Margin="2 5 2 5">
-                    <CheckBox VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
-                    <TextBlock Text="КР" VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
-                </DockPanel>
-                <DockPanel DockPanel.Dock="Top" Margin="2 5 2 5">
-                    <CheckBox VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
-                    <TextBlock Text="ОВ" VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
-                </DockPanel>
-                <DockPanel DockPanel.Dock="Top" Margin="2 5 2 5">
-                    <CheckBox VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
-                    <TextBlock Text="ЭОМ" VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
-                </DockPanel>
-                <DockPanel DockPanel.Dock="Top" Margin="2 5 2 5">
-                    <CheckBox VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
-                    <TextBlock Text="СС" VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
-                </DockPanel>
-                <DockPanel DockPanel.Dock="Top" Margin="2 5 2 5" VerticalAlignment="Top">
-                    <CheckBox VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
-                    <TextBlock Text="ХС" VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
-                </DockPanel>
-            </DockPanel>
-
             <DataGrid DockPanel.Dock="Right" SelectionMode="Extended"  
                           CanUserAddRows="False"
                           FrozenColumnCount ="4"

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RoomsAndSpacesManagerDesktop.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,16 @@ namespace RoomsAndSpacesManagerDesktop.Views.Windows
         public MainWindow()
         {
             InitializeComponent();
+            CreateIssueViewModel createIssueViewModel = new CreateIssueViewModel();
+            CreateIssue.DataContext = createIssueViewModel;
+            ArTub.DataContext = createIssueViewModel;
+            VkTab.DataContext = createIssueViewModel;
+            MgtgTab.DataContext = createIssueViewModel;
+            KrTab.DataContext = createIssueViewModel;
+            OvTab.DataContext = createIssueViewModel;
+            EomTab.DataContext = createIssueViewModel;
+            SsTab.DataContext = createIssueViewModel;
+            HsTab.DataContext = createIssueViewModel;
         }
     }
 }

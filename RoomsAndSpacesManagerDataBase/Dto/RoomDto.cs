@@ -90,6 +90,10 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                 
             }
         }
+
+        public int? Count { get; set; }
+        public int? Summary_Area { get; set; }
+
         public string Class_chistoti_SanPin 
         { 
             get => class_chistoti_SanPin;

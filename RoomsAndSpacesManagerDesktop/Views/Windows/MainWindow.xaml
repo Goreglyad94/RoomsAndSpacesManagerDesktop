@@ -8,15 +8,38 @@
         xmlns:local="clr-namespace:RoomsAndSpacesManagerDesktop.Views.Windows"
         xmlns:vm="clr-namespace:RoomsAndSpacesManagerDesktop.ViewModels"
         xmlns:ucs="clr-namespace:RoomsAndSpacesManagerDesktop.Views.UserControls"
+        xmlns:ucsSub="clr-namespace:RoomsAndSpacesManagerDesktop.Views.UserControls.SubTabs"
         mc:Ignorable="d"
         Title="Window1" Height="600" Width="1200">
-    <Window.DataContext>
-        <vm:CreateIssueViewModel/>
-    </Window.DataContext>
     <TabControl>
         <TabItem Header="Сформировать задание" IsSelected="True">
-            <ucs:CreateIssueMainWindow/>
+            <ucs:CreateIssueMainWindow x:Name="CreateIssue"/>
         </TabItem>
+        <TabItem Header="АР" IsSelected="True">
+            <ucsSub:ArTabUserControl x:Name="ArTub"/>
+        </TabItem>
+        <TabItem Header="ВК" IsSelected="True">
+            <ucsSub:VkTabUserControl x:Name="VkTab"/>
+        </TabItem>
+        <TabItem Header="МГТГ" IsSelected="True">
+            <ucsSub:MgtgTubUserControl x:Name="MgtgTab"/>
+        </TabItem>
+        <TabItem Header="КР" IsSelected="True">
+            <ucsSub:KrTabUserControl x:Name="KrTab"/>
+        </TabItem>
+        <TabItem Header="ОВ" IsSelected="True">
+            <ucsSub:OvTabUserControl x:Name="OvTab"/>
+        </TabItem>
+        <TabItem Header="ЭОМ" IsSelected="True">
+            <ucsSub:EomTabUserControl x:Name="EomTab"/>
+        </TabItem>
+        <TabItem Header="СС" IsSelected="True">
+            <ucsSub:SsTabUserControl x:Name="SsTab"/>
+        </TabItem>
+        <TabItem Header="ХС" IsSelected="True">
+            <ucsSub:HsTabUserControl x:Name="HsTab"/>
+        </TabItem>
+        
         <TabItem Header="Исходные данные по помещениям">
             <ucs:RoomsPropertiesuserControl/>
         </TabItem>

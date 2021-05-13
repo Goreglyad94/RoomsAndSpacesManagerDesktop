@@ -98,6 +98,8 @@
     <Reference Include="System.Data">
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
@@ -198,6 +200,10 @@
     <Compile Include="Migrations\202105130908344_dd.designer.cs">
       <DependentUpon>202105130908344_dd.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105131110353_AddSummuryArea.cs" />
+    <Compile Include="Migrations\202105131110353_AddSummuryArea.designer.cs">
+      <DependentUpon>202105131110353_AddSummuryArea.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CsvModels\MainCsvModel.cs" />
     <Compile Include="Models\CsvModels\TestScv.cs" />
@@ -212,6 +218,30 @@
     </Compile>
     <Compile Include="Views\UserControls\RoomsPropertiesuserControl.xaml.cs">
       <DependentUpon>RoomsPropertiesuserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\SubTabs\ArTabUserControl.xaml.cs">
+      <DependentUpon>ArTabUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\SubTabs\EomTabUserControl.xaml.cs">
+      <DependentUpon>EomTabUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\SubTabs\HsTabUserControl.xaml.cs">
+      <DependentUpon>HsTabUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\SubTabs\KrTabUserControl.xaml.cs">
+      <DependentUpon>KrTabUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\SubTabs\MgtgTubUserControl.xaml.cs">
+      <DependentUpon>MgtgTubUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\SubTabs\OvTabUserControl.xaml.cs">
+      <DependentUpon>OvTabUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\SubTabs\SsTabUserControl.xaml.cs">
+      <DependentUpon>SsTabUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\SubTabs\VkTabUserControl.xaml.cs">
+      <DependentUpon>VkTabUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -229,6 +259,38 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserControls\RoomsPropertiesuserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\SubTabs\ArTabUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\SubTabs\EomTabUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\SubTabs\HsTabUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\SubTabs\KrTabUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\SubTabs\MgtgTubUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\SubTabs\OvTabUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\SubTabs\SsTabUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\SubTabs\VkTabUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -289,6 +351,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105130908344_dd.resx">
       <DependentUpon>202105130908344_dd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105131110353_AddSummuryArea.resx">
+      <DependentUpon>202105131110353_AddSummuryArea.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

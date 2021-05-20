@@ -13,10 +13,21 @@ namespace RoomAndSpacesManagerConsole
     {
         static void Main(string[] args)
         {
+            ProjectInfoToDb();
+        }
+
+        public static void RoomInfoToDb()
+        {
             CsvToDbRooms csvToDbRooms = new CsvToDbRooms();
             csvToDbRooms.AddCats();
             csvToDbRooms.GetSubCatsCsv();
             csvToDbRooms.AddRooms();
+        }
+
+        public static void ProjectInfoToDb()
+        {
+            AddInfoToDb projCont = new AddInfoToDb();
+            projCont.ProjectInfoToDB("Екатеринбург3", "ЕКА-ЦКЛ3");
         }
     }
 }

@@ -25,8 +25,6 @@
             <RowDefinition/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-
-
         <DockPanel Grid.Row="0" Grid.Column="0">
             <TextBlock Width="50" Text="Проект: " DockPanel.Dock="Left"  VerticalAlignment="Center" HorizontalAlignment="Right"/>
             <ComboBox x:Name="ProjectList" ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject}" DockPanel.Dock="Left" Height="25" Width="150" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 2 20 2">
@@ -44,7 +42,6 @@
                 </ComboBox.ItemContainerStyle>
             </ComboBox>
         </DockPanel>
-
         <DockPanel Grid.Row="0" Grid.Column="1">
             <TextBlock Width="50" Text="Модель: " DockPanel.Dock="Left"  VerticalAlignment="Center"/>
             <ComboBox ItemsSource="{Binding Buildings}" SelectedItem="{Binding SelectedBuilding}" DockPanel.Dock="Left" Width="150" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 2 20 2" Height="25">
@@ -66,34 +63,27 @@
             <TextBlock VerticalAlignment="Center" Text="Добавить новый проект/модель: "/>
             <CheckBox x:Name="chk" VerticalAlignment="Center" IsChecked="False"/>
         </DockPanel>
-
-
         <DockPanel Grid.Row="1" Grid.Column="0" Visibility="{Binding IsChecked,ElementName=chk,Converter={StaticResource b2v}}">
             <Button Command="{Binding AddNewProjectCommand}" Content="+"  Margin="50 0 0 0" Width="20" Height="20" DockPanel.Dock="Left"  VerticalAlignment="Center"/>
             <TextBox Text="{Binding NewProjectName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Left" Height="25" Width="150" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 2 20 2"/>
         </DockPanel>
-
         <DockPanel Grid.Row="1" Grid.Column="1" Visibility="{Binding IsChecked,ElementName=chk,Converter={StaticResource b2v}}">
             <Button Command="{Binding AddNewBuildingCommand}" Content="+"  Margin="65 0 0 0" Width="20" Height="20" DockPanel.Dock="Left"  VerticalAlignment="Center" CommandParameter="{Binding ElementName=ProjectList,Path=SelectedItem}"/>
             <TextBox Text="{Binding NewBuildingName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Left" Height="25" Width="150" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 2 20 2"/>
         </DockPanel>
-
-
         <DockPanel Grid.Row="2" Grid.Column="0">
             <TextBlock Text="Категория: " DockPanel.Dock="Left"  VerticalAlignment="Center"/>
             <ComboBox ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategoties}" DockPanel.Dock="Left" Height="25" Width="150" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 2 20 2"/>
         </DockPanel>
-
         <DockPanel Grid.Row="2" Grid.Column="1">
             <TextBlock Text="Подкатегория: " DockPanel.Dock="Left"  VerticalAlignment="Center"/>
             <ComboBox x:Name="SubCatsList" ItemsSource="{Binding SubCategories}" SelectedItem="{Binding SelectedSubCategoties}" DockPanel.Dock="Left" Width="150"  Height="25" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 2 20 2"/>
         </DockPanel>
-
-
         <DockPanel Grid.Row="3" Grid.ColumnSpan="3">
             <DataGrid DockPanel.Dock="Right" SelectionMode="Extended"  
                           CanUserAddRows="False"
                           FrozenColumnCount ="4"
+                          CanUserDeleteRows="False"
                           SelectedItem="{Binding SelectedRoom}" 
                           ItemsSource="{Binding Rooms, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                           AutoGenerateColumns="False">
@@ -112,7 +102,6 @@
                 </DataGrid.ItemContainerStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="30" IsReadOnly="True"/>
-
                     <DataGridTemplateColumn Header="Наименование" Width="250">
                         <DataGridTemplateColumn.CellEditingTemplate>
                             <DataTemplate>
@@ -131,11 +120,8 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-
                     <DataGridTextColumn Header="Краткое наименование" Width="100" Binding="{Binding ShortName}"/>
-
                     <DataGridTextColumn Header="Номер помещения" Width="100" Binding="{Binding RoomNumber}"/>
-
                     <DataGridTextColumn Header="Мин. площадь" Binding="{Binding Min_area, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
                         <DataGridTextColumn.CellStyle>
                             <Style TargetType="DataGridCell">
@@ -151,7 +137,7 @@
                         </DataGridTextColumn.CellStyle>
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="Кол-во" Binding="{Binding Count}"/>
-                    <DataGridTextColumn Header="Суммарная расчётная площадь" Binding="{Binding Summary_Area}"/>
+                    <DataGridTextColumn Header="Суммарная расчётная площадь" Binding="{Binding Summary_Area, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Рабочих мест/посетителей" Binding="{Binding Rab_mesta_posetiteli}"/>
                     <DataGridTextColumn Header="Категория пожароопасности" Binding="{Binding Categoty_pizharoopasnosti}"/>
                     <DataGridTextColumn Header="Класс чистоты по СанПиН" Binding="{Binding Class_chistoti_SanPin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
@@ -166,7 +152,6 @@
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
-
                         </DataGridTextColumn.CellStyle>
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="Класс чистоты по СП 158" Binding="{Binding Class_chistoti_SP_158, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
@@ -211,11 +196,6 @@
                             </Style>
                         </DataGridTextColumn.CellStyle>
                     </DataGridTextColumn>
-                    
-                    
-                    
-                    
-                    
                     <DataGridTextColumn Header="Температура расчётная, °C" Binding="{Binding T_calc, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
                         <DataGridTextColumn.CellStyle>
                             <Style TargetType="DataGridCell">
@@ -314,7 +294,6 @@
                             </Style>
                         </DataGridTextColumn.CellStyle>
                     </DataGridTextColumn>
-
                     <DataGridTextColumn Header="Оборудование ВК" Binding="{Binding Equipment_VK, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
                         <DataGridTextColumn.CellStyle>
                             <Style TargetType="DataGridCell">
@@ -329,7 +308,6 @@
                             </Style>
                         </DataGridTextColumn.CellStyle>
                     </DataGridTextColumn>
-
                     <DataGridTextColumn Header="КЕО при бок. ест. осв." Binding="{Binding KEO_est_osv, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
                         <DataGridTextColumn.CellStyle>
                             <Style TargetType="DataGridCell">
@@ -401,7 +379,6 @@
                             </Style>
                         </DataGridTextColumn.CellStyle>
                     </DataGridTextColumn>
-                    
                     <DataGridTextColumn Header="Оборудование СС" Binding="{Binding Discription_SS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
                         <DataGridTextColumn.CellStyle>
                             <Style TargetType="DataGridCell">
@@ -416,9 +393,7 @@
                             </Style>
                         </DataGridTextColumn.CellStyle>
                     </DataGridTextColumn>
-
                     <DataGridTextColumn Header="Нагрузка на перекрытие" Binding="{Binding Nagruzki_na_perekririe}"/>
-
                     <DataGridTextColumn Header="Примечание АК, АТХ" Binding="{Binding Discription_AK_ATH, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
                         <DataGridTextColumn.CellStyle>
                             <Style TargetType="DataGridCell">
@@ -461,18 +436,13 @@
                             </Style>
                         </DataGridTextColumn.CellStyle>
                     </DataGridTextColumn>
-
                 </DataGrid.Columns>
             </DataGrid>
         </DockPanel>
-
-
         <Button Content="Добавить строку" Command="{Binding AddNewRowCommand}" HorizontalAlignment="Left" Margin="10 0 0 0" Grid.Column="0" Grid.Row="4" Width="100" Height="25"/>
-
         <DockPanel Grid.Row="4" Grid.Column="2">
             <Button Command="{Binding PushToDbCommand}" Content="Отправить изменения в БД" Width="160" Height="25" DockPanel.Dock="Right" Margin="0 0 10 0"/>
             <Button Command="{Binding PullFromDbCommand}" Content="Pull" Width="50" Height="25" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"/>
         </DockPanel>
-
     </Grid>
 </UserControl>

@@ -1,6 +1,7 @@
 ﻿using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using RoomsAndSpacesManagerLib.Models.RevitModels;
 using RoomsAndSpacesManagerLib.ViewModels;
 using RoomsAndSpacesManagerLib.Views.Windows;
 using System;
@@ -19,8 +20,13 @@ namespace RoomsAndSpacesManagerLib
 
             Document doc = commandData.Application.ActiveUIDocument.Document;
 
+            SelectRoomEventHendler evHendSelectRoom = new SelectRoomEventHendler();
+            ExternalEvent ExEventSelectRoom = ExternalEvent.Create(evHendSelectRoom);
+
             MainWindow mainWindow = new MainWindow();
-            mainWindow.DataContext = new MainWindowViewModel();
+            MainWindowViewModel vm = new MainWindowViewModel();
+            vm.ApplyEventGetRoomFromRvtModel = ExEventSelectRoom;
+            mainWindow.DataContext = vm;
             mainWindow.Show();
 
             return Result.Succeeded;

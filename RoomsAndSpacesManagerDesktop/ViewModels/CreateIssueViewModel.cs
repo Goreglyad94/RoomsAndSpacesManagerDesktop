@@ -358,12 +358,9 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
 
 
         #region Комманд. Удаление строк из списка
-
         public ICommand DeleteIssueCommand { get; set; }
-
         private void OnDeleteIssueCommandExecutde(object p)
         {
-
             if ((p as RoomDto).Id == default)
             {
                 roomDtos.Remove(p as RoomDto);
@@ -377,46 +374,49 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                 roomDtos = projContext.GetRooms(SelectedBuilding);
                 Rooms = CollectionViewSource.GetDefaultView(roomDtos);
                 Rooms.Refresh();
-            }
-            
+            }   
         }
         private bool CanDeleteIssueCommandExecute(object p) => true;
 
         #endregion
-
-
-        #region MyRegion
+        #region Получить значение по умолчанию по выбранной строке
         public ICommand SetDefaultValueCommand { get; set; }
 
         private void OnSetDefaultValueCommandExecutde(object p)
         {
+            
             RoomDto room = p as RoomDto;
+            
+            if (room.Name != null)
+            {
+                room.RoomNameId = room.RoomName.Id;
+                room.Min_area = room.RoomName.Min_area;
+                room.Class_chistoti_GMP = room.RoomName.Class_chistoti_GMP;
+                room.Class_chistoti_SanPin = room.RoomName.Class_chistoti_SanPin;
+                room.Class_chistoti_SP_158 = room.RoomName.Class_chistoti_SP_158;
+                room.T_calc = room.RoomName.T_calc;
+                room.T_max = room.RoomName.T_max;
+                room.T_min = room.RoomName.T_min;
+                room.Pritok = room.RoomName.Pritok;
+                room.Vityazhka = room.RoomName.Vityazhka;
+                room.Ot_vlazhnost = room.RoomName.Ot_vlazhnost;
+                room.KEO_est_osv = room.RoomName.KEO_est_osv;
+                room.KEO_sovm_osv = room.RoomName.KEO_sovm_osv;
+                room.Discription_OV = room.RoomName.Discription_OV;
+                room.Osveshennost_pro_obshem_osvech = room.RoomName.Osveshennost_pro_obshem_osvech;
+                room.Group_el_bez = room.RoomName.Group_el_bez;
+                room.Discription_EOM = room.RoomName.Discription_EOM;
+                room.Discription_AR = room.RoomName.Discription_AR;
+                room.Equipment_VK = room.RoomName.Equipment_VK;
+                room.Discription_SS = room.RoomName.Discription_SS;
+                room.Discription_AK_ATH = room.RoomName.Discription_AK_ATH;
+                room.Discription_GSV = room.RoomName.Discription_GSV;
+                room.Discription_HS = room.RoomName.Discription_HS;
 
-            room.RoomNameId = room.RoomName.Id;
-            room.Min_area = room.RoomName.Min_area;
-            room.Class_chistoti_GMP = room.RoomName.Class_chistoti_GMP;
-            room.Class_chistoti_SanPin = room.RoomName.Class_chistoti_SanPin;
-            room.Class_chistoti_SP_158 = room.RoomName.Class_chistoti_SP_158;
-            room.T_calc = room.RoomName.T_calc;
-            room.T_max = room.RoomName.T_max;
-            room.T_min = room.RoomName.T_min;
-            room.Pritok = room.RoomName.Pritok;
-            room.Vityazhka = room.RoomName.Vityazhka;
-            room.Ot_vlazhnost = room.RoomName.Ot_vlazhnost;
-            room.KEO_est_osv = room.RoomName.KEO_est_osv;
-            room.KEO_sovm_osv = room.RoomName.KEO_sovm_osv;
-            room.Discription_OV = room.RoomName.Discription_OV;
-            room.Osveshennost_pro_obshem_osvech = room.RoomName.Osveshennost_pro_obshem_osvech;
-            room.Group_el_bez = room.RoomName.Group_el_bez;
-            room.Discription_EOM = room.RoomName.Discription_EOM;
-            room.Discription_AR = room.RoomName.Discription_AR;
-            room.Equipment_VK = room.RoomName.Equipment_VK;
-            room.Discription_SS = room.RoomName.Discription_SS;
-            room.Discription_AK_ATH = room.RoomName.Discription_AK_ATH;
-            room.Discription_GSV = room.RoomName.Discription_GSV;
-            room.Discription_HS = room.RoomName.Discription_HS;
+                Rooms = CollectionViewSource.GetDefaultView(roomDtos);
+            }
 
-            Rooms = CollectionViewSource.GetDefaultView(roomDtos);
+            
             //Rooms.Refresh();
         }
         private bool CanSetDefaultValueCommandExecute(object p) => true;

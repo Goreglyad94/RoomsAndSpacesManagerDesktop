@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace RoomsAndSpacesManagerDataBase.Dto
 {
@@ -38,6 +39,15 @@ namespace RoomsAndSpacesManagerDataBase.Dto
         private string t_max;
         private string t_min;
 
+        public RoomDto()
+        {
+            int b;
+            if (int.TryParse(Min_area, out b))
+            {
+                Summary_Area = b * Count;
+                OnPropertyChanged(nameof(Summary_Area));
+            }
+        }
 
         #region Поля для выгрузки
         public int Id { get; set; }
@@ -70,41 +80,68 @@ namespace RoomsAndSpacesManagerDataBase.Dto
         public string RoomNumber { get; set; }
 
         #region Исходные данные по помещениям
+        int a;
         public string Min_area
         {
             get => min_area;
-            set 
+            set
             {
-                Set(ref min_area, value); 
+                Set(ref min_area, value);
+
+                if (int.TryParse(Min_area, out a))
+                {
+                    Summary_Area = a * Count;
+                    OnPropertyChanged(nameof(Summary_Area));
+                }
+
                 if (RoomName != null)
                 {
+
                     if (Min_area != RoomName.Min_area)
                     {
-                        Min_area_color = "LightCoral";
+                        Min_area_color = "#ffd6d4";
                     }
                     else
                     {
                         Min_area_color = "Transparent";
                     }
                 }
-                
+
+            }
+        }
+        private int? count;
+        public int? Count
+        {
+            get => count;
+            set
+            {
+                Set(ref count, value);
+                Summary_Area = a * Count;
             }
         }
 
-        public int? Count { get; set; }
-        public int? Summary_Area { get; set; }
+        private int? summary_Area;
+        public int? Summary_Area
+        {
+            get => summary_Area;
+            set
+            {
+                Set(ref summary_Area, value);
+            }
+        }
 
-        public string Class_chistoti_SanPin 
-        { 
+        public string Class_chistoti_SanPin
+        {
             get => class_chistoti_SanPin;
-            set 
+            set
             {
                 Set(ref class_chistoti_SanPin, value);
                 if (RoomName != null)
                 {
                     if (Class_chistoti_SanPin != RoomName.Class_chistoti_SanPin && Class_chistoti_SanPin != null)
                     {
-                        Class_chistoti_SanPin_color = "LightCoral";
+                        Class_chistoti_SanPin_color = "#ffd6d4";
+
                     }
                     else
                     {
@@ -113,17 +150,17 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                 }
             }
         }
-        public string Class_chistoti_SP_158 
+        public string Class_chistoti_SP_158
         {
             get => class_chistoti_SP_158;
-            set 
+            set
             {
                 Set(ref class_chistoti_SP_158, value);
                 if (RoomName != null)
                 {
                     if (Class_chistoti_SP_158 != RoomName.Class_chistoti_SP_158 && Class_chistoti_SP_158 != null)
                     {
-                        Class_chistoti_SP_158_color = "LightCoral";
+                        Class_chistoti_SP_158_color = "#ffd6d4";
                     }
                     else
                     {
@@ -132,17 +169,17 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                 }
             }
         }
-        public string Class_chistoti_GMP 
+        public string Class_chistoti_GMP
         {
             get => class_chistoti_GMP;
-            set 
+            set
             {
                 Set(ref class_chistoti_GMP, value);
                 if (RoomName != null)
                 {
                     if (Class_chistoti_GMP != RoomName.Class_chistoti_GMP && Class_chistoti_GMP != null)
                     {
-                        Class_chistoti_GMP_color = "LightCoral";
+                        Class_chistoti_GMP_color = "#ffd6d4";
                     }
                     else
                     {
@@ -151,17 +188,17 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                 }
             }
         }
-        public string T_calc 
+        public string T_calc
         {
             get => t_calc;
-            set 
+            set
             {
                 Set(ref t_calc, value);
                 if (RoomName != null)
                 {
                     if (T_calc != RoomName.T_calc && T_calc != null)
                     {
-                        T_calc_color = "LightCoral";
+                        T_calc_color = "#ffd6d4";
                     }
                     else
                     {
@@ -170,17 +207,17 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                 }
             }
         }
-        public string T_min 
+        public string T_min
         {
             get => t_min;
-            set 
+            set
             {
                 Set(ref t_min, value);
                 if (RoomName != null)
                 {
                     if (T_min != RoomName.T_min && T_min != null)
                     {
-                        T_min_color = "LightCoral";
+                        T_min_color = "#ffd6d4";
                     }
                     else
                     {
@@ -189,17 +226,17 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                 }
             }
         }
-        public string T_max 
+        public string T_max
         {
             get => t_max;
-            set 
+            set
             {
                 Set(ref t_max, value);
                 if (RoomName != null)
                 {
                     if (T_max != RoomName.T_max && T_max != null)
                     {
-                        T_max_color = "LightCoral";
+                        T_max_color = "#ffd6d4";
                     }
                     else
                     {
@@ -208,17 +245,17 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                 }
             }
         }
-        public string Pritok 
+        public string Pritok
         {
             get => pritok;
-            set 
+            set
             {
                 Set(ref pritok, value);
                 if (RoomName != null)
                 {
                     if (Pritok != RoomName.Pritok && Pritok != null)
                     {
-                        Pritok_color = "LightCoral";
+                        Pritok_color = "#ffd6d4";
                     }
                     else
                     {
@@ -227,17 +264,17 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                 }
             }
         }
-        public string Vityazhka 
+        public string Vityazhka
         {
             get => vityazhka;
-            set 
+            set
             {
                 Set(ref vityazhka, value);
                 if (RoomName != null)
                 {
                     if (Vityazhka != RoomName.Vityazhka && Vityazhka != null)
                     {
-                        Vityazhka_color = "LightCoral";
+                        Vityazhka_color = "#ffd6d4";
                     }
                     else
                     {
@@ -246,17 +283,17 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                 }
             }
         }
-        public string Ot_vlazhnost 
+        public string Ot_vlazhnost
         {
             get => ot_vlazhnost;
-            set 
+            set
             {
                 Set(ref ot_vlazhnost, value);
                 if (RoomName != null)
                 {
                     if (Ot_vlazhnost != RoomName.Ot_vlazhnost && Ot_vlazhnost != null)
                     {
-                        Ot_vlazhnost_color = "LightCoral";
+                        Ot_vlazhnost_color = "#ffd6d4";
                     }
                     else
                     {
@@ -265,17 +302,17 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                 }
             }
         }
-        public string KEO_est_osv 
+        public string KEO_est_osv
         {
             get => kEO_est_osv;
-            set 
+            set
             {
                 Set(ref kEO_est_osv, value);
                 if (RoomName != null)
                 {
                     if (KEO_est_osv != RoomName.KEO_est_osv && KEO_est_osv != null)
                     {
-                        KEO_est_osv_color = "LightCoral";
+                        KEO_est_osv_color = "#ffd6d4";
                     }
                     else
                     {
@@ -284,17 +321,17 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                 }
             }
         }
-        public string KEO_sovm_osv 
+        public string KEO_sovm_osv
         {
             get => kEO_sovm_osv;
-            set 
+            set
             {
                 Set(ref kEO_sovm_osv, value);
                 if (RoomName != null)
                 {
                     if (KEO_sovm_osv != RoomName.KEO_sovm_osv && KEO_sovm_osv != null)
                     {
-                        KEO_sovm_osv_color = "LightCoral";
+                        KEO_sovm_osv_color = "#ffd6d4";
                     }
                     else
                     {
@@ -303,17 +340,17 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                 }
             }
         }
-        public string Discription_OV 
+        public string Discription_OV
         {
             get => discription_OV;
-            set 
+            set
             {
                 Set(ref discription_OV, value);
                 if (RoomName != null)
                 {
                     if (Discription_OV != RoomName.Discription_OV && Discription_OV != null)
                     {
-                        Discription_OV_color = "LightCoral";
+                        Discription_OV_color = "#ffd6d4";
                     }
                     else
                     {
@@ -322,17 +359,17 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                 }
             }
         }
-        public string Osveshennost_pro_obshem_osvech 
+        public string Osveshennost_pro_obshem_osvech
         {
             get => osveshennost_pro_obshem_osvech;
-            set 
+            set
             {
                 Set(ref osveshennost_pro_obshem_osvech, value);
                 if (RoomName != null)
                 {
                     if (Osveshennost_pro_obshem_osvech != RoomName.Osveshennost_pro_obshem_osvech && Osveshennost_pro_obshem_osvech != null)
                     {
-                        Osveshennost_pro_obshem_osvech_color = "LightCoral";
+                        Osveshennost_pro_obshem_osvech_color = "#ffd6d4";
                     }
                     else
                     {
@@ -341,17 +378,17 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                 }
             }
         }
-        public string Group_el_bez 
+        public string Group_el_bez
         {
             get => group_el_bez;
-            set 
+            set
             {
                 Set(ref group_el_bez, value);
                 if (RoomName != null)
                 {
                     if (Group_el_bez != RoomName.Group_el_bez && Group_el_bez != null)
                     {
-                        Group_el_bez_color = "LightCoral";
+                        Group_el_bez_color = "#ffd6d4";
                     }
                     else
                     {
@@ -360,17 +397,17 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                 }
             }
         }
-        public string Discription_EOM 
+        public string Discription_EOM
         {
             get => discription_EOM;
-            set 
+            set
             {
                 Set(ref discription_EOM, value);
                 if (RoomName != null)
                 {
                     if (Discription_EOM != RoomName.Discription_EOM && Discription_EOM != null)
                     {
-                        Discription_EOM_color = "LightCoral";
+                        Discription_EOM_color = "#ffd6d4";
                     }
                     else
                     {
@@ -379,17 +416,17 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                 }
             }
         }
-        public string Discription_AR 
+        public string Discription_AR
         {
             get => discription_AR;
-            set 
+            set
             {
                 Set(ref discription_AR, value);
                 if (RoomName != null)
                 {
                     if (Discription_AR != RoomName.Discription_AR && Discription_AR != null)
                     {
-                        Discription_AR_color = "LightCoral";
+                        Discription_AR_color = "#ffd6d4";
                     }
                     else
                     {
@@ -398,17 +435,17 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                 }
             }
         }
-        public string Equipment_VK 
+        public string Equipment_VK
         {
             get => equipment_VK;
-            set 
+            set
             {
                 Set(ref equipment_VK, value);
                 if (RoomName != null)
                 {
                     if (Equipment_VK != RoomName.Equipment_VK && Equipment_VK != null)
                     {
-                        Equipment_VK_color = "LightCoral";
+                        Equipment_VK_color = "#ffd6d4";
                     }
                     else
                     {
@@ -417,17 +454,17 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                 }
             }
         }
-        public string Discription_SS 
+        public string Discription_SS
         {
             get => discription_SS;
-            set 
+            set
             {
                 Set(ref discription_SS, value);
                 if (RoomName != null)
                 {
                     if (Discription_SS != RoomName.Discription_SS && Discription_SS != null)
                     {
-                        Discription_SS_color = "LightCoral";
+                        Discription_SS_color = "#ffd6d4";
                     }
                     else
                     {
@@ -436,17 +473,17 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                 }
             }
         }
-        public string Discription_AK_ATH 
+        public string Discription_AK_ATH
         {
             get => discription_AK_ATH;
-            set 
+            set
             {
                 Set(ref discription_AK_ATH, value);
                 if (RoomName != null)
                 {
                     if (Discription_AK_ATH != RoomName.Discription_AK_ATH && Discription_AK_ATH != null)
                     {
-                        Discription_AK_ATH_color = "LightCoral";
+                        Discription_AK_ATH_color = "#ffd6d4";
                     }
                     else
                     {
@@ -455,17 +492,17 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                 }
             }
         }
-        public string Discription_GSV 
+        public string Discription_GSV
         {
             get => discription_GSV;
-            set 
+            set
             {
                 Set(ref discription_GSV, value);
                 if (RoomName != null)
                 {
                     if (Discription_GSV != RoomName.Discription_GSV && Discription_GSV != null)
                     {
-                        Discription_GSV_color = "LightCoral";
+                        Discription_GSV_color = "#ffd6d4";
                     }
                     else
                     {
@@ -474,17 +511,17 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                 }
             }
         }
-        public string Categoty_Chistoti_po_san_epid 
+        public string Categoty_Chistoti_po_san_epid
         {
             get => categoty_Chistoti_po_san_epid;
-            set 
+            set
             {
                 Set(ref categoty_Chistoti_po_san_epid, value);
                 if (RoomName != null)
                 {
                     if (Categoty_Chistoti_po_san_epid != RoomName.Categoty_Chistoti_po_san_epid && Categoty_Chistoti_po_san_epid != null)
                     {
-                        Categoty_Chistoti_po_san_epid_color = "LightCoral";
+                        Categoty_Chistoti_po_san_epid_color = "#ffd6d4";
                     }
                     else
                     {
@@ -493,17 +530,17 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                 }
             }
         }
-        public string Discription_HS 
+        public string Discription_HS
         {
             get => discription_HS;
-            set 
+            set
             {
                 Set(ref discription_HS, value);
                 if (RoomName != null)
                 {
                     if (Discription_HS != RoomName.Discription_HS && Discription_HS != null)
                     {
-                        Discription_HS_color = "LightCoral";
+                        Discription_HS_color = "#ffd6d4";
                     }
                     else
                     {
@@ -519,7 +556,7 @@ namespace RoomsAndSpacesManagerDataBase.Dto
         public string El_Nagruzka { get; set; }
         #endregion
 
-        public int ArRoomId { get; set; }
+        public int ArRoomId { get => arRoomId; set => Set(ref arRoomId, value); }
         public int BuildingId { get; set; }
 
 
@@ -710,6 +747,8 @@ namespace RoomsAndSpacesManagerDataBase.Dto
         }
 
         private string discription_HS_color;
+        private int arRoomId;
+
         [NotMapped]
         public string Discription_HS_color
         {

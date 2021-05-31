@@ -69,6 +69,7 @@ namespace RoomAndSpacesOV
                         space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Примечание СС", "Discription_SS", item, roomDto));
                         space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Примечание ХС", "Discription_HS", item, roomDto));
                         space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Приток кратность", "Pritok", item, roomDto));
+                        space.parameters.Add(mainModelRvtHelper.SetPropertt("M1_Вытяжка кратность", "Vityazhka", item, roomDto));
                         space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Расчетная площадь", "Summary_Area", item, roomDto));
                         space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Температура максимальная С", "T_max", item, roomDto));
                         space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Температура минимальная С", "T_min", item, roomDto));

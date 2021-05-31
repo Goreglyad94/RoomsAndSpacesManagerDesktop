@@ -204,6 +204,14 @@
     <Compile Include="Migrations\202105131110353_AddSummuryArea.designer.cs">
       <DependentUpon>202105131110353_AddSummuryArea.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105310922268_Initial.cs" />
+    <Compile Include="Migrations\202105310922268_Initial.designer.cs">
+      <DependentUpon>202105310922268_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105310923481_deleteTest.cs" />
+    <Compile Include="Migrations\202105310923481_deleteTest.designer.cs">
+      <DependentUpon>202105310923481_deleteTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CsvModels\MainCsvModel.cs" />
     <Compile Include="Models\CsvModels\TestScv.cs" />
@@ -354,6 +362,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105131110353_AddSummuryArea.resx">
       <DependentUpon>202105131110353_AddSummuryArea.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105310922268_Initial.resx">
+      <DependentUpon>202105310922268_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105310923481_deleteTest.resx">
+      <DependentUpon>202105310923481_deleteTest.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

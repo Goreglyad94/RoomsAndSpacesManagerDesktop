@@ -8,13 +8,20 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:customBehColorChange="clr-namespace:RoomsAndSpacesManagerDesktop.Infrastructure.Behaviors"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="1100">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="b2v" />
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"/>
+            <ColumnDefinition  Width="270"/>
             <ColumnDefinition  Width="270"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
@@ -27,7 +34,7 @@
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="0" Grid.Column="0">
             <TextBlock Width="50" Text="Проект: " DockPanel.Dock="Left"  VerticalAlignment="Center" HorizontalAlignment="Right"/>
-            <ComboBox x:Name="ProjectList" ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject}" DockPanel.Dock="Left" Height="25" Width="150" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 2 20 2">
+            <ComboBox SelectedIndex="0" x:Name="ProjectList" ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject}" DockPanel.Dock="Left" Height="25" Width="150" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 2 20 2">
                 <ComboBox.ItemContainerStyle>
                     <Style TargetType="ComboBoxItem">
                         <Setter Property="Tag" Value="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ComboBox}}}" />
@@ -43,8 +50,8 @@
             </ComboBox>
         </DockPanel>
         <DockPanel Grid.Row="0" Grid.Column="1">
-            <TextBlock Width="50" Text="Модель: " DockPanel.Dock="Left"  VerticalAlignment="Center"/>
-            <ComboBox ItemsSource="{Binding Buildings}" SelectedItem="{Binding SelectedBuilding}" DockPanel.Dock="Left" Width="150" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 2 20 2" Height="25">
+            <TextBlock Width="50" Text="Здание: " DockPanel.Dock="Left"  VerticalAlignment="Center"/>
+            <ComboBox x:Name="BuildingsList" ItemsSource="{Binding Buildings}" SelectedItem="{Binding SelectedBuilding}" DockPanel.Dock="Left" Width="150" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 2 20 2" Height="25">
                 <ComboBox.ItemContainerStyle>
                     <Style TargetType="ComboBoxItem">
                         <Setter Property="Tag" Value="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ComboBox}}}" />
@@ -59,7 +66,26 @@
                 </ComboBox.ItemContainerStyle>
             </ComboBox>
         </DockPanel>
+
         <DockPanel Grid.Row="0" Grid.Column="2">
+            <TextBlock Width="90" Text="Подразделение: " DockPanel.Dock="Left"  VerticalAlignment="Center"/>
+            <ComboBox ItemsSource="{Binding Subdivisions}" SelectedItem="{Binding SelectedSubdivision}" DockPanel.Dock="Left" Width="150" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 2 20 2" Height="25">
+                <ComboBox.ItemContainerStyle>
+                    <Style TargetType="ComboBoxItem">
+                        <Setter Property="Tag" Value="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ComboBox}}}" />
+                        <Setter Property="ContextMenu">
+                            <Setter.Value>
+                                <ContextMenu>
+                                    <MenuItem Header="Удалить" Command="{Binding PlacementTarget.Tag.DeleteCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding }" />
+                                </ContextMenu>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ComboBox.ItemContainerStyle>
+            </ComboBox>
+        </DockPanel>
+
+        <DockPanel Grid.Row="0" Grid.Column="3">
             <TextBlock VerticalAlignment="Center" Text="Добавить новый проект/модель: "/>
             <CheckBox x:Name="chk" VerticalAlignment="Center" IsChecked="False"/>
         </DockPanel>
@@ -71,6 +97,10 @@
             <Button Command="{Binding AddNewBuildingCommand}" Content="+"  Margin="65 0 0 0" Width="20" Height="20" DockPanel.Dock="Left"  VerticalAlignment="Center" CommandParameter="{Binding ElementName=ProjectList,Path=SelectedItem}"/>
             <TextBox Text="{Binding NewBuildingName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Left" Height="25" Width="150" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 2 20 2"/>
         </DockPanel>
+        <DockPanel Grid.Row="1" Grid.Column="2" Visibility="{Binding IsChecked,ElementName=chk,Converter={StaticResource b2v}}">
+            <Button Command="{Binding AddNewSubdivisionCommand}" Content="+"  Margin="65 0 0 0" Width="20" Height="20" DockPanel.Dock="Left"  VerticalAlignment="Center" CommandParameter="{Binding ElementName=BuildingsList,Path=SelectedItem}"/>
+            <TextBox Text="{Binding NewSubdivisionName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Left" Height="25" Width="150" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 2 20 2"/>
+        </DockPanel>
         <DockPanel Grid.Row="2" Grid.Column="0">
             <TextBlock Text="Категория: " DockPanel.Dock="Left"  VerticalAlignment="Center"/>
             <ComboBox ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategoties}" DockPanel.Dock="Left" Height="25" Width="150" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 2 20 2"/>
@@ -79,7 +109,8 @@
             <TextBlock Text="Подкатегория: " DockPanel.Dock="Left"  VerticalAlignment="Center"/>
             <ComboBox x:Name="SubCatsList" ItemsSource="{Binding SubCategories}" SelectedItem="{Binding SelectedSubCategoties}" DockPanel.Dock="Left" Width="150"  Height="25" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 2 20 2"/>
         </DockPanel>
-        <DockPanel Grid.Row="3" Grid.ColumnSpan="3">
+        
+        <DockPanel Grid.Row="3" Grid.ColumnSpan="4">
             <DataGrid DockPanel.Dock="Right" SelectionMode="Extended"  
                           CanUserAddRows="False"
                           FrozenColumnCount ="4"
@@ -102,6 +133,18 @@
                 </DataGrid.ItemContainerStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="30" IsReadOnly="True"/>
+                    <DataGridTemplateColumn Header="Подразделение" Width="100" IsReadOnly="False">
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <ComboBox Height="20" ItemsSource="{Binding Path=DataContext.Subdivisions, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" SelectedItem="{Binding Path=DataContext.SelectedSubdivisionAction, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Subdivision}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Наименование" Width="250">
                         <DataGridTemplateColumn.CellEditingTemplate>
                             <DataTemplate>
@@ -120,6 +163,16 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     <DataGridTextColumn Header="Краткое наименование" Width="100" Binding="{Binding ShortName}"/>
                     <DataGridTextColumn Header="Номер помещения" Width="100" Binding="{Binding RoomNumber}"/>
                     <DataGridTextColumn Header="Мин. площадь" Binding="{Binding Min_area, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
@@ -136,8 +189,6 @@
                             </Style>
                         </DataGridTextColumn.CellStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Кол-во" Binding="{Binding Count}"/>
-                    <DataGridTextColumn Header="Суммарная расчётная площадь" Binding="{Binding Summary_Area, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Рабочих мест/посетителей" Binding="{Binding Rab_mesta_posetiteli}"/>
                     <DataGridTextColumn Header="Категория пожароопасности" Binding="{Binding Categoty_pizharoopasnosti}"/>
                     <DataGridTextColumn Header="Класс чистоты по СанПиН" Binding="{Binding Class_chistoti_SanPin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
@@ -439,8 +490,12 @@
                 </DataGrid.Columns>
             </DataGrid>
         </DockPanel>
-        <Button Content="Добавить строку" Command="{Binding AddNewRowCommand}" HorizontalAlignment="Left" Margin="10 0 0 0" Grid.Column="0" Grid.Row="4" Width="100" Height="25"/>
-        <DockPanel Grid.Row="4" Grid.Column="2">
+        <DockPanel Grid.Column="0" Grid.Row="4">
+            <Button Content="Добавить строку" Command="{Binding AddNewRowCommand}" HorizontalAlignment="Left" Margin="10 0 0 0"  Width="100" Height="25"/>
+            <Button Content="Скопировать подразделение" Command="{Binding CopySubdivisionCommnd}" HorizontalAlignment="Left" Margin="10 0 0 0" Width="100" Height="25"/>
+        </DockPanel>
+        
+        <DockPanel Grid.Row="4" Grid.Column="3">
             <Button Command="{Binding PushToDbCommand}" Content="Отправить изменения в БД" Width="160" Height="25" DockPanel.Dock="Right" Margin="0 0 10 0"/>
             <Button Command="{Binding PullFromDbCommand}" Content="Pull" Width="50" Height="25" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"/>
         </DockPanel>

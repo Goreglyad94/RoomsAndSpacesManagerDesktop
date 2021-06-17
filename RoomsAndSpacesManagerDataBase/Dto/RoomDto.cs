@@ -41,13 +41,46 @@ namespace RoomsAndSpacesManagerDataBase.Dto
 
         public RoomDto()
         {
-            int b;
-            if (int.TryParse(Min_area, out b))
-            {
-                Summary_Area = b * Count;
-                OnPropertyChanged(nameof(Summary_Area));
-            }
+
         }
+
+        public RoomDto(RoomDto oldRoom)
+        {
+            this.RoomNameId = oldRoom.RoomNameId;
+            this.ShortName = oldRoom.ShortName;
+            this.RoomNumber = oldRoom. RoomNumber;
+            this.Min_area = oldRoom.Min_area;
+
+            this.Class_chistoti_SanPin = oldRoom.Class_chistoti_SanPin;
+            this.Class_chistoti_SP_158 = oldRoom.Class_chistoti_SP_158;
+            this.Class_chistoti_GMP = oldRoom.Class_chistoti_GMP;
+            this.T_calc = oldRoom.T_calc;
+            this.T_min = oldRoom.T_min;
+            this.T_max = oldRoom.T_max;
+            this.Pritok = oldRoom.Pritok;
+            this.Vityazhka = oldRoom.Vityazhka;
+            this.Ot_vlazhnost = oldRoom.Ot_vlazhnost;
+            this.KEO_est_osv = oldRoom.KEO_est_osv;
+            this.KEO_sovm_osv = oldRoom.KEO_sovm_osv;
+            this.Discription_OV = oldRoom.Discription_OV;
+            this.Osveshennost_pro_obshem_osvech = oldRoom.Osveshennost_pro_obshem_osvech;
+            this.Group_el_bez = oldRoom.Group_el_bez;
+            this.Discription_EOM = oldRoom.Discription_EOM;
+            this.Discription_AR = oldRoom.Discription_AR;
+            this.Equipment_VK = oldRoom.Equipment_VK;
+            this.Discription_SS = oldRoom.discription_SS;
+            this.Discription_AK_ATH = oldRoom.Discription_AK_ATH;
+            this.Discription_GSV = oldRoom.discription_GSV;
+            this.Categoty_Chistoti_po_san_epid = oldRoom.Categoty_Chistoti_po_san_epid;
+            this.Discription_HS = oldRoom.Discription_HS;
+            this.Categoty_pizharoopasnosti = oldRoom.Categoty_pizharoopasnosti;
+            this.Rab_mesta_posetiteli = oldRoom.Rab_mesta_posetiteli;
+            this.Nagruzki_na_perekririe = oldRoom.Nagruzki_na_perekririe;
+            this.El_Nagruzka = oldRoom.El_Nagruzka; 
+        }
+
+
+
 
         #region Поля для выгрузки
         public int Id { get; set; }
@@ -88,11 +121,7 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             {
                 Set(ref min_area, value);
 
-                if (int.TryParse(Min_area, out a))
-                {
-                    Summary_Area = a * Count;
-                    OnPropertyChanged(nameof(Summary_Area));
-                }
+
 
                 if (RoomName != null)
                 {
@@ -107,26 +136,6 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                     }
                 }
 
-            }
-        }
-        private int? count;
-        public int? Count
-        {
-            get => count;
-            set
-            {
-                Set(ref count, value);
-                Summary_Area = a * Count;
-            }
-        }
-
-        private int? summary_Area;
-        public int? Summary_Area
-        {
-            get => summary_Area;
-            set
-            {
-                Set(ref summary_Area, value);
             }
         }
 
@@ -554,11 +563,12 @@ namespace RoomsAndSpacesManagerDataBase.Dto
         public string Rab_mesta_posetiteli { get; set; }
         public string Nagruzki_na_perekririe { get; set; }
         public string El_Nagruzka { get; set; }
+
+        public string Notation { get; set; }
         #endregion
 
         public int ArRoomId { get => arRoomId; set => Set(ref arRoomId, value); }
-        public int BuildingId { get; set; }
-
+       
 
 
         #region SupClass
@@ -764,7 +774,9 @@ namespace RoomsAndSpacesManagerDataBase.Dto
 
         #endregion
 
-        public virtual BuildingDto Building { get; set; }
+
+        public int SubdivisionId { get; set; }
+        public virtual SubdivisionDto Subdivision { get; set; }
         #endregion
     }
 }

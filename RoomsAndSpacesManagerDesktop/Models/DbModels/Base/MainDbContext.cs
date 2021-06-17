@@ -1,4 +1,4 @@
-﻿using RoomsAndSpacesManagerDesktop.Data.DataBaseContext;
+﻿using RoomsAndSpacesManagerDataBase.Data.DataBaseContext;
 
 namespace RoomsAndSpacesManagerDesktop.Models.DbModels.Base
 {

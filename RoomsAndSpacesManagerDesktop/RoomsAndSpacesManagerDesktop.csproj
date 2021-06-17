@@ -66,10 +66,6 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DocumentFormat.OpenXml, Version=2.12.3.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
-      <HintPath>..\packages\DocumentFormat.OpenXml.2.12.3\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -78,6 +74,9 @@
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EPPlus, Version=4.5.3.3, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.5.3.3\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
       <Private>True</Private>
@@ -85,9 +84,9 @@
     <Reference Include="Microsoft.VisualBasic">
       <Private>True</Private>
     </Reference>
-    <Reference Include="RoomsAndSpacesManagerDataBase">
+    <Reference Include="RoomsAndSpacesManagerDataBase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\RoomsAndSpacesManagerDataBase\bin\Debug\RoomsAndSpacesManagerDataBase.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System">
       <Private>True</Private>
@@ -95,10 +94,12 @@
     <Reference Include="System.ComponentModel.DataAnnotations">
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data">
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
@@ -148,77 +149,29 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202104291336495_InitialCreate.cs" />
-    <Compile Include="Migrations\202104291336495_InitialCreate.designer.cs">
-      <DependentUpon>202104291336495_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\202106110736054_Init.cs" />
+    <Compile Include="Migrations\202106110736054_Init.designer.cs">
+      <DependentUpon>202106110736054_Init.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202104291401314_AddEquipmentField.cs" />
-    <Compile Include="Migrations\202104291401314_AddEquipmentField.designer.cs">
-      <DependentUpon>202104291401314_AddEquipmentField.cs</DependentUpon>
+    <Compile Include="Migrations\202106110739079_NewRoomsInSubdiv.cs" />
+    <Compile Include="Migrations\202106110739079_NewRoomsInSubdiv.designer.cs">
+      <DependentUpon>202106110739079_NewRoomsInSubdiv.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202104291430441_RenameRoomsTable.cs" />
-    <Compile Include="Migrations\202104291430441_RenameRoomsTable.designer.cs">
-      <DependentUpon>202104291430441_RenameRoomsTable.cs</DependentUpon>
+    <Compile Include="Migrations\202106171356504_DeleteCountAndSummuryArea.cs" />
+    <Compile Include="Migrations\202106171356504_DeleteCountAndSummuryArea.designer.cs">
+      <DependentUpon>202106171356504_DeleteCountAndSummuryArea.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202105041259261_UpdateRoomNamesInfo.cs" />
-    <Compile Include="Migrations\202105041259261_UpdateRoomNamesInfo.designer.cs">
-      <DependentUpon>202105041259261_UpdateRoomNamesInfo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105041425448_AddCategoty_Chistoti_po_san_epidFieldToRoomNameDto.cs" />
-    <Compile Include="Migrations\202105041425448_AddCategoty_Chistoti_po_san_epidFieldToRoomNameDto.designer.cs">
-      <DependentUpon>202105041425448_AddCategoty_Chistoti_po_san_epidFieldToRoomNameDto.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105051157151_DeleteEquipmentFiels.cs" />
-    <Compile Include="Migrations\202105051157151_DeleteEquipmentFiels.designer.cs">
-      <DependentUpon>202105051157151_DeleteEquipmentFiels.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105061133092_AddArRoomIdProp.cs" />
-    <Compile Include="Migrations\202105061133092_AddArRoomIdProp.designer.cs">
-      <DependentUpon>202105061133092_AddArRoomIdProp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105061134091_AddArRoomIdProp1.cs" />
-    <Compile Include="Migrations\202105061134091_AddArRoomIdProp1.designer.cs">
-      <DependentUpon>202105061134091_AddArRoomIdProp1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105070752253_DeleteRoomsDtoFieldsCategotyAndSubCategory.cs" />
-    <Compile Include="Migrations\202105070752253_DeleteRoomsDtoFieldsCategotyAndSubCategory.designer.cs">
-      <DependentUpon>202105070752253_DeleteRoomsDtoFieldsCategotyAndSubCategory.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105070822032_AddRoomNameId.cs" />
-    <Compile Include="Migrations\202105070822032_AddRoomNameId.designer.cs">
-      <DependentUpon>202105070822032_AddRoomNameId.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105071121041_AddInIssueRoomNamesProp.cs" />
-    <Compile Include="Migrations\202105071121041_AddInIssueRoomNamesProp.designer.cs">
-      <DependentUpon>202105071121041_AddInIssueRoomNamesProp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105071148576_DeleteNamfeFromDbIssues.cs" />
-    <Compile Include="Migrations\202105071148576_DeleteNamfeFromDbIssues.designer.cs">
-      <DependentUpon>202105071148576_DeleteNamfeFromDbIssues.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105130908344_dd.cs" />
-    <Compile Include="Migrations\202105130908344_dd.designer.cs">
-      <DependentUpon>202105130908344_dd.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105131110353_AddSummuryArea.cs" />
-    <Compile Include="Migrations\202105131110353_AddSummuryArea.designer.cs">
-      <DependentUpon>202105131110353_AddSummuryArea.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105310922268_Initial.cs" />
-    <Compile Include="Migrations\202105310922268_Initial.designer.cs">
-      <DependentUpon>202105310922268_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105310923481_deleteTest.cs" />
-    <Compile Include="Migrations\202105310923481_deleteTest.designer.cs">
-      <DependentUpon>202105310923481_deleteTest.cs</DependentUpon>
+    <Compile Include="Migrations\202106180729144_AddNotationFieldToRooms.cs" />
+    <Compile Include="Migrations\202106180729144_AddNotationFieldToRooms.designer.cs">
+      <DependentUpon>202106180729144_AddNotationFieldToRooms.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\CsvModels\MainCsvModel.cs" />
-    <Compile Include="Models\CsvModels\TestScv.cs" />
+    <Compile Include="Models\CsvModels\UploadToCsvModel.cs" />
     <Compile Include="Models\DbModels\Base\MainDbContext.cs" />
     <Compile Include="Models\DbModels\ProjectsDbContext.cs" />
     <Compile Include="Models\DbModels\RoomsDbContext.cs" />
     <Compile Include="ViewModels\Base\ViewModel.cs" />
+    <Compile Include="ViewModels\CopySubDivisionViewModel.cs" />
     <Compile Include="ViewModels\CreateIssueViewModel.cs" />
     <Compile Include="ViewModels\RoomsPropertiesViewModel.cs" />
     <Compile Include="Views\UserControls\CreateIssueMainWindow.xaml.cs">
@@ -250,6 +203,15 @@
     </Compile>
     <Compile Include="Views\UserControls\SubTabs\VkTabUserControl.xaml.cs">
       <DependentUpon>VkTabUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\SubTabs\_RoomProgram.xaml.cs">
+      <DependentUpon>_RoomProgram.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\SubTabs\_Summary.xaml.cs">
+      <DependentUpon>_Summary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\CopySubdivisionWindow.xaml.cs">
+      <DependentUpon>CopySubdivisionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -302,6 +264,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\UserControls\SubTabs\_RoomProgram.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\SubTabs\_Summary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\CopySubdivisionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Windows\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -321,53 +295,17 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\202104291336495_InitialCreate.resx">
-      <DependentUpon>202104291336495_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202106110736054_Init.resx">
+      <DependentUpon>202106110736054_Init.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202104291401314_AddEquipmentField.resx">
-      <DependentUpon>202104291401314_AddEquipmentField.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202106110739079_NewRoomsInSubdiv.resx">
+      <DependentUpon>202106110739079_NewRoomsInSubdiv.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202104291430441_RenameRoomsTable.resx">
-      <DependentUpon>202104291430441_RenameRoomsTable.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202106171356504_DeleteCountAndSummuryArea.resx">
+      <DependentUpon>202106171356504_DeleteCountAndSummuryArea.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105041259261_UpdateRoomNamesInfo.resx">
-      <DependentUpon>202105041259261_UpdateRoomNamesInfo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105041425448_AddCategoty_Chistoti_po_san_epidFieldToRoomNameDto.resx">
-      <DependentUpon>202105041425448_AddCategoty_Chistoti_po_san_epidFieldToRoomNameDto.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105051157151_DeleteEquipmentFiels.resx">
-      <DependentUpon>202105051157151_DeleteEquipmentFiels.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105061133092_AddArRoomIdProp.resx">
-      <DependentUpon>202105061133092_AddArRoomIdProp.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105061134091_AddArRoomIdProp1.resx">
-      <DependentUpon>202105061134091_AddArRoomIdProp1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105070752253_DeleteRoomsDtoFieldsCategotyAndSubCategory.resx">
-      <DependentUpon>202105070752253_DeleteRoomsDtoFieldsCategotyAndSubCategory.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105070822032_AddRoomNameId.resx">
-      <DependentUpon>202105070822032_AddRoomNameId.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105071121041_AddInIssueRoomNamesProp.resx">
-      <DependentUpon>202105071121041_AddInIssueRoomNamesProp.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105071148576_DeleteNamfeFromDbIssues.resx">
-      <DependentUpon>202105071148576_DeleteNamfeFromDbIssues.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105130908344_dd.resx">
-      <DependentUpon>202105130908344_dd.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105131110353_AddSummuryArea.resx">
-      <DependentUpon>202105131110353_AddSummuryArea.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105310922268_Initial.resx">
-      <DependentUpon>202105310922268_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105310923481_deleteTest.resx">
-      <DependentUpon>202105310923481_deleteTest.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202106180729144_AddNotationFieldToRooms.resx">
+      <DependentUpon>202106180729144_AddNotationFieldToRooms.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

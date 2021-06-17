@@ -20,7 +20,7 @@ namespace RoomAndSpacesOV.Models.RvtHelper
                 string storageType = param.StorageType.ToString();
                 if (storageType.ToString() == "String")
                 {
-                    string propValue = roomDto.GetType().GetProperty(dtoProp).GetValue(roomDto).ToString();
+                    string propValue = roomDto.GetType().GetProperty(dtoProp)?.GetValue(roomDto)?.ToString();
                     if (param.AsString() != propValue)
                     {
                         ParameterDto parameterDto = new ParameterDto();
@@ -34,7 +34,7 @@ namespace RoomAndSpacesOV.Models.RvtHelper
 
                 if (storageType.ToString() == "Integer")
                 {
-                    string propValue = roomDto.GetType().GetProperty(dtoProp).GetValue(roomDto).ToString();
+                    string propValue = roomDto.GetType().GetProperty(dtoProp)?.GetValue(roomDto)?.ToString();
                     if (propValue != null & param.AsInteger() != int.Parse(propValue))
                     {
                         ParameterDto parameterDto = new ParameterDto();

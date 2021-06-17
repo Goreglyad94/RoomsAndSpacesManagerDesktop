@@ -18,6 +18,7 @@ namespace RoomsAndSpacesManagerDataBase.Data.DataBaseContext
 
         public DbSet<ProjectDto> RaSM_Projects { get; set; }
         public DbSet<BuildingDto> RaSM_Buildings { get; set; }
+        public DbSet<SubdivisionDto> RaSM_Subdivisions { get; set; }
         public DbSet<RoomDto> RaSM_Rooms { get; set; }
         public DbSet<CategoryDto> RaSM_RoomCategories { get; set; }
         public DbSet<SubCategoryDto> RaSM_RoomSubCategories { get; set; }

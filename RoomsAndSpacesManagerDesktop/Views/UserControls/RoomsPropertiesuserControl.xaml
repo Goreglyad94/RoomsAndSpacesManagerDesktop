@@ -42,6 +42,7 @@
                           ItemsSource="{Binding Rooms, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                           AutoGenerateColumns="False">
                 <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="auto"/>
                     <DataGridTextColumn Header="Наименвоание помещений" Binding="{Binding Name}" Width="auto"/>
                     <DataGridTextColumn Header="Мин. площадь" Binding="{Binding Min_area}" Width="70"/>
                     <DataGridTextColumn Header="Класс чистоты по СанПиН" Binding="{Binding Class_chistoti_SanPin}"/>

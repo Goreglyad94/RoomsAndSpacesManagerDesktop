@@ -21,7 +21,8 @@ namespace RoomsAndSpacesManagerLib.ViewModels
     {
         public ExternalEvent ApplyEventGetRoomFromRvtModel;
 
-        public static int roomId;
+        public static string roomId;
+        public static int rvtToomId;
 
         ProjectsDbContext projectsDbContext = new ProjectsDbContext();
         List<RoomDto> roomDtos;
@@ -30,6 +31,7 @@ namespace RoomsAndSpacesManagerLib.ViewModels
             Projects = projectsDbContext.GetProjects();
             SelectRoomEventHendler.ChangeUI += OnSelectRevitRoomCommandExecutdeEvent;
             SelectRevitRoomCommand = new RelayCommand(OnSelectRevitRoomCommandExecutde, CanSelectRevitRoomCommandExecute);
+            PushToDbCommand = new RelayCommand(OnPushToDbCommandExecuted, CanPushToDbCommandExecute);
         }
 
         #region Список проектов. Выбранный проект
@@ -79,7 +81,7 @@ namespace RoomsAndSpacesManagerLib.ViewModels
                 selectedBuilding = value;
                 if (SelectedBuilding != null)
                 {
-                    roomDtos = projectsDbContext.GetRooms(SelectedBuilding);
+                    //roomDtos = projectsDbContext.GetRooms(SelectedBuilding);
                     Rooms = CollectionViewSource.GetDefaultView(roomDtos);
                     Rooms.Refresh();
                 }
@@ -112,12 +114,14 @@ namespace RoomsAndSpacesManagerLib.ViewModels
 
         private void OnSelectRevitRoomCommandExecutde(object sander)
         {
+            SelectRoomEventHendler.DbRommId = (sander as RoomDto).Id;
             ApplyEventGetRoomFromRvtModel.Raise();
         }
+
         private void OnSelectRevitRoomCommandExecutdeEvent(object sander)
         {
-            SelectedRoom.ArRoomId = roomId;
-            MessageBox.Show(SelectedRoom.ArRoomId.ToString());
+            SelectedRoom.RoomNumber = roomId.ToString();
+            SelectedRoom.ArRoomId = rvtToomId;
             Rooms = CollectionViewSource.GetDefaultView(roomDtos);
             Rooms.Refresh();
         }
@@ -125,6 +129,19 @@ namespace RoomsAndSpacesManagerLib.ViewModels
 
 
         private bool CanSelectRevitRoomCommandExecute(object sander) => true;
+        #endregion
+
+
+        #region Пуш в БД
+        public ICommand PushToDbCommand { get; set; }
+
+        private void OnPushToDbCommandExecuted(object obj)
+        {
+            projectsDbContext.SaveChanges();
+            MessageBox.Show("Изменения успешно внесены в БД!","Статус");
+        }
+
+        private bool CanPushToDbCommandExecute(object obj) => true;
         #endregion
     }
 }

@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dto\SubdivisionDto.cs" />
     <Compile Include="ViewModel.cs" />
     <Compile Include="Data\DataBaseContext\RoomAndSpacesDbContext.cs" />
     <Compile Include="Dto\BuildingDto.cs" />

@@ -33,6 +33,8 @@ namespace RoomsAndSpacesManagerDesktop.Views.Windows
             EomTab.DataContext = createIssueViewModel;
             SsTab.DataContext = createIssueViewModel;
             HsTab.DataContext = createIssueViewModel;
+            RoomProgramm.DataContext = createIssueViewModel;
+            Summury.DataContext = createIssueViewModel;
         }
     }
 }

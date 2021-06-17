@@ -1,5 +1,6 @@
 ﻿using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 using RoomsAndSpacesManagerLib.ViewModels;
 using System;
@@ -16,7 +17,9 @@ namespace RoomsAndSpacesManagerLib.Models.RevitModels
     class SelectRoomEventHendler : IExternalEventHandler
     {
         public static event Action<object> ChangeUI;
+        public static int DbRommId;
 
+        
         public void Execute(UIApplication app)
         {
             Autodesk.Revit.UI.UIDocument uiDoc = app.ActiveUIDocument;
@@ -27,9 +30,18 @@ namespace RoomsAndSpacesManagerLib.Models.RevitModels
 
             Element dd = uiDoc.Document.GetElement(selectedIds.First());
 
-            MainWindowViewModel.roomId = dd.Id.IntegerValue;
-            ChangeUI.Invoke(this);
+            MainWindowViewModel.roomId = (dd as Room).get_Parameter(BuiltInParameter.ROOM_NUMBER).AsString();
+            MainWindowViewModel.rvtToomId = dd.Id.IntegerValue;
+            using (Transaction trans = new Transaction(app.ActiveUIDocument.Document, "AddToFamilyParam"))
+            {
+                trans.Start();
+                dd.LookupParameter("М1_ID_задания").Set(DbRommId);
+                //dd.LookupParameter("Имя").Set(DbRommId);
+                trans.Commit();
+            }
 
+            ChangeUI.Invoke(this);
+            
 
         }
 

@@ -22,12 +22,17 @@ namespace RoomsAndSpacesManagerLib.Models.DataBaseModels
             return context.RaSM_Buildings.Where(x => x.ProjectId == projDto.Id).ToList();
         }
 
-        public List<RoomDto> GetRooms(BuildingDto buildDto)
+        public List<RoomDto> GetRooms(SubdivisionDto subdiv)
         {
-            if (buildDto != null)
-                return context.RaSM_Rooms.Where(x => x.Building.Id == buildDto.Id).ToList();
+            if (subdiv != null)
+                return context.RaSM_Rooms.Where(x => x.Subdivision.Id == subdiv.Id).ToList();
             else
                 return null;
+        }
+
+        public void SaveChanges()
+        {
+            context.SaveChanges();
         }
 
     }

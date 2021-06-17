@@ -7,13 +7,13 @@ namespace RoomsAndSpacesManagerDesktop.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class Initial : IMigrationMetadata
+    public sealed partial class Init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Init));
         
         string IMigrationMetadata.Id
         {
-            get { return "202105310922268_Initial"; }
+            get { return "202106110736054_Init"; }
         }
         
         string IMigrationMetadata.Source

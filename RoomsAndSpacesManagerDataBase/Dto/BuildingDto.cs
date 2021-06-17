@@ -15,15 +15,16 @@ namespace RoomsAndSpacesManagerDataBase.Dto
         public string Path { get; set; }
         public int ProjectId { get; set; }
 
+        [NotMapped]
+        public int? SunnuryArea { get; set; }
+
+
         public virtual ProjectDto Project { get; set; }
 
-        public virtual ICollection<RoomDto> Rooms { get; set; }
+        public virtual ICollection<SubdivisionDto> Subdivisions { get; set; }
         public override string ToString()
         {
             return Name;
         }
-
-
-
     }
 }

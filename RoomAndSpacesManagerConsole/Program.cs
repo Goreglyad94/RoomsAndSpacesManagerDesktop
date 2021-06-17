@@ -13,7 +13,8 @@ namespace RoomAndSpacesManagerConsole
     {
         static void Main(string[] args)
         {
-            ProjectInfoToDb();
+            RoomInfoToDb();
+            //ProjectInfoToDb();
         }
 
         public static void RoomInfoToDb()
@@ -27,7 +28,7 @@ namespace RoomAndSpacesManagerConsole
         public static void ProjectInfoToDb()
         {
             AddInfoToDb projCont = new AddInfoToDb();
-            projCont.ProjectInfoToDB("Екатеринбург3", "ЕКА-ЦКЛ3");
+            projCont.ProjectInfoToDB("Екатеринбург", "ЕКА-ЦКЛ");
         }
     }
 }

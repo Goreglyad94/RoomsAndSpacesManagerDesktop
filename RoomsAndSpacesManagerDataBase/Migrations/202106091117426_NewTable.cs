@@ -1,9 +1,9 @@
-﻿namespace RoomsAndSpacesManagerDesktop.Migrations
+﻿namespace RoomsAndSpacesManagerDataBase.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class AddRabMesta : DbMigration
+    public partial class NewTable : DbMigration
     {
         public override void Up()
         {
@@ -30,6 +30,18 @@
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
+                "dbo.RaSM_SubdivisionDto",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                        BuildingId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.RaSM_Buildings", t => t.BuildingId, cascadeDelete: true)
+                .Index(t => t.BuildingId);
+            
+            CreateTable(
                 "dbo.RaSM_Rooms",
                 c => new
                     {
@@ -38,6 +50,8 @@
                         ShortName = c.String(),
                         RoomNumber = c.String(),
                         Min_area = c.String(),
+                        Count = c.Int(),
+                        Summary_Area = c.Int(),
                         Class_chistoti_SanPin = c.String(),
                         Class_chistoti_SP_158 = c.String(),
                         Class_chistoti_GMP = c.String(),
@@ -60,14 +74,19 @@
                         Discription_GSV = c.String(),
                         Categoty_Chistoti_po_san_epid = c.String(),
                         Discription_HS = c.String(),
-                        Category_of_fire_Deng = c.String(),
+                        Categoty_pizharoopasnosti = c.String(),
                         Rab_mesta_posetiteli = c.String(),
+                        Nagruzki_na_perekririe = c.String(),
+                        El_Nagruzka = c.String(),
                         ArRoomId = c.Int(nullable: false),
                         BuildingId = c.Int(nullable: false),
+                        SubdivisionDto_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.RaSM_Buildings", t => t.BuildingId, cascadeDelete: true)
-                .Index(t => t.BuildingId);
+                .ForeignKey("dbo.RaSM_SubdivisionDto", t => t.SubdivisionDto_Id)
+                .Index(t => t.BuildingId)
+                .Index(t => t.SubdivisionDto_Id);
             
             CreateTable(
                 "dbo.RaSM_RoomCategory",
@@ -136,16 +155,21 @@
         {
             DropForeignKey("dbo.RaSM_RoomNames", "SubCategory_Id", "dbo.RaSM_SubRoomCategory");
             DropForeignKey("dbo.RaSM_SubRoomCategory", "Category_Id", "dbo.RaSM_RoomCategory");
+            DropForeignKey("dbo.RaSM_Rooms", "SubdivisionDto_Id", "dbo.RaSM_SubdivisionDto");
             DropForeignKey("dbo.RaSM_Rooms", "BuildingId", "dbo.RaSM_Buildings");
+            DropForeignKey("dbo.RaSM_SubdivisionDto", "BuildingId", "dbo.RaSM_Buildings");
             DropForeignKey("dbo.RaSM_Buildings", "ProjectId", "dbo.RaSM_Projects");
             DropIndex("dbo.RaSM_RoomNames", new[] { "SubCategory_Id" });
             DropIndex("dbo.RaSM_SubRoomCategory", new[] { "Category_Id" });
+            DropIndex("dbo.RaSM_Rooms", new[] { "SubdivisionDto_Id" });
             DropIndex("dbo.RaSM_Rooms", new[] { "BuildingId" });
+            DropIndex("dbo.RaSM_SubdivisionDto", new[] { "BuildingId" });
             DropIndex("dbo.RaSM_Buildings", new[] { "ProjectId" });
             DropTable("dbo.RaSM_RoomNames");
             DropTable("dbo.RaSM_SubRoomCategory");
             DropTable("dbo.RaSM_RoomCategory");
             DropTable("dbo.RaSM_Rooms");
+            DropTable("dbo.RaSM_SubdivisionDto");
             DropTable("dbo.RaSM_Projects");
             DropTable("dbo.RaSM_Buildings");
         }

@@ -44,6 +44,7 @@ namespace RoomAndSpacesOV
                     count++;
 
                     var rvtRoomNumber = item.LookupParameter("Номер").AsString();
+
                     var roomDto = context.RaSM_Rooms.FirstOrDefault(x => x.RoomNumber == rvtRoomNumber);
 
                     SpaceDto space = new SpaceDto()
@@ -74,8 +75,11 @@ namespace RoomAndSpacesOV
                         space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Температура максимальная С", "T_max", item, roomDto));
                         space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Температура минимальная С", "T_min", item, roomDto));
                         space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Температура расчетная С", "T_calc", item, roomDto));
+                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Мощность_ТХ", "El_Nagruzka", item, roomDto));
+                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Освещенность_ТХ", "Osveshennost_pro_obshem_osvech", item, roomDto));
                         space.parameters.RemoveAll(x => x == null);
                     }
+                    
 
 
 

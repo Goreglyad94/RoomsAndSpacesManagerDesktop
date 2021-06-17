@@ -42,7 +42,7 @@ namespace RoomAndSpacesManagerConsole
                     var id = roomAndSpacesDbContext.RaSM_RoomNames.FirstOrDefault(x => x.Name == straintname)?.Id;
                     var ddd = new RoomDto()
                     {
-                        BuildingId = roomAndSpacesDbContext.RaSM_Buildings.FirstOrDefault(x => x.Name == BuildingName).Id,
+                        //BuildingId = roomAndSpacesDbContext.RaSM_Buildings.FirstOrDefault(x => x.Name == BuildingName).Id,
                         RoomNumber = fields[1],
                         //Name = fields[2],
                         ShortName = fields[3],

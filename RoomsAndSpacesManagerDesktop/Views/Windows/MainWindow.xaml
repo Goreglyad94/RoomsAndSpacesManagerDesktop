@@ -15,6 +15,12 @@
         <TabItem Header="Сформировать задание" IsSelected="True">
             <ucs:CreateIssueMainWindow x:Name="CreateIssue"/>
         </TabItem>
+        <TabItem Header="Программа помещений" IsSelected="True">
+            <ucsSub:_RoomProgram x:Name="RoomProgramm"/>
+        </TabItem>
+        <TabItem Header="Сводная">
+            <ucsSub:_Summary x:Name="Summury"/>
+        </TabItem>
         <TabItem Header="АР" IsSelected="True">
             <ucsSub:ArTabUserControl x:Name="ArTub"/>
         </TabItem>

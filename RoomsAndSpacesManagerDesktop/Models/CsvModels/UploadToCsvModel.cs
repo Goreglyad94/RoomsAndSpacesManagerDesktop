@@ -23,7 +23,7 @@ namespace RoomsAndSpacesManagerDesktop.Models.CsvModels
 
             var dfdd = openFileDialog.SelectedPath;
 
-
+             
             var isExist = File.Exists(dfdd + @"\Программа.csv");
 
             if (isExist)

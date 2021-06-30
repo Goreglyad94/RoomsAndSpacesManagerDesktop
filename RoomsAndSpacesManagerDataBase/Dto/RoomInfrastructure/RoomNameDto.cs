@@ -44,7 +44,7 @@ namespace RoomsAndSpacesManagerDataBase.Dto.RoomInfrastructure
 
 
 
-
+        public virtual ICollection<RoomEquipmentDto> RoomEquipments { get; set; }
         public virtual SubCategoryDto SubCategory { get; set; }
 
         public override string ToString()

@@ -41,9 +41,44 @@
                           SelectedItem="{Binding SelectedRoom}" 
                           ItemsSource="{Binding Rooms, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                           AutoGenerateColumns="False">
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="ContentTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <TextBlock TextWrapping="Wrap" Text="{Binding}"></TextBlock>
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+                <DataGrid.ItemContainerStyle>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="Tag" Value="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" />
+                        <Setter Property="ContextMenu">
+                            <Setter.Value>
+                                <ContextMenu>
+                                    <MenuItem Header="Удалить" Command="{Binding PlacementTarget.Tag.DeleteRoomCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding }" />
+                                    <MenuItem Header="Перечень оборудования" Command="{Binding PlacementTarget.Tag.GetRoomEquipments, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding }" />
+                                </ContextMenu>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </DataGrid.ItemContainerStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="auto"/>
-                    <DataGridTextColumn Header="Наименвоание помещений" Binding="{Binding Name}" Width="auto"/>
+                    <DataGridTemplateColumn Header="Наименвоание помещений" Width="auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" TextWrapping="Wrap"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Name}" TextWrapping="Wrap" AcceptsReturn="True"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Мин. площадь" Binding="{Binding Min_area}" Width="70"/>
                     <DataGridTextColumn Header="Класс чистоты по СанПиН" Binding="{Binding Class_chistoti_SanPin}"/>
                     <DataGridTextColumn Header="Класс чистоты по СП 158" Binding="{Binding Class_chistoti_SP_158}"/>
@@ -72,11 +107,13 @@
             <!--<Button Content="Add new row" Command="{Binding AddNewRowCommand}" HorizontalAlignment="Left" Margin="10 0 0 0" Grid.Column="0" Grid.Row="2" Width="80" Height="25"/>-->
 
             <DockPanel Grid.Row="2" Grid.Column="2">
-                <Button Command="{Binding PushToDbCommand}" Content="Push" Width="50" Height="25" DockPanel.Dock="Right" Margin="0 0 10 0"/>
+                <Button Command="{Binding PushToDbCommand}" Content="Отправить изменения в БД" Width="170" Height="25" DockPanel.Dock="Right" Margin="0 0 10 0"/>
                 <Button Command="{Binding PullFromDbCommand}" Content="Pull" Width="50" Height="25" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"/>
                 <TextBlock Text="{Binding Status}" VerticalAlignment="Center" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"/>
             </DockPanel>
 
+            <Button Command="{Binding AddNewRowCommand}" Content="Добавить строку" Width="100" Height="25" HorizontalAlignment="Left" Grid.Row="2" Margin="0 0 10 0" />
+            
         </Grid>
     </Grid>
 </UserControl>

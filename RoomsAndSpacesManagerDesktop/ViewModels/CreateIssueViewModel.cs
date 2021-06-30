@@ -710,7 +710,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         public ICommand UploadProgramToCsv { get; set; }
         private void OnUploadProgramToCsvExecutde(object obj)
         {
-            uploadToCsvModel.UploadRoomProgram(SelectedProject);
+            uploadToCsvModel.UploadRoomProgramToExcel(SelectedProject);
         }
         private bool CanUploadProgramToCsvExecute(object obj) => true;
 

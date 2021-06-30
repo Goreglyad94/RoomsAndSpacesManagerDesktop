@@ -41,6 +41,13 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
             context.SaveChanges();
         }
 
+        public void RemoveRoom(RoomNameDto roomNameDto)
+        {
+            context.RaSM_RoomNames.Remove(roomNameDto);
+            context.SaveChanges();
+        }
+
+
         public void SaveChanges()
         {
             context.SaveChanges();
@@ -74,6 +81,11 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
         {
             var ddf = context.RaSM_RoomNames.Where(x => x.SubCategotyId == subCat.Id).ToList();
             return ddf;
+        }
+
+        public List<RoomEquipmentDto> GetAllEquipments()
+        {
+            return context.RaSM_RoomEquipments.ToList();
         }
         #endregion
     }

@@ -165,6 +165,10 @@
     <Compile Include="Migrations\202106180729144_AddNotationFieldToRooms.designer.cs">
       <DependentUpon>202106180729144_AddNotationFieldToRooms.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106300740240_add new table RoomEquipmentDto.cs" />
+    <Compile Include="Migrations\202106300740240_add new table RoomEquipmentDto.designer.cs">
+      <DependentUpon>202106300740240_add new table RoomEquipmentDto.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CsvModels\UploadToCsvModel.cs" />
     <Compile Include="Models\DbModels\Base\MainDbContext.cs" />
@@ -173,6 +177,7 @@
     <Compile Include="ViewModels\Base\ViewModel.cs" />
     <Compile Include="ViewModels\CopySubDivisionViewModel.cs" />
     <Compile Include="ViewModels\CreateIssueViewModel.cs" />
+    <Compile Include="ViewModels\RoomEquipmentsViewModel.cs" />
     <Compile Include="ViewModels\RoomsPropertiesViewModel.cs" />
     <Compile Include="Views\UserControls\CreateIssueMainWindow.xaml.cs">
       <DependentUpon>CreateIssueMainWindow.xaml</DependentUpon>
@@ -219,6 +224,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\Windows\RoomEquipmentsWindow.xaml.cs">
+      <DependentUpon>RoomEquipmentsWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
@@ -280,6 +288,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Windows\RoomEquipmentsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -306,6 +318,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202106180729144_AddNotationFieldToRooms.resx">
       <DependentUpon>202106180729144_AddNotationFieldToRooms.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106300740240_add new table RoomEquipmentDto.resx">
+      <DependentUpon>202106300740240_add new table RoomEquipmentDto.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -126,6 +126,7 @@
                                 <ContextMenu>
                                     <MenuItem Header="Удалить" Command="{Binding PlacementTarget.Tag.DeleteIssueCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding }" />
                                     <MenuItem Header="Значения по умолчанию" Command="{Binding PlacementTarget.Tag.SetDefaultValueCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding }" />
+                                    <MenuItem Header="Оборудование" Command="{Binding PlacementTarget.Tag.GetEquipmentCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding }" />
                                 </ContextMenu>
                             </Setter.Value>
                         </Setter>
@@ -148,13 +149,23 @@
                     <DataGridTemplateColumn Header="Наименование" Width="250">
                         <DataGridTemplateColumn.CellEditingTemplate>
                             <DataTemplate>
-                                <ComboBox Height="20" ItemsSource="{Binding Path=DataContext.RoomsNames, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" SelectedItem="{Binding Path=DataContext.SelectedRoomName, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="DropDownOpened">
-                                            <i:InvokeCommandAction Command="{Binding Path=DataContext.RenderComboboxCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding ElementName=SubCatsList,Path=SelectedItem}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </ComboBox>
+                                <DockPanel>
+                                    <TextBox Text="{Binding Path=DataContext.RoomNameFiltering, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" DockPanel.Dock="Top">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Unloaded">
+                                                <i:InvokeCommandAction Command="{Binding Path=DataContext.ClearTextboxCommand, Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBox>
+                                    <ComboBox IsDropDownOpen="{Binding Path=DataContext.IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" DockPanel.Dock="Bottom" Height="20" ItemsSource="{Binding Path=DataContext.RoomsNames, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" SelectedItem="{Binding Path=DataContext.SelectedRoomName, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="DropDownOpened">
+                                                <i:InvokeCommandAction Command="{Binding Path=DataContext.RenderComboboxCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding ElementName=SubCatsList,Path=SelectedItem}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </ComboBox>
+                                    
+                                </DockPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                         <DataGridTemplateColumn.CellTemplate>

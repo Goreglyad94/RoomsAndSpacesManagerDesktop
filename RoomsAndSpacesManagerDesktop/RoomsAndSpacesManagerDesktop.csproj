@@ -169,6 +169,10 @@
     <Compile Include="Migrations\202106300740240_add new table RoomEquipmentDto.designer.cs">
       <DependentUpon>202106300740240_add new table RoomEquipmentDto.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202107011127216_add Equipment table.cs" />
+    <Compile Include="Migrations\202107011127216_add Equipment table.designer.cs">
+      <DependentUpon>202107011127216_add Equipment table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CsvModels\UploadToCsvModel.cs" />
     <Compile Include="Models\DbModels\Base\MainDbContext.cs" />
@@ -323,6 +327,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202106300740240_add new table RoomEquipmentDto.resx">
       <DependentUpon>202106300740240_add new table RoomEquipmentDto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107011127216_add Equipment table.resx">
+      <DependentUpon>202107011127216_add Equipment table.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

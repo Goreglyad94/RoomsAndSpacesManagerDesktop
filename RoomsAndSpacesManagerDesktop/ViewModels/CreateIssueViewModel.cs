@@ -29,11 +29,12 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         RoomsDbContext roomsContext = new RoomsDbContext();
         UploadToCsvModel uploadToCsvModel = new UploadToCsvModel();
         List<RoomNameDto> roomsNamesList;
+        List<RoomNameDto> allRoomNames { get; set; }
         #endregion
 
         public CreateIssueViewModel()
         {
-            
+            allRoomNames = roomsContext.GetAllRoomNames();
 
             //context.DB();
             Projects = projContext.GetProjects();
@@ -54,6 +55,8 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             CopySubdivisionCommnd = new RelayCommand(OnCopySubdivisionCommndExecutde, CanCopySubdivisionCommndExecute);
             LoadedSummuryCommand = new RelayCommand(OnLoadedSummuryCommandExecutde, CanLoadedSummuryCommandExecute);
             UploadProgramToCsv = new RelayCommand(OnUploadProgramToCsvExecutde, CanUploadProgramToCsvExecute);
+            ClearTextboxCommand = new RelayCommand(OnClearTextboxCommandExecuted, CanClearTextboxCommandExecute);
+            GetEquipmentCommand = new RelayCommand(OnGetEquipmentCommandExecutde, CanGetEquipmentCommandExecute);
             #endregion
         }
 
@@ -69,7 +72,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                 Rooms = CollectionViewSource.GetDefaultView(roomDtos);
                 Rooms.Refresh();
             }
-            
+
 
         }
 
@@ -350,6 +353,9 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             set
             {
                 selectedSubCategoties = value;
+
+
+
             }
         }
 
@@ -372,6 +378,15 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             {
                 selectedRoomName = value;
                 AddRoomInfo();
+                EquipmentDbContext equipmentDbContext = new EquipmentDbContext();
+
+
+                if (SelectedRoom.Id != 0)
+                {
+                    List<EquipmentDto> equipment = equipmentDbContext.GetEquipments(SelectedRoomName).Select(x => new EquipmentDto(x) { RoomId = SelectedRoom.Id }).ToList();
+                    equipmentDbContext.AddNewEquipments(equipment, SelectedRoom);
+                }
+
                 selectedRoomName = null;
             }
         }
@@ -403,6 +418,22 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             SelectedRoom.Discription_HS = SelectedRoomName.Discription_HS;
         }
 
+        #region Флаг разворачивания Comboboxa
+
+        private bool isDropDownOpen;
+
+        public bool IsDropDownOpen
+        {
+            get { return isDropDownOpen; }
+            set
+            {
+                Set(ref isDropDownOpen, value);
+            }
+        }
+
+        #endregion
+
+
         #endregion
 
         #region Комманда при отрисовке комбобокса
@@ -422,8 +453,60 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                 RoomsNames.Refresh();
             }
 
+            if (RoomNameFiltering != "")
+            {
+                RoomsNames = CollectionViewSource.GetDefaultView(allRoomNames);
+                RoomsNames.Filter = delegate (object item) {
+                    RoomNameDto user = item as RoomNameDto;
+                    if (user != null && user.Name.ToLower().StartsWith(RoomNameFiltering.ToLower())) return true;
+                    return false;
+                };
+                RoomsNames.Refresh();
+            }
+
         }
         private bool CanRenderComboboxCommandExecute(object p) => true;
+
+        #endregion
+
+        #region Строки фильтрации помещений
+        private string roomNameFiltering = "";
+        public string RoomNameFiltering
+        {
+            get { return roomNameFiltering; }
+            set
+            {
+                roomNameFiltering = value;
+                if (RoomNameFiltering != "")
+                {
+                    IsDropDownOpen = true;
+                }
+                else
+                {
+                    IsDropDownOpen = false;
+                }
+                CollectionViewSource.GetDefaultView(allRoomNames).Refresh();
+            }
+        }
+
+        private bool UserFilter(object item)
+        {
+            if (String.IsNullOrEmpty(RoomNameFiltering))
+                return true;
+            else
+                return ((item as RoomNameDto).Name.IndexOf(RoomNameFiltering, StringComparison.OrdinalIgnoreCase) >= 0);
+        }
+
+        #endregion
+
+        #region Анлоадед текстбокс
+
+        public ICommand ClearTextboxCommand { get; set; }
+        private void OnClearTextboxCommandExecuted(object obj)
+        {
+            RoomNameFiltering = "";
+        }
+        private bool CanClearTextboxCommandExecute(object obj) => true;
 
         #endregion
 
@@ -497,7 +580,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
 
         #endregion
 
-        #region Получить значение по умолчанию по выбранной строке
+        #region Комманд. Получить значение по умолчанию по выбранной строке
         public ICommand SetDefaultValueCommand { get; set; }
 
         private void OnSetDefaultValueCommandExecutde(object p)
@@ -538,6 +621,19 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             //Rooms.Refresh();
         }
         private bool CanSetDefaultValueCommandExecute(object p) => true;
+        #endregion
+
+        #region Комманд. Открыть окно с оборудованием
+
+        public ICommand GetEquipmentCommand { get; set; }
+
+        private void OnGetEquipmentCommandExecutde(object p)
+        {
+
+        }
+        private bool CanGetEquipmentCommandExecute(object p) => true;
+
+
         #endregion
 
         /*Нижняя панель. Интерфейс добавления строки и синхронизации с БД~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -630,7 +726,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
 
         #region Список помещений для целого проекта с сортировкой. Помещения получаются при выборе проекта. 
         private List<RoomDto> allRooms;
-        
+
 
         public List<RoomDto> AllRooms
         {
@@ -657,7 +753,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         {
             get => summury;
             set => Set(ref summury, value);
-        } 
+        }
         #endregion
 
         #region Комманд. Загрузка окна Summury
@@ -683,7 +779,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                                 int.TryParse(room.Min_area, out i);
                                 summAreaSubdiv += i;
                             }
-                                
+
                         }
                         subDiv.SunnuryArea = summAreaSubdiv;
                         summAreaBuild += summAreaSubdiv;
@@ -694,7 +790,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                 Summury = CollectionViewSource.GetDefaultView(buildList);
                 Summury.Refresh();
                 SummuryArea = sss;
-            }    
+            }
         }
         private bool CanLoadedSummuryCommandExecute(object obj) => true;
 
@@ -723,7 +819,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             {
                 MessageBox.Show(ex.Message, "Ошибка");
             }
-            
+
         }
         private bool CanUploadProgramToCsvExecute(object obj) => true;
 

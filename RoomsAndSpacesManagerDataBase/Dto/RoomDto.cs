@@ -774,9 +774,10 @@ namespace RoomsAndSpacesManagerDataBase.Dto
 
         #endregion
 
-
         public int SubdivisionId { get; set; }
         public virtual SubdivisionDto Subdivision { get; set; }
+
+        public virtual ICollection<EquipmentDto> Equipments { get; set; }
         #endregion
     }
 }

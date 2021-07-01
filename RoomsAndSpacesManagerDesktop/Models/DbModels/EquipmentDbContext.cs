@@ -1,4 +1,5 @@
-﻿using RoomsAndSpacesManagerDataBase.Dto.RoomInfrastructure;
+﻿using RoomsAndSpacesManagerDataBase.Dto;
+using RoomsAndSpacesManagerDataBase.Dto.RoomInfrastructure;
 using RoomsAndSpacesManagerDesktop.Models.DbModels.Base;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
             return context.RaSM_RoomEquipments.Where(x => x.RoomNameId == roomName.Id).ToList();
         }
 
+
         public void AddNewEquipment(RoomNameDto roomName)
         {
             context.RaSM_RoomEquipments.Add(new RoomEquipmentDto() { RoomNameId = roomName.Id});
@@ -32,6 +34,14 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
             context.SaveChanges();
         }
 
+        public void AddNewEquipments(List<EquipmentDto> equipments, RoomDto room)
+        {
+            context.RaSM_Equipments.RemoveRange(context.RaSM_Equipments.Where(x => x.RoomId == room.Id));
+            context.RaSM_Equipments.AddRange(equipments);
+            context.SaveChanges();
+        }
+
+
         public void RemoveEquipment(RoomEquipmentDto equipment)
         {
             context.RaSM_RoomEquipments.Remove(equipment);
@@ -42,5 +52,15 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
         {
             context.SaveChanges();
         }
+
+
+
+
+
+
+
+
+
+
     }
 }

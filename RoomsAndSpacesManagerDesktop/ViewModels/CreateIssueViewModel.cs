@@ -15,6 +15,7 @@ using RoomsAndSpacesManagerDesktop.Infrastructure.Commands;
 using RoomsAndSpacesManagerDesktop.Models.CsvModels;
 using RoomsAndSpacesManagerDesktop.Models.DbModels;
 using RoomsAndSpacesManagerDesktop.Models.DbModels.Base;
+using RoomsAndSpacesManagerDesktop.Models.ExcelModels;
 using RoomsAndSpacesManagerDesktop.ViewModels.Base;
 using RoomsAndSpacesManagerDesktop.Views.Windows;
 
@@ -32,6 +33,8 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
 
         public CreateIssueViewModel()
         {
+            
+
             //context.DB();
             Projects = projContext.GetProjects();
             Categories = roomsContext.GetCategories();
@@ -66,6 +69,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                 Rooms = CollectionViewSource.GetDefaultView(roomDtos);
                 Rooms.Refresh();
             }
+            
 
         }
 
@@ -611,13 +615,13 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         private bool CanPushToDbCommandExecute(object p) => true;
         #endregion
 
-        #region Комманд. Закинуть обновления пространств в БД
+        #region Комманд. Получить обновления пространств из БД
         public ICommand PullFromDbCommand { get; set; }
         private void OnPullFromDbCommandExecutde(object p)
         {
-            //Пока нет реализации
+            MainExcelModel mainExcelModel = new MainExcelModel();
         }
-        private bool CanPullFromDbCommandExecute(object p) => false;
+        private bool CanPullFromDbCommandExecute(object p) => true;
         #endregion
 
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -705,12 +709,21 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         }
         #endregion
 
-        #region Комманд. Загрузка окна Summury
+        #region Комманд. Выгрузка в Excel
 
         public ICommand UploadProgramToCsv { get; set; }
         private void OnUploadProgramToCsvExecutde(object obj)
         {
-            uploadToCsvModel.UploadRoomProgramToExcel(SelectedProject);
+            try
+            {
+                uploadToCsvModel.UploadRoomProgramToExcel(SelectedProject);
+                MessageBox.Show("Выгрузка завершена", "Статус");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка");
+            }
+            
         }
         private bool CanUploadProgramToCsvExecute(object obj) => true;
 

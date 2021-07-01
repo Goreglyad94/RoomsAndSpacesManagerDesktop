@@ -83,10 +83,7 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
             return ddf;
         }
 
-        public List<RoomEquipmentDto> GetAllEquipments()
-        {
-            return context.RaSM_RoomEquipments.ToList();
-        }
+        
         #endregion
     }
 }

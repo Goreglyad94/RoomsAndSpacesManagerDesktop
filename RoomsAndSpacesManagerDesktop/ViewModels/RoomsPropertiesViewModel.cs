@@ -29,6 +29,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             AddNewRowCommand = new RelayCommand(OnAddNewRowCommandExecutde, CanAddNewRowCommandExecute);
             DeleteRoomCommand = new RelayCommand(OnDeleteRoomCommandExecutde, CanDeleteRoomCommandExecute);
             GetRoomEquipments = new RelayCommand(OnGetRoomEquipmentsExecutde, CanGetRoomEquipmentsExecute);
+            
             #endregion
         }
 
@@ -83,7 +84,8 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                 selectedSubCategoties = value;
                 if (SelectedSubCategoties != null)
                 {
-                    RoomsList = roomsContext.GetRoomNames(SelectedSubCategoties);
+                    RoomsDbContext newroomsDbContext = new RoomsDbContext();
+                    RoomsList = newroomsDbContext.GetRoomNames(SelectedSubCategoties);
                     Rooms = CollectionViewSource.GetDefaultView(RoomsList);
                     Rooms.Refresh();
                 }
@@ -175,17 +177,23 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         #endregion
 
         #region Комманд. Список оборудования
-
         public ICommand GetRoomEquipments { get; set; }
         private void OnGetRoomEquipmentsExecutde(object p)
         {
+            RoomEquipmentsViewModel.RoomName = p as RoomNameDto;
             RoomEquipmentsWindow roomEquipmentsWindow = new RoomEquipmentsWindow();
             RoomEquipmentsViewModel roomEquipmentsViewModel = new RoomEquipmentsViewModel();
+            
             roomEquipmentsWindow.DataContext = roomEquipmentsViewModel;
             roomEquipmentsWindow.ShowDialog();
+
+            Rooms = CollectionViewSource.GetDefaultView(RoomsList);
+            Rooms.Refresh();
+
         } 
         private bool CanGetRoomEquipmentsExecute(object p) => true;
-
         #endregion
+
+        
     }
 }

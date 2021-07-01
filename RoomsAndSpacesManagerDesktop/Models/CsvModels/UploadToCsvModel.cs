@@ -119,7 +119,7 @@ namespace RoomsAndSpacesManagerDesktop.Models.CsvModels
 
                         worksheet.Cells[rowCount, colCount].Value = iiis;
                         colCount++;
-                        worksheet.Cells[rowCount, colCount].Value = room.Name;
+                        worksheet.Cells[rowCount, colCount].Value = room.ShortName;
                         colCount++;
                         worksheet.Cells[rowCount, colCount].Value = room.Min_area;
                         colCount++;
@@ -133,7 +133,7 @@ namespace RoomsAndSpacesManagerDesktop.Models.CsvModels
                 i++;
             }
 
-            FileInfo excelFile = new FileInfo(@"C:\Users\ya.goreglyad\Desktop\Программа.xlsx");
+            FileInfo excelFile = new FileInfo(dfdd + @"\Программа.xlsx");
             excel.SaveAs(excelFile);
         }
     }

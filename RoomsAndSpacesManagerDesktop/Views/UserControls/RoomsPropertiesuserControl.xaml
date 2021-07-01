@@ -67,6 +67,7 @@
                 </DataGrid.ItemContainerStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="auto"/>
+                    <DataGridTextColumn Header="Оборудование" Binding="{Binding EquipmentAvailability}" Width="auto"/>
                     <DataGridTemplateColumn Header="Наименвоание помещений" Width="auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

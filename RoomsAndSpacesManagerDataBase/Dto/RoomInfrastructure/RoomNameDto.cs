@@ -4,13 +4,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
+using RoomsAndSpacesManagerDataBase.Data.DataBaseContext;
 
 namespace RoomsAndSpacesManagerDataBase.Dto.RoomInfrastructure
 {
     [Table("RaSM_RoomNames")]
-    public class RoomNameDto
+    public class RoomNameDto : ViewModel
     {
-        public int Id { get; set; }
+
+
+        public RoomNameDto()
+        {
+
+        }
+
+        private int id;
+        public int Id
+        {
+            get => id;
+            set
+            {
+                id = value;
+                RoomAndSpacesDbContext roomAndSpacesDbContext = new RoomAndSpacesDbContext();
+                var edee = roomAndSpacesDbContext.RaSM_RoomEquipments.Where(x => x.RoomNameId == Id).ToList();
+                if (edee.Count == 0)
+                {
+                    EquipmentAvailability = "No";
+                }
+                else
+                {
+                    EquipmentAvailability = "Yes";
+                }
+            }
+        }
         public string Key { get; set; }
         public string Name { get; set; }
 
@@ -40,11 +66,30 @@ namespace RoomsAndSpacesManagerDataBase.Dto.RoomInfrastructure
         public string Discription_HS { get; set; }
         #endregion
 
+        [NotMapped]
+        public string EquipmentAvailability
+        {
+            get => equipmentAvailability;
+            set
+            {
+                Set(ref equipmentAvailability, value);
+            }
+        }
+
         public int SubCategotyId { get; set; }
 
 
+        private ICollection<RoomEquipmentDto> roomEquipments;
+        private string equipmentAvailability;
 
-        public virtual ICollection<RoomEquipmentDto> RoomEquipments { get; set; }
+        public virtual ICollection<RoomEquipmentDto> RoomEquipments
+        {
+            get => roomEquipments;
+            set
+            {
+                roomEquipments = value;
+            }
+        }
         public virtual SubCategoryDto SubCategory { get; set; }
 
         public override string ToString()

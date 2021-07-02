@@ -13,21 +13,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
-
 namespace RoomsAndSpacesManagerDesktop.ViewModels
 {
-    class RoomEquipmentsViewModel : ViewModel
+    class EquipmentsViewModel : ViewModel
     {
-        public static RoomNameDto RoomName { get; set; }
+        public static RoomDto Room { get; set; }
 
         EquipmentDbContext context = new EquipmentDbContext();
 
         MainDbContext roomContext = new MainDbContext();
-        public RoomEquipmentsViewModel()
+        public EquipmentsViewModel()
         {
-            if (RoomName != null)
+            if (Room != null)
             {
-                RoomEquipmentsList = CollectionViewSource.GetDefaultView(context.GetEquipments(RoomName));
+                RoomEquipmentsList = CollectionViewSource.GetDefaultView(context.GetEquipments(Room));
                 RoomEquipmentsList.Refresh();
             }
             else
@@ -35,7 +34,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                 RoomEquipmentsList = CollectionViewSource.GetDefaultView(context.GetAllEquipments());
                 RoomEquipmentsList.Refresh();
             }
-            
+
             AddNewRowCommand = new RelayCommand(OnAddNewRowCommandExecuted, CanAddNewRowCommandExecute);
             SaveChangesCommand = new RelayCommand(OnSaveChangesCommandExecuted, CanSaveChangesCommandExecute);
             ChangeDataFromExcelCommand = new RelayCommand(OnChangeDataFromExcelCommandExecuted, CanChangeDataFromExcelCommandExecute);
@@ -55,9 +54,9 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         public ICommand AddNewRowCommand { get; set; }
         private void OnAddNewRowCommandExecuted(object obj)
         {
-            context.AddNewEquipment(RoomName);
-            RoomEquipmentsList = CollectionViewSource.GetDefaultView(context.GetEquipments(RoomName));
-            RoomEquipmentsList.Refresh();
+            //context.AddNewEquipment(Room);
+            //RoomEquipmentsList = CollectionViewSource.GetDefaultView(context.GetEquipments(Room));
+            //RoomEquipmentsList.Refresh();
         }
         private bool CanAddNewRowCommandExecute(object obj) => true;
         #endregion
@@ -79,11 +78,11 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         private void OnChangeDataFromExcelCommandExecuted(object obj)
         {
 
-            MainExcelModel mainExcelModel = new MainExcelModel();
-            mainExcelModel.AddToDbFromExcelEqupment(RoomName);
+            //MainExcelModel mainExcelModel = new MainExcelModel();
+            //mainExcelModel.AddToDbFromExcelEqupment(RoomName);
 
-            RoomEquipmentsList = CollectionViewSource.GetDefaultView(context.GetEquipments(RoomName));
-            RoomEquipmentsList.Refresh();
+            //RoomEquipmentsList = CollectionViewSource.GetDefaultView(context.GetEquipments(RoomName));
+            //RoomEquipmentsList.Refresh();
 
         }
         private bool CanChangeDataFromExcelCommandExecute(object obj) => true;
@@ -96,10 +95,10 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
 
         private void OnDeleteEquipmentCommandExecuted(object obj)
         {
-            context.RemoveEquipment(obj as RoomEquipmentDto);
+            //context.RemoveEquipment(obj as RoomEquipmentDto);
 
-            RoomEquipmentsList = CollectionViewSource.GetDefaultView(context.GetEquipments(RoomName));
-            RoomEquipmentsList.Refresh();
+            //RoomEquipmentsList = CollectionViewSource.GetDefaultView(context.GetEquipments(RoomName));
+            //RoomEquipmentsList.Refresh();
         }
         private bool CanDeleteEquipmentCommandExecute(object obj) => true;
 

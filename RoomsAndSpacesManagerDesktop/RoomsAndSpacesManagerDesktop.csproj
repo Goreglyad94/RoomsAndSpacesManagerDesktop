@@ -183,6 +183,7 @@
     <Compile Include="ViewModels\Base\ViewModel.cs" />
     <Compile Include="ViewModels\CopySubDivisionViewModel.cs" />
     <Compile Include="ViewModels\CreateIssueViewModel.cs" />
+    <Compile Include="ViewModels\EquipmentsViewModel.cs" />
     <Compile Include="ViewModels\RoomEquipmentsViewModel.cs" />
     <Compile Include="ViewModels\RoomsPropertiesViewModel.cs" />
     <Compile Include="Views\UserControls\CreateIssueMainWindow.xaml.cs">
@@ -223,6 +224,9 @@
     </Compile>
     <Compile Include="Views\Windows\CopySubdivisionWindow.xaml.cs">
       <DependentUpon>CopySubdivisionWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\EquipmentsWindow.xaml.cs">
+      <DependentUpon>EquipmentsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -287,6 +291,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Windows\CopySubdivisionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\EquipmentsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

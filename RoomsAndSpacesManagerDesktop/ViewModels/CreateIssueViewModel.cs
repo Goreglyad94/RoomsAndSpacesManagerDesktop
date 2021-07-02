@@ -629,6 +629,14 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
 
         private void OnGetEquipmentCommandExecutde(object p)
         {
+            EquipmentsViewModel.Room = SelectedRoom;
+
+            EquipmentsWindow equipmentsWindow = new EquipmentsWindow();
+            EquipmentsViewModel vm = new EquipmentsViewModel();
+            equipmentsWindow.DataContext = vm;
+
+            equipmentsWindow.ShowDialog();
+
 
         }
         private bool CanGetEquipmentCommandExecute(object p) => true;

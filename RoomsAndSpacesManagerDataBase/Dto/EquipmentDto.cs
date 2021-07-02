@@ -13,6 +13,11 @@ namespace RoomsAndSpacesManagerDataBase.Dto
     public class EquipmentDto
     {
 
+        public EquipmentDto()
+        {
+
+        }
+
         public EquipmentDto(RoomEquipmentDto roomEquipment)
         {
             Number = roomEquipment.Number;

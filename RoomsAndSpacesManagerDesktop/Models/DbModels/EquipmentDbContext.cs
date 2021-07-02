@@ -21,6 +21,10 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
             return context.RaSM_RoomEquipments.Where(x => x.RoomNameId == roomName.Id).ToList();
         }
 
+        public List<EquipmentDto> GetEquipments(RoomDto room)
+        {
+            return context.RaSM_Equipments.Where(x => x.RoomId == room.Id).ToList();
+        }
 
         public void AddNewEquipment(RoomNameDto roomName)
         {
@@ -36,7 +40,7 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
 
         public void AddNewEquipments(List<EquipmentDto> equipments, RoomDto room)
         {
-            context.RaSM_Equipments.RemoveRange(context.RaSM_Equipments.Where(x => x.RoomId == room.Id));
+            //context.RaSM_Equipments.RemoveRange(context.RaSM_Equipments.Where(x => x.RoomId == room.Id));
             context.RaSM_Equipments.AddRange(equipments);
             context.SaveChanges();
         }

@@ -48,9 +48,8 @@ namespace RoomsAndSpacesManagerDataBase.Dto
         {
             this.RoomNameId = oldRoom.RoomNameId;
             this.ShortName = oldRoom.ShortName;
-            this.RoomNumber = oldRoom. RoomNumber;
+            this.RoomNumber = oldRoom.RoomNumber;
             this.Min_area = oldRoom.Min_area;
-
             this.Class_chistoti_SanPin = oldRoom.Class_chistoti_SanPin;
             this.Class_chistoti_SP_158 = oldRoom.Class_chistoti_SP_158;
             this.Class_chistoti_GMP = oldRoom.Class_chistoti_GMP;
@@ -76,7 +75,7 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             this.Categoty_pizharoopasnosti = oldRoom.Categoty_pizharoopasnosti;
             this.Rab_mesta_posetiteli = oldRoom.Rab_mesta_posetiteli;
             this.Nagruzki_na_perekririe = oldRoom.Nagruzki_na_perekririe;
-            this.El_Nagruzka = oldRoom.El_Nagruzka; 
+            this.El_Nagruzka = oldRoom.El_Nagruzka;
         }
 
 
@@ -93,7 +92,6 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             get => name;
             set => Set(ref name, value);
         }
-
         public int RoomNameId
         {
             get => roomNameId;
@@ -108,55 +106,24 @@ namespace RoomsAndSpacesManagerDataBase.Dto
 
             }
         }
-
         public string ShortName { get; set; }
         public string RoomNumber { get; set; }
 
         #region Исходные данные по помещениям
-        int a;
         public string Min_area
         {
             get => min_area;
             set
             {
                 Set(ref min_area, value);
-
-
-
-                if (RoomName != null)
-                {
-
-                    if (Min_area != RoomName.Min_area)
-                    {
-                        Min_area_color = "#ffd6d4";
-                    }
-                    else
-                    {
-                        Min_area_color = "Transparent";
-                    }
-                }
-
             }
         }
-
         public string Class_chistoti_SanPin
         {
             get => class_chistoti_SanPin;
             set
             {
                 Set(ref class_chistoti_SanPin, value);
-                if (RoomName != null)
-                {
-                    if (Class_chistoti_SanPin != RoomName.Class_chistoti_SanPin && Class_chistoti_SanPin != null)
-                    {
-                        Class_chistoti_SanPin_color = "#ffd6d4";
-
-                    }
-                    else
-                    {
-                        Class_chistoti_SanPin_color = "Transparent";
-                    }
-                }
             }
         }
         public string Class_chistoti_SP_158
@@ -165,17 +132,6 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             set
             {
                 Set(ref class_chistoti_SP_158, value);
-                if (RoomName != null)
-                {
-                    if (Class_chistoti_SP_158 != RoomName.Class_chistoti_SP_158 && Class_chistoti_SP_158 != null)
-                    {
-                        Class_chistoti_SP_158_color = "#ffd6d4";
-                    }
-                    else
-                    {
-                        Class_chistoti_SP_158_color = "Transparent";
-                    }
-                }
             }
         }
         public string Class_chistoti_GMP
@@ -184,17 +140,6 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             set
             {
                 Set(ref class_chistoti_GMP, value);
-                if (RoomName != null)
-                {
-                    if (Class_chistoti_GMP != RoomName.Class_chistoti_GMP && Class_chistoti_GMP != null)
-                    {
-                        Class_chistoti_GMP_color = "#ffd6d4";
-                    }
-                    else
-                    {
-                        Class_chistoti_GMP_color = "Transparent";
-                    }
-                }
             }
         }
         public string T_calc
@@ -203,17 +148,7 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             set
             {
                 Set(ref t_calc, value);
-                if (RoomName != null)
-                {
-                    if (T_calc != RoomName.T_calc && T_calc != null)
-                    {
-                        T_calc_color = "#ffd6d4";
-                    }
-                    else
-                    {
-                        T_calc_color = "Transparent";
-                    }
-                }
+
             }
         }
         public string T_min
@@ -222,17 +157,7 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             set
             {
                 Set(ref t_min, value);
-                if (RoomName != null)
-                {
-                    if (T_min != RoomName.T_min && T_min != null)
-                    {
-                        T_min_color = "#ffd6d4";
-                    }
-                    else
-                    {
-                        T_min_color = "Transparent";
-                    }
-                }
+
             }
         }
         public string T_max
@@ -241,17 +166,7 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             set
             {
                 Set(ref t_max, value);
-                if (RoomName != null)
-                {
-                    if (T_max != RoomName.T_max && T_max != null)
-                    {
-                        T_max_color = "#ffd6d4";
-                    }
-                    else
-                    {
-                        T_max_color = "Transparent";
-                    }
-                }
+
             }
         }
         public string Pritok
@@ -260,17 +175,6 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             set
             {
                 Set(ref pritok, value);
-                if (RoomName != null)
-                {
-                    if (Pritok != RoomName.Pritok && Pritok != null)
-                    {
-                        Pritok_color = "#ffd6d4";
-                    }
-                    else
-                    {
-                        Pritok_color = "Transparent";
-                    }
-                }
             }
         }
         public string Vityazhka
@@ -279,17 +183,6 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             set
             {
                 Set(ref vityazhka, value);
-                if (RoomName != null)
-                {
-                    if (Vityazhka != RoomName.Vityazhka && Vityazhka != null)
-                    {
-                        Vityazhka_color = "#ffd6d4";
-                    }
-                    else
-                    {
-                        Vityazhka_color = "Transparent";
-                    }
-                }
             }
         }
         public string Ot_vlazhnost
@@ -298,17 +191,6 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             set
             {
                 Set(ref ot_vlazhnost, value);
-                if (RoomName != null)
-                {
-                    if (Ot_vlazhnost != RoomName.Ot_vlazhnost && Ot_vlazhnost != null)
-                    {
-                        Ot_vlazhnost_color = "#ffd6d4";
-                    }
-                    else
-                    {
-                        Ot_vlazhnost_color = "Transparent";
-                    }
-                }
             }
         }
         public string KEO_est_osv
@@ -317,17 +199,6 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             set
             {
                 Set(ref kEO_est_osv, value);
-                if (RoomName != null)
-                {
-                    if (KEO_est_osv != RoomName.KEO_est_osv && KEO_est_osv != null)
-                    {
-                        KEO_est_osv_color = "#ffd6d4";
-                    }
-                    else
-                    {
-                        KEO_est_osv_color = "Transparent";
-                    }
-                }
             }
         }
         public string KEO_sovm_osv
@@ -336,17 +207,6 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             set
             {
                 Set(ref kEO_sovm_osv, value);
-                if (RoomName != null)
-                {
-                    if (KEO_sovm_osv != RoomName.KEO_sovm_osv && KEO_sovm_osv != null)
-                    {
-                        KEO_sovm_osv_color = "#ffd6d4";
-                    }
-                    else
-                    {
-                        KEO_sovm_osv_color = "Transparent";
-                    }
-                }
             }
         }
         public string Discription_OV
@@ -355,17 +215,6 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             set
             {
                 Set(ref discription_OV, value);
-                if (RoomName != null)
-                {
-                    if (Discription_OV != RoomName.Discription_OV && Discription_OV != null)
-                    {
-                        Discription_OV_color = "#ffd6d4";
-                    }
-                    else
-                    {
-                        Discription_OV_color = "Transparent";
-                    }
-                }
             }
         }
         public string Osveshennost_pro_obshem_osvech
@@ -374,17 +223,6 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             set
             {
                 Set(ref osveshennost_pro_obshem_osvech, value);
-                if (RoomName != null)
-                {
-                    if (Osveshennost_pro_obshem_osvech != RoomName.Osveshennost_pro_obshem_osvech && Osveshennost_pro_obshem_osvech != null)
-                    {
-                        Osveshennost_pro_obshem_osvech_color = "#ffd6d4";
-                    }
-                    else
-                    {
-                        Osveshennost_pro_obshem_osvech_color = "Transparent";
-                    }
-                }
             }
         }
         public string Group_el_bez
@@ -393,17 +231,6 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             set
             {
                 Set(ref group_el_bez, value);
-                if (RoomName != null)
-                {
-                    if (Group_el_bez != RoomName.Group_el_bez && Group_el_bez != null)
-                    {
-                        Group_el_bez_color = "#ffd6d4";
-                    }
-                    else
-                    {
-                        Group_el_bez_color = "Transparent";
-                    }
-                }
             }
         }
         public string Discription_EOM
@@ -412,17 +239,6 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             set
             {
                 Set(ref discription_EOM, value);
-                if (RoomName != null)
-                {
-                    if (Discription_EOM != RoomName.Discription_EOM && Discription_EOM != null)
-                    {
-                        Discription_EOM_color = "#ffd6d4";
-                    }
-                    else
-                    {
-                        Discription_EOM_color = "Transparent";
-                    }
-                }
             }
         }
         public string Discription_AR
@@ -431,17 +247,6 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             set
             {
                 Set(ref discription_AR, value);
-                if (RoomName != null)
-                {
-                    if (Discription_AR != RoomName.Discription_AR && Discription_AR != null)
-                    {
-                        Discription_AR_color = "#ffd6d4";
-                    }
-                    else
-                    {
-                        Discription_AR_color = "Transparent";
-                    }
-                }
             }
         }
         public string Equipment_VK
@@ -450,17 +255,6 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             set
             {
                 Set(ref equipment_VK, value);
-                if (RoomName != null)
-                {
-                    if (Equipment_VK != RoomName.Equipment_VK && Equipment_VK != null)
-                    {
-                        Equipment_VK_color = "#ffd6d4";
-                    }
-                    else
-                    {
-                        Equipment_VK_color = "Transparent";
-                    }
-                }
             }
         }
         public string Discription_SS
@@ -469,17 +263,6 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             set
             {
                 Set(ref discription_SS, value);
-                if (RoomName != null)
-                {
-                    if (Discription_SS != RoomName.Discription_SS && Discription_SS != null)
-                    {
-                        Discription_SS_color = "#ffd6d4";
-                    }
-                    else
-                    {
-                        Discription_SS_color = "Transparent";
-                    }
-                }
             }
         }
         public string Discription_AK_ATH
@@ -488,17 +271,6 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             set
             {
                 Set(ref discription_AK_ATH, value);
-                if (RoomName != null)
-                {
-                    if (Discription_AK_ATH != RoomName.Discription_AK_ATH && Discription_AK_ATH != null)
-                    {
-                        Discription_AK_ATH_color = "#ffd6d4";
-                    }
-                    else
-                    {
-                        Discription_AK_ATH_color = "Transparent";
-                    }
-                }
             }
         }
         public string Discription_GSV
@@ -507,17 +279,6 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             set
             {
                 Set(ref discription_GSV, value);
-                if (RoomName != null)
-                {
-                    if (Discription_GSV != RoomName.Discription_GSV && Discription_GSV != null)
-                    {
-                        Discription_GSV_color = "#ffd6d4";
-                    }
-                    else
-                    {
-                        Discription_GSV_color = "Transparent";
-                    }
-                }
             }
         }
         public string Categoty_Chistoti_po_san_epid
@@ -526,17 +287,6 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             set
             {
                 Set(ref categoty_Chistoti_po_san_epid, value);
-                if (RoomName != null)
-                {
-                    if (Categoty_Chistoti_po_san_epid != RoomName.Categoty_Chistoti_po_san_epid && Categoty_Chistoti_po_san_epid != null)
-                    {
-                        Categoty_Chistoti_po_san_epid_color = "#ffd6d4";
-                    }
-                    else
-                    {
-                        Categoty_Chistoti_po_san_epid_color = "Transparent";
-                    }
-                }
             }
         }
         public string Discription_HS
@@ -545,17 +295,6 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             set
             {
                 Set(ref discription_HS, value);
-                if (RoomName != null)
-                {
-                    if (Discription_HS != RoomName.Discription_HS && Discription_HS != null)
-                    {
-                        Discription_HS_color = "#ffd6d4";
-                    }
-                    else
-                    {
-                        Discription_HS_color = "Transparent";
-                    }
-                }
             }
         }
 
@@ -567,207 +306,23 @@ namespace RoomsAndSpacesManagerDataBase.Dto
         public string Notation { get; set; }
         #endregion
 
+
+        private int arRoomId;
+        
+
         public int ArRoomId { get => arRoomId; set => Set(ref arRoomId, value); }
-       
+
 
 
         #region SupClass
+        private RoomNameDto roomName;
         [NotMapped]
-        public RoomNameDto RoomName { get; set; }
+        public RoomNameDto RoomName { get => roomName; set => Set(ref roomName, value); }
 
 
 
 
-        #region Свойства для цветов
-        private string min_area_color;
-        [NotMapped]
-        public string Min_area_color
-        {
-            get { return min_area_color; }
-            set { Set(ref min_area_color, value); }
-        }
 
-        private string class_chistoti_SanPin_color;
-        [NotMapped]
-        public string Class_chistoti_SanPin_color
-        {
-            get { return class_chistoti_SanPin_color; }
-            set { Set(ref class_chistoti_SanPin_color, value); }
-        }
-
-
-        private string class_chistoti_SP_158_color;
-        [NotMapped]
-        public string Class_chistoti_SP_158_color
-        {
-            get { return class_chistoti_SP_158_color; }
-            set { Set(ref class_chistoti_SP_158_color, value); }
-        }
-
-        private string class_chistoti_GMP_color;
-        [NotMapped]
-        public string Class_chistoti_GMP_color
-        {
-            get { return class_chistoti_GMP_color; }
-            set { Set(ref class_chistoti_GMP_color, value); }
-        }
-
-        private string t_calc_color;
-        [NotMapped]
-        public string T_calc_color
-        {
-            get { return t_calc_color; }
-            set { Set(ref t_calc_color, value); }
-        }
-
-        private string t_min_color;
-        [NotMapped]
-        public string T_min_color
-        {
-            get { return t_min_color; }
-            set { Set(ref t_min_color, value); }
-        }
-
-        private string t_max_color;
-        [NotMapped]
-        public string T_max_color
-        {
-            get { return t_max_color; }
-            set { Set(ref t_max_color, value); }
-        }
-
-        private string pritok_color;
-        [NotMapped]
-        public string Pritok_color
-        {
-            get { return pritok_color; }
-            set { Set(ref pritok_color, value); }
-        }
-
-        private string vityazhka_color;
-        [NotMapped]
-        public string Vityazhka_color
-        {
-            get { return vityazhka_color; }
-            set { Set(ref vityazhka_color, value); }
-        }
-
-        private string ot_vlazhnost_color;
-        [NotMapped]
-        public string Ot_vlazhnost_color
-        {
-            get { return ot_vlazhnost_color; }
-            set { Set(ref ot_vlazhnost_color, value); }
-        }
-
-        private string kEO_est_osv_color;
-        [NotMapped]
-        public string KEO_est_osv_color
-        {
-            get { return kEO_est_osv_color; }
-            set { Set(ref kEO_est_osv_color, value); }
-        }
-
-        private string kEO_sovm_osv_color;
-        [NotMapped]
-        public string KEO_sovm_osv_color
-        {
-            get { return kEO_sovm_osv_color; }
-            set { Set(ref kEO_sovm_osv_color, value); }
-        }
-
-        private string discription_OV_color;
-        [NotMapped]
-        public string Discription_OV_color
-        {
-            get { return discription_OV_color; }
-            set { Set(ref discription_OV_color, value); }
-        }
-
-        private string osveshennost_pro_obshem_osvech_color;
-        [NotMapped]
-        public string Osveshennost_pro_obshem_osvech_color
-        {
-            get { return osveshennost_pro_obshem_osvech_color; }
-            set { Set(ref osveshennost_pro_obshem_osvech_color, value); }
-        }
-
-        private string group_el_bez_color;
-        [NotMapped]
-        public string Group_el_bez_color
-        {
-            get { return group_el_bez_color; }
-            set { Set(ref group_el_bez_color, value); }
-        }
-
-        private string discription_EOM_color;
-        [NotMapped]
-        public string Discription_EOM_color
-        {
-            get { return discription_EOM_color; }
-            set { Set(ref discription_EOM_color, value); }
-        }
-
-        private string discription_AR_color;
-        [NotMapped]
-        public string Discription_AR_color
-        {
-            get { return discription_AR_color; }
-            set { Set(ref discription_AR_color, value); }
-        }
-
-        private string equipment_VK_color;
-        [NotMapped]
-        public string Equipment_VK_color
-        {
-            get { return equipment_VK_color; }
-            set { Set(ref equipment_VK_color, value); }
-        }
-
-        private string discription_SS_color;
-        [NotMapped]
-        public string Discription_SS_color
-        {
-            get { return discription_SS_color; }
-            set { Set(ref discription_SS_color, value); }
-        }
-
-        private string discription_AK_ATH_color;
-        [NotMapped]
-        public string Discription_AK_ATH_color
-        {
-            get { return discription_AK_ATH_color; }
-            set { Set(ref discription_AK_ATH_color, value); }
-        }
-
-        private string discription_GSV_color;
-        [NotMapped]
-        public string Discription_GSV_color
-        {
-            get { return discription_GSV_color; }
-            set { Set(ref discription_GSV_color, value); }
-        }
-
-        private string categoty_Chistoti_po_san_epid_color;
-        [NotMapped]
-        public string Categoty_Chistoti_po_san_epid_color
-        {
-            get { return categoty_Chistoti_po_san_epid_color; }
-            set { Set(ref categoty_Chistoti_po_san_epid_color, value); }
-        }
-
-        private string discription_HS_color;
-        private int arRoomId;
-
-        [NotMapped]
-        public string Discription_HS_color
-        {
-            get { return discription_HS_color; }
-            set { Set(ref discription_HS_color, value); }
-        }
-
-
-        #endregion
 
 
 

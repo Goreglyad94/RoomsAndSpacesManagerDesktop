@@ -11,16 +11,11 @@ namespace RoomsAndSpacesManagerDesktop.Infrastructure.Behaviors
         protected override void OnAttached()
         {
             base.OnAttached();
-
-            
-
         }
 
         protected override void OnDetaching()
         {
             base.OnDetaching();
-
-            
         }
     }
 }

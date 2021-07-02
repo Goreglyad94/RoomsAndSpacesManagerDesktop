@@ -6,15 +6,17 @@ using System.Threading.Tasks;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.VisualBasic.FileIO;
+using RoomAndSpacesManagerConsole.DbModel;
 
 namespace RoomAndSpacesManagerConsole
 {
     class Program
     {
+        
         static void Main(string[] args)
         {
-            RoomInfoToDb();
-            //ProjectInfoToDb();
+            AddToRoomNameSubCategoryIdModel addToRoomNameSubCategoryIdModel = new AddToRoomNameSubCategoryIdModel();
+            addToRoomNameSubCategoryIdModel.Change_1_Field();
         }
 
         public static void RoomInfoToDb()

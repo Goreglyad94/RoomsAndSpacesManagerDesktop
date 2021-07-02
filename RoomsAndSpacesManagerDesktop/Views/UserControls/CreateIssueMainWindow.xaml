@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:RoomsAndSpacesManagerDesktop.Views.UserControls"
              xmlns:vm="clr-namespace:RoomsAndSpacesManagerDesktop.ViewModels"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-             xmlns:customBehColorChange="clr-namespace:RoomsAndSpacesManagerDesktop.Infrastructure.Behaviors"
+             
+             xmlns:customControls="clr-namespace:RoomsAndSpacesManagerDesktop.Infrastructure.CustomControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="1100">
     <i:Interaction.Triggers>
@@ -109,7 +110,7 @@
             <TextBlock Text="Подкатегория: " DockPanel.Dock="Left"  VerticalAlignment="Center"/>
             <ComboBox x:Name="SubCatsList" ItemsSource="{Binding SubCategories}" SelectedItem="{Binding SelectedSubCategoties}" DockPanel.Dock="Left" Width="150"  Height="25" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 2 20 2"/>
         </DockPanel>
-        
+
         <DockPanel Grid.Row="3" Grid.ColumnSpan="4">
             <DataGrid DockPanel.Dock="Right" SelectionMode="Extended"  
                           CanUserAddRows="False"
@@ -164,7 +165,7 @@
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </ComboBox>
-                                    
+
                                 </DockPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
@@ -174,16 +175,16 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+
+
+
+
+
+
+
+
+
+
                     <DataGridTextColumn Header="Краткое наименование" Width="100" Binding="{Binding ShortName}"/>
                     <DataGridTextColumn Header="Номер помещения" Width="100" Binding="{Binding RoomNumber}"/>
                     <DataGridTextColumn Header="Мин. площадь" Binding="{Binding Min_area, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
@@ -202,302 +203,379 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="Рабочих мест/посетителей" Binding="{Binding Rab_mesta_posetiteli}"/>
                     <DataGridTextColumn Header="Категория пожароопасности" Binding="{Binding Categoty_pizharoopasnosti}"/>
-                    <DataGridTextColumn Header="Класс чистоты по СанПиН" Binding="{Binding Class_chistoti_SanPin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell">
-                                <Setter Property="Background" Value="{Binding Class_chistoti_SanPin_color}"/>
-                                <Style.Triggers>
-                                    <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                        <Setter Property="Background" Value="{Binding Class_chistoti_SanPin_color}"/>
-                                        <Setter Property="Foreground"  Value="Black"/>
-                                        <Setter Property="BorderBrush" Value="Blue"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="Класс чистоты по СП 158" Binding="{Binding Class_chistoti_SP_158, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell">
-                                <Setter Property="Background" Value="{Binding Class_chistoti_SP_158_color}"/>
-                                <Style.Triggers>
-                                    <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                        <Setter Property="Background" Value="{Binding Class_chistoti_SP_158_color}"/>
-                                        <Setter Property="Foreground"  Value="Black"/>
-                                        <Setter Property="BorderBrush" Value="Blue"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="Класс чистоты по GMP" Binding="{Binding Class_chistoti_GMP, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell">
-                                <Setter Property="Background" Value="{Binding Class_chistoti_GMP_color}"/>
-                                <Style.Triggers>
-                                    <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                        <Setter Property="Background" Value="{Binding Class_chistoti_GMP_color}"/>
-                                        <Setter Property="Foreground"  Value="Black"/>
-                                        <Setter Property="BorderBrush" Value="Blue"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="Примечание АР" Binding="{Binding Discription_AR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell">
-                                <Setter Property="Background" Value="{Binding Discription_AR_color}"/>
-                                <Style.Triggers>
-                                    <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                        <Setter Property="Background" Value="{Binding Discription_AR_color}"/>
-                                        <Setter Property="Foreground"  Value="Black"/>
-                                        <Setter Property="BorderBrush" Value="Blue"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="Температура расчётная, °C" Binding="{Binding T_calc, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell">
-                                <Setter Property="Background" Value="{Binding T_calc_color}"/>
-                                <Style.Triggers>
-                                    <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                        <Setter Property="Background" Value="{Binding T_calc_color}"/>
-                                        <Setter Property="Foreground"  Value="Black"/>
-                                        <Setter Property="BorderBrush" Value="Blue"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="Температура мин, °C" Binding="{Binding T_min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell">
-                                <Setter Property="Background" Value="{Binding T_min_color}"/>
-                                <Style.Triggers>
-                                    <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                        <Setter Property="Background" Value="{Binding T_min_color}"/>
-                                        <Setter Property="Foreground"  Value="Black"/>
-                                        <Setter Property="BorderBrush" Value="Blue"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="Температура макс, °C" Binding="{Binding T_max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell">
-                                <Setter Property="Background" Value="{Binding T_max_color}"/>
-                                <Style.Triggers>
-                                    <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                        <Setter Property="Background" Value="{Binding T_max_color}"/>
-                                        <Setter Property="Foreground"  Value="Black"/>
-                                        <Setter Property="BorderBrush" Value="Blue"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="Приток" Binding="{Binding Pritok, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell">
-                                <Setter Property="Background" Value="{Binding Pritok_color}"/>
-                                <Style.Triggers>
-                                    <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                        <Setter Property="Background" Value="{Binding Pritok_color}"/>
-                                        <Setter Property="Foreground"  Value="Black"/>
-                                        <Setter Property="BorderBrush" Value="Blue"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="Вытяжка" Binding="{Binding Vityazhka, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell">
-                                <Setter Property="Background" Value="{Binding Vityazhka_color}"/>
-                                <Style.Triggers>
-                                    <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                        <Setter Property="Background" Value="{Binding Vityazhka_color}"/>
-                                        <Setter Property="Foreground"  Value="Black"/>
-                                        <Setter Property="BorderBrush" Value="Blue"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="Относительная влажность,%" Binding="{Binding Ot_vlazhnost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell">
-                                <Setter Property="Background" Value="{Binding Ot_vlazhnost_color}"/>
-                                <Style.Triggers>
-                                    <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                        <Setter Property="Background" Value="{Binding Ot_vlazhnost_color}"/>
-                                        <Setter Property="Foreground"  Value="Black"/>
-                                        <Setter Property="BorderBrush" Value="Blue"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="Примечание ОВ" Binding="{Binding Discription_OV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell">
-                                <Setter Property="Background" Value="{Binding Discription_OV_color}"/>
-                                <Style.Triggers>
-                                    <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                        <Setter Property="Background" Value="{Binding Discription_OV_color}"/>
-                                        <Setter Property="Foreground"  Value="Black"/>
-                                        <Setter Property="BorderBrush" Value="Blue"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="Оборудование ВК" Binding="{Binding Equipment_VK, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell">
-                                <Setter Property="Background" Value="{Binding Equipment_VK_color}"/>
-                                <Style.Triggers>
-                                    <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                        <Setter Property="Background" Value="{Binding Equipment_VK_color}"/>
-                                        <Setter Property="Foreground"  Value="Black"/>
-                                        <Setter Property="BorderBrush" Value="Blue"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="КЕО при бок. ест. осв." Binding="{Binding KEO_est_osv, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell">
-                                <Setter Property="Background" Value="{Binding KEO_est_osv_color}"/>
-                                <Style.Triggers>
-                                    <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                        <Setter Property="Background" Value="{Binding KEO_est_osv_color}"/>
-                                        <Setter Property="Foreground"  Value="Black"/>
-                                        <Setter Property="BorderBrush" Value="Blue"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="КЕО при бок. совм. осв." Binding="{Binding KEO_sovm_osv, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell">
-                                <Setter Property="Background" Value="{Binding KEO_sovm_osv_color}"/>
-                                <Style.Triggers>
-                                    <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                        <Setter Property="Background" Value="{Binding KEO_sovm_osv_color}"/>
-                                        <Setter Property="Foreground"  Value="Black"/>
-                                        <Setter Property="BorderBrush" Value="Blue"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="Освещенность при общем освещении, лк" Binding="{Binding Osveshennost_pro_obshem_osvech, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell">
-                                <Setter Property="Background" Value="{Binding Osveshennost_pro_obshem_osvech_color}"/>
-                                <Style.Triggers>
-                                    <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                        <Setter Property="Background" Value="{Binding Osveshennost_pro_obshem_osvech_color}"/>
-                                        <Setter Property="Foreground"  Value="Black"/>
-                                        <Setter Property="BorderBrush" Value="Blue"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
+
+
+                    <DataGridTemplateColumn Header="Класс чистоты по СанПиН" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <customControls:CustomTextBlockColumnTemplate PropertyName="Class_chistoti_SanPin"
+                                    SecondValue="{Binding RoomName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Text="{Binding Class_chistoti_SanPin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                       
+                                    FirstValue="{Binding Class_chistoti_SanPin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                   
+                                    />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Class_chistoti_SanPin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+
+
+
+                    <DataGridTemplateColumn Header="Класс чистоты по СП 158" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <customControls:CustomTextBlockColumnTemplate PropertyName="Class_chistoti_SP_158"
+                                                                              SecondValue="{Binding RoomName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Text="{Binding Class_chistoti_SP_158, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                       
+                                    FirstValue="{Binding Class_chistoti_SP_158, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                   
+                                    />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Class_chistoti_SP_158, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+
+
+                    <DataGridTemplateColumn Header="Класс чистоты по GMP" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <customControls:CustomTextBlockColumnTemplate PropertyName="Class_chistoti_GMP"
+                                                                              SecondValue="{Binding RoomName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Text="{Binding Class_chistoti_GMP, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                       
+                                    FirstValue="{Binding Class_chistoti_GMP, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                   
+                                    />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Class_chistoti_GMP, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+
+
+
+
+                    <DataGridTemplateColumn Header="Примечание АР" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <customControls:CustomTextBlockColumnTemplate PropertyName="Discription_AR"
+                                    Text="{Binding Discription_AR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                       
+                                    FirstValue="{Binding Discription_AR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                   
+                                    SecondValue="{Binding RoomName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Discription_AR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+
+
+
+                    <DataGridTemplateColumn Header="Температура расчётная, °C" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <customControls:CustomTextBlockColumnTemplate PropertyName="T_calc"
+                                    Text="{Binding T_calc, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                       
+                                    FirstValue="{Binding T_calc, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                   
+                                    SecondValue="{Binding RoomName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding T_calc, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+
+
+                    <DataGridTemplateColumn Header="Температура мин, °C"  Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <customControls:CustomTextBlockColumnTemplate PropertyName="T_min"
+                                    Text="{Binding T_min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                       
+                                    FirstValue="{Binding T_min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                   
+                                    SecondValue="{Binding RoomName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding T_min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+
+
+
+                    <DataGridTemplateColumn Header="Температура макс, °C" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <customControls:CustomTextBlockColumnTemplate PropertyName="T_max"
+                                    Text="{Binding T_max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                       
+                                    FirstValue="{Binding T_max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                   
+                                    SecondValue="{Binding RoomName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding T_max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+
+
+                    <DataGridTemplateColumn Header="Приток" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <customControls:CustomTextBlockColumnTemplate PropertyName="Pritok"
+                                    Text="{Binding Pritok, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                       
+                                    FirstValue="{Binding Pritok, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                   
+                                    SecondValue="{Binding RoomName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Pritok, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Вытяжка" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <customControls:CustomTextBlockColumnTemplate PropertyName="Vityazhka"
+                                    Text="{Binding Vityazhka, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                       
+                                    FirstValue="{Binding Vityazhka, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                   
+                                    SecondValue="{Binding RoomName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Vityazhka, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+
+
+
+                    <DataGridTemplateColumn Header="Относительная влажность,%" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <customControls:CustomTextBlockColumnTemplate PropertyName="Ot_vlazhnost"
+                                    Text="{Binding Ot_vlazhnost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                       
+                                    FirstValue="{Binding Ot_vlazhnost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                   
+                                    SecondValue="{Binding RoomName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Ot_vlazhnost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+
+
+
+                    <DataGridTemplateColumn Header="Примечание ОВ" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <customControls:CustomTextBlockColumnTemplate PropertyName="Discription_OV"
+                                    Text="{Binding Discription_OV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                       
+                                    FirstValue="{Binding Discription_OV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                   
+                                    SecondValue="{Binding RoomName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Discription_OV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+
+
+                    <DataGridTemplateColumn Header="Оборудование ВК" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <customControls:CustomTextBlockColumnTemplate PropertyName="Equipment_VK"
+                                    Text="{Binding Equipment_VK, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                       
+                                    FirstValue="{Binding Equipment_VK, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                   
+                                    SecondValue="{Binding RoomName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Equipment_VK, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+
+
+                    <DataGridTemplateColumn Header="КЕО при бок. ест. осв." Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <customControls:CustomTextBlockColumnTemplate PropertyName="KEO_est_osv"
+                                    Text="{Binding KEO_est_osv, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                       
+                                    FirstValue="{Binding KEO_est_osv, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                   
+                                    SecondValue="{Binding RoomName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding KEO_est_osv, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+
+
+
+                    <DataGridTemplateColumn Header="КЕО при бок. совм. осв." Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <customControls:CustomTextBlockColumnTemplate PropertyName="KEO_sovm_osv"
+                                    Text="{Binding KEO_sovm_osv, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                       
+                                    FirstValue="{Binding KEO_sovm_osv, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                   
+                                    SecondValue="{Binding RoomName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding KEO_sovm_osv, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+
+
+
+                    <DataGridTemplateColumn Header="Освещенность при общем освещении, лк"  Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <customControls:CustomTextBlockColumnTemplate PropertyName="Osveshennost_pro_obshem_osvech"
+                                    Text="{Binding Osveshennost_pro_obshem_osvech, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                       
+                                    FirstValue="{Binding Osveshennost_pro_obshem_osvech, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                   
+                                    SecondValue="{Binding RoomName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Osveshennost_pro_obshem_osvech, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+
+
                     <DataGridTextColumn Header="Электрическая нагрузка, кВт" Binding="{Binding El_Nagruzka}"/>
-                    <DataGridTextColumn Header="Группа по электробезопасности" Binding="{Binding Group_el_bez, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell">
-                                <Setter Property="Background" Value="{Binding Group_el_bez_color}"/>
-                                <Style.Triggers>
-                                    <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                        <Setter Property="Background" Value="{Binding Group_el_bez_color}"/>
-                                        <Setter Property="Foreground"  Value="Black"/>
-                                        <Setter Property="BorderBrush" Value="Blue"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="Примечание ЭОМ" Binding="{Binding Discription_EOM, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell">
-                                <Setter Property="Background" Value="{Binding Discription_EOM_color}"/>
-                                <Style.Triggers>
-                                    <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                        <Setter Property="Background" Value="{Binding Discription_EOM_color}"/>
-                                        <Setter Property="Foreground"  Value="Black"/>
-                                        <Setter Property="BorderBrush" Value="Blue"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="Оборудование СС" Binding="{Binding Discription_SS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell">
-                                <Setter Property="Background" Value="{Binding Discription_SS_color}"/>
-                                <Style.Triggers>
-                                    <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                        <Setter Property="Background" Value="{Binding Discription_SS_color}"/>
-                                        <Setter Property="Foreground"  Value="Black"/>
-                                        <Setter Property="BorderBrush" Value="Blue"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
+                    <DataGridTemplateColumn Header="Группа по электробезопасности" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <customControls:CustomTextBlockColumnTemplate PropertyName="Group_el_bez"
+                                    Text="{Binding Group_el_bez, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                       
+                                    FirstValue="{Binding Group_el_bez, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                   
+                                    SecondValue="{Binding RoomName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Group_el_bez, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+
+
+
+
+                    <DataGridTemplateColumn Header="Примечание ЭОМ" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <customControls:CustomTextBlockColumnTemplate PropertyName="Discription_EOM"
+                                    Text="{Binding Discription_EOM, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                       
+                                    FirstValue="{Binding Discription_EOM, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                   
+                                    SecondValue="{Binding RoomName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Discription_EOM, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+
+
+                    <DataGridTemplateColumn Header="Оборудование СС"  Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <customControls:CustomTextBlockColumnTemplate PropertyName="Discription_SS"
+                                    Text="{Binding Discription_SS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                       
+                                    FirstValue="{Binding Discription_SS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                   
+                                    SecondValue="{Binding RoomName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Discription_SS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+
+
                     <DataGridTextColumn Header="Нагрузка на перекрытие" Binding="{Binding Nagruzki_na_perekririe}"/>
-                    <DataGridTextColumn Header="Примечание АК, АТХ" Binding="{Binding Discription_AK_ATH, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell">
-                                <Setter Property="Background" Value="{Binding Discription_AK_ATH_color}"/>
-                                <Style.Triggers>
-                                    <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                        <Setter Property="Background" Value="{Binding Discription_AK_ATH_color}"/>
-                                        <Setter Property="Foreground"  Value="Black"/>
-                                        <Setter Property="BorderBrush" Value="Blue"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="Технологические газы" Binding="{Binding Discription_GSV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell">
-                                <Setter Property="Background" Value="{Binding Discription_GSV_color}"/>
-                                <Style.Triggers>
-                                    <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                        <Setter Property="Background" Value="{Binding Discription_GSV_color}"/>
-                                        <Setter Property="Foreground"  Value="Black"/>
-                                        <Setter Property="BorderBrush" Value="Blue"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="Холодоснабжение" Binding="{Binding Discription_HS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell">
-                                <Setter Property="Background" Value="{Binding Discription_HS_color}"/>
-                                <Style.Triggers>
-                                    <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                        <Setter Property="Background" Value="{Binding Discription_HS_color}"/>
-                                        <Setter Property="Foreground"  Value="Black"/>
-                                        <Setter Property="BorderBrush" Value="Blue"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
+                    <DataGridTemplateColumn Header="Примечание АК, АТХ"  Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <customControls:CustomTextBlockColumnTemplate PropertyName="Discription_AK_ATH"
+                                    Text="{Binding Discription_AK_ATH, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                       
+                                    FirstValue="{Binding Discription_AK_ATH, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                   
+                                    SecondValue="{Binding RoomName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Discription_AK_ATH, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Технологические газы" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <customControls:CustomTextBlockColumnTemplate PropertyName="Discription_GSV"
+                                    Text="{Binding Discription_GSV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                       
+                                    FirstValue="{Binding Discription_GSV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                   
+                                    SecondValue="{Binding RoomName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Discription_GSV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+
+
+                    <DataGridTemplateColumn Header="Холодоснабжение" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <customControls:CustomTextBlockColumnTemplate PropertyName="Discription_HS"
+                                    Text="{Binding Discription_HS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                       
+                                    FirstValue="{Binding Discription_HS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                   
+                                    SecondValue="{Binding RoomName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Discription_HS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+
+
                 </DataGrid.Columns>
             </DataGrid>
         </DockPanel>
@@ -505,7 +583,7 @@
             <Button Content="Добавить строку" Command="{Binding AddNewRowCommand}" HorizontalAlignment="Left" Margin="10 0 0 0"  Width="100" Height="25"/>
             <Button Content="Скопировать подразделение" Command="{Binding CopySubdivisionCommnd}" HorizontalAlignment="Left" Margin="10 0 0 0" Width="100" Height="25"/>
         </DockPanel>
-        
+
         <DockPanel Grid.Row="4" Grid.Column="3">
             <Button Command="{Binding PushToDbCommand}" Content="Отправить изменения в БД" Width="160" Height="25" DockPanel.Dock="Right" Margin="0 0 10 0"/>
             <Button Command="{Binding PullFromDbCommand}" Content="Pull" Width="50" Height="25" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"/>

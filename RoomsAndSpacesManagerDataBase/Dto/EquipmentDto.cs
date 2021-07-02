@@ -13,6 +13,11 @@ namespace RoomsAndSpacesManagerDataBase.Dto
     public class EquipmentDto
     {
 
+        public EquipmentDto()
+        {
+
+        }
+
         public EquipmentDto(RoomEquipmentDto roomEquipment)
         {
             Number = roomEquipment.Number;
@@ -32,6 +37,7 @@ namespace RoomsAndSpacesManagerDataBase.Dto
         public string Name { get; set; }
         public int Count { get; set; }
         public bool Mandatory { get; set; }
+        public string Discription { get; set; }
 
         public int RoomId { get; set; }
 

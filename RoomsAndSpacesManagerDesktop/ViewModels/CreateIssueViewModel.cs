@@ -36,7 +36,6 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         {
             allRoomNames = roomsContext.GetAllRoomNames();
 
-            //context.DB();
             Projects = projContext.GetProjects();
             Categories = roomsContext.GetCategories();
 
@@ -381,8 +380,11 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                 EquipmentDbContext equipmentDbContext = new EquipmentDbContext();
 
 
+
                 if (SelectedRoom.Id != 0)
                 {
+                    equipmentDbContext.RemoveAllEquipment(SelectedRoom);
+
                     List<EquipmentDto> equipment = equipmentDbContext.GetEquipments(SelectedRoomName).Select(x => new EquipmentDto(x) { RoomId = SelectedRoom.Id }).ToList();
                     equipmentDbContext.AddNewEquipments(equipment, SelectedRoom);
                 }
@@ -629,6 +631,14 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
 
         private void OnGetEquipmentCommandExecutde(object p)
         {
+            EquipmentsViewModel.Room = SelectedRoom;
+
+            EquipmentsWindow equipmentsWindow = new EquipmentsWindow();
+            EquipmentsViewModel vm = new EquipmentsViewModel();
+            equipmentsWindow.DataContext = vm;
+
+            equipmentsWindow.ShowDialog();
+
 
         }
         private bool CanGetEquipmentCommandExecute(object p) => true;
@@ -734,8 +744,6 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             set { Set(ref allRooms, value); }
         }
         #endregion
-
-
 
         /*Таблица "Сводная"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 

@@ -13,33 +13,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
-
 namespace RoomsAndSpacesManagerDesktop.ViewModels
 {
-    class RoomEquipmentsViewModel : ViewModel
+    class EquipmentsViewModel : ViewModel
     {
-        public static RoomNameDto RoomName { get; set; }
+        public static RoomDto Room { get; set; }
 
         EquipmentDbContext context = new EquipmentDbContext();
 
-        MainDbContext roomContext = new MainDbContext();
-        public RoomEquipmentsViewModel()
+        public EquipmentsViewModel()
         {
-            if (RoomName != null)
-            {
-                RoomEquipmentsList = CollectionViewSource.GetDefaultView(context.GetEquipments(RoomName));
-                RoomEquipmentsList.Refresh();
-            }
-            else
-            {
-                RoomEquipmentsList = CollectionViewSource.GetDefaultView(context.GetAllEquipments());
-                RoomEquipmentsList.Refresh();
-            }
-            
+
+            RoomEquipmentsList = CollectionViewSource.GetDefaultView(context.GetEquipments(Room));
+            RoomEquipmentsList.Refresh();
+
+            #region Комманды
             AddNewRowCommand = new RelayCommand(OnAddNewRowCommandExecuted, CanAddNewRowCommandExecute);
             SaveChangesCommand = new RelayCommand(OnSaveChangesCommandExecuted, CanSaveChangesCommandExecute);
-            ChangeDataFromExcelCommand = new RelayCommand(OnChangeDataFromExcelCommandExecuted, CanChangeDataFromExcelCommandExecute);
-            DeleteEquipmentCommand = new RelayCommand(OnDeleteEquipmentCommandExecuted, CanDeleteEquipmentCommandExecute);
+            
+            DeleteEquipmentCommand = new RelayCommand(OnDeleteEquipmentCommandExecuted, CanDeleteEquipmentCommandExecute); 
+            #endregion
         }
 
         #region КоллекшенВью для списка оборудования
@@ -55,8 +48,8 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         public ICommand AddNewRowCommand { get; set; }
         private void OnAddNewRowCommandExecuted(object obj)
         {
-            context.AddNewEquipment(RoomName);
-            RoomEquipmentsList = CollectionViewSource.GetDefaultView(context.GetEquipments(RoomName));
+            context.AddNewEquipment(Room);
+            RoomEquipmentsList = CollectionViewSource.GetDefaultView(context.GetEquipments(Room));
             RoomEquipmentsList.Refresh();
         }
         private bool CanAddNewRowCommandExecute(object obj) => true;
@@ -73,22 +66,6 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         private bool CanSaveChangesCommandExecute(object obj) => true;
         #endregion
 
-        #region Комманд. Заменить данные на данные из Excel
-
-        public ICommand ChangeDataFromExcelCommand { get; set; }
-        private void OnChangeDataFromExcelCommandExecuted(object obj)
-        {
-
-            MainExcelModel mainExcelModel = new MainExcelModel();
-            mainExcelModel.AddToDbFromExcelEqupment(RoomName);
-
-            RoomEquipmentsList = CollectionViewSource.GetDefaultView(context.GetEquipments(RoomName));
-            RoomEquipmentsList.Refresh();
-
-        }
-        private bool CanChangeDataFromExcelCommandExecute(object obj) => true;
-
-        #endregion
 
         #region Комманд. Удалить строку оборудования
 
@@ -96,15 +73,11 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
 
         private void OnDeleteEquipmentCommandExecuted(object obj)
         {
-            context.RemoveEquipment(obj as RoomEquipmentDto);
-
-            RoomEquipmentsList = CollectionViewSource.GetDefaultView(context.GetEquipments(RoomName));
+            context.RemoveEquipment(obj as EquipmentDto);
+            RoomEquipmentsList = CollectionViewSource.GetDefaultView(context.GetEquipments(Room));
             RoomEquipmentsList.Refresh();
         }
         private bool CanDeleteEquipmentCommandExecute(object obj) => true;
-
-
         #endregion
-
     }
 }

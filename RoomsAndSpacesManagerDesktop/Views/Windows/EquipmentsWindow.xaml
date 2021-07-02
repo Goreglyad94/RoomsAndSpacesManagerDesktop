@@ -1,11 +1,11 @@
-﻿<Window x:Class="RoomsAndSpacesManagerDesktop.Views.Windows.RoomEquipmentsWindow"
+﻿<Window x:Class="RoomsAndSpacesManagerDesktop.Views.Windows.EquipmentsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RoomsAndSpacesManagerDesktop.Views.Windows"
         mc:Ignorable="d"
-        Title="RoomEquipmentsWindow" Height="450" Width="880">
+        Title="EquipmentsWindow" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -15,7 +15,6 @@
             <RowDefinition/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-
         <DataGrid ItemsSource="{Binding RoomEquipmentsList}" AutoGenerateColumns="False" Grid.ColumnSpan="2" CanUserAddRows="False">
             <DataGrid.ItemContainerStyle>
                 <Style TargetType="DataGridRow">
@@ -34,7 +33,7 @@
                     <Setter Property="ContentTemplate">
                         <Setter.Value>
                             <DataTemplate>
-                                <TextBlock TextWrapping="Wrap" Text="{Binding}"></TextBlock>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding}"/>
                             </DataTemplate>
                         </Setter.Value>
                     </Setter>
@@ -55,7 +54,6 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
-
                 <DataGridTemplateColumn Header="Наименование медицинского изделия" Width="250">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -68,8 +66,6 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
-                
-                
                 <DataGridTextColumn Header="Количество (не менее), шт"  Binding="{Binding Count}"  Width="90"/>
                 <DataGridCheckBoxColumn Header="Обязательный" Binding="{Binding Mandatory}"/>
                 <DataGridTemplateColumn Header="Описание" Width="250">
@@ -86,9 +82,7 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-
         <Button Command="{Binding AddNewRowCommand}" Content="Добавить строку" Margin="3 3 3 3" Width="150" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="1"/>
         <Button Command="{Binding SaveChangesCommand}" Content="Сохранить изменения" Margin="3 3 3 3" Width="150" HorizontalAlignment="Right" Grid.Column="0" Grid.Row="1"/>
-        <Button Command="{Binding ChangeDataFromExcelCommand}"  Content="Заменить данные из Excel" Margin="3 3 3 3" Width="150" HorizontalAlignment="Right" Grid.Column="1" Grid.Row="1"/>
     </Grid>
 </Window>

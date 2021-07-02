@@ -146,6 +146,8 @@
     <Compile Include="Infrastructure\Behaviors\DataGridCellColorBehavior.cs" />
     <Compile Include="Infrastructure\Commands\Base\Command.cs" />
     <Compile Include="Infrastructure\Commands\RelayCommand.cs" />
+    <Compile Include="Infrastructure\CustomControls\CustomColumnTemplate.cs" />
+    <Compile Include="Infrastructure\CustomControls\CustomTextBlockColumnTemplate.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -173,6 +175,10 @@
     <Compile Include="Migrations\202107011127216_add Equipment table.designer.cs">
       <DependentUpon>202107011127216_add Equipment table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202107021206538_add -Discription- Field to db.cs" />
+    <Compile Include="Migrations\202107021206538_add -Discription- Field to db.designer.cs">
+      <DependentUpon>202107021206538_add -Discription- Field to db.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CsvModels\UploadToCsvModel.cs" />
     <Compile Include="Models\DbModels\Base\MainDbContext.cs" />
@@ -183,6 +189,7 @@
     <Compile Include="ViewModels\Base\ViewModel.cs" />
     <Compile Include="ViewModels\CopySubDivisionViewModel.cs" />
     <Compile Include="ViewModels\CreateIssueViewModel.cs" />
+    <Compile Include="ViewModels\EquipmentsViewModel.cs" />
     <Compile Include="ViewModels\RoomEquipmentsViewModel.cs" />
     <Compile Include="ViewModels\RoomsPropertiesViewModel.cs" />
     <Compile Include="Views\UserControls\CreateIssueMainWindow.xaml.cs">
@@ -223,6 +230,9 @@
     </Compile>
     <Compile Include="Views\Windows\CopySubdivisionWindow.xaml.cs">
       <DependentUpon>CopySubdivisionWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\EquipmentsWindow.xaml.cs">
+      <DependentUpon>EquipmentsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -290,6 +300,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Windows\EquipmentsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Windows\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -330,6 +344,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202107011127216_add Equipment table.resx">
       <DependentUpon>202107011127216_add Equipment table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107021206538_add -Discription- Field to db.resx">
+      <DependentUpon>202107021206538_add -Discription- Field to db.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

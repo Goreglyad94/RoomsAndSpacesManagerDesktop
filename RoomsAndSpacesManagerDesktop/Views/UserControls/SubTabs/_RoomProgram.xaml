@@ -67,6 +67,9 @@
                         </Style>
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>
+                <DataGridTextColumn Header="Номер помещения" Binding="{Binding}"/>
+
+
             </DataGrid.Columns>
         </DataGrid>
 

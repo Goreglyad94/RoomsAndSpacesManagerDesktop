@@ -179,6 +179,10 @@
     <Compile Include="Migrations\202107021206538_add -Discription- Field to db.designer.cs">
       <DependentUpon>202107021206538_add -Discription- Field to db.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202107131521184_AddPosEtiteleiPersonalaColumn.cs" />
+    <Compile Include="Migrations\202107131521184_AddPosEtiteleiPersonalaColumn.designer.cs">
+      <DependentUpon>202107131521184_AddPosEtiteleiPersonalaColumn.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CsvModels\UploadToCsvModel.cs" />
     <Compile Include="Models\DbModels\Base\MainDbContext.cs" />
@@ -347,6 +351,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202107021206538_add -Discription- Field to db.resx">
       <DependentUpon>202107021206538_add -Discription- Field to db.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107131521184_AddPosEtiteleiPersonalaColumn.resx">
+      <DependentUpon>202107131521184_AddPosEtiteleiPersonalaColumn.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

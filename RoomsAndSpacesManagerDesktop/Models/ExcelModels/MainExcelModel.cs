@@ -24,6 +24,9 @@ namespace RoomsAndSpacesManagerDesktop.Models.ExcelModels
 
             ExcelPackage excel = new ExcelPackage(new FileInfo(openFileDialog.FileName));
 
+
+
+
             List<RoomEquipmentDto> equipnets = new List<RoomEquipmentDto>();
 
             string idPom = "start";

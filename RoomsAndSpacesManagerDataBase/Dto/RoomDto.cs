@@ -74,6 +74,8 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             this.Discription_HS = oldRoom.Discription_HS;
             this.Categoty_pizharoopasnosti = oldRoom.Categoty_pizharoopasnosti;
             this.Rab_mesta_posetiteli = oldRoom.Rab_mesta_posetiteli;
+            this.Kolichestvo_personala = oldRoom.Kolichestvo_personala;
+            this.Kolichestvo_posetitelei = oldRoom.Kolichestvo_posetitelei;
             this.Nagruzki_na_perekririe = oldRoom.Nagruzki_na_perekririe;
             this.El_Nagruzka = oldRoom.El_Nagruzka;
         }
@@ -300,6 +302,8 @@ namespace RoomsAndSpacesManagerDataBase.Dto
 
         public string Categoty_pizharoopasnosti { get; set; }
         public string Rab_mesta_posetiteli { get; set; }
+        public string Kolichestvo_personala { get; set; }
+        public string Kolichestvo_posetitelei { get; set; }
         public string Nagruzki_na_perekririe { get; set; }
         public string El_Nagruzka { get; set; }
 

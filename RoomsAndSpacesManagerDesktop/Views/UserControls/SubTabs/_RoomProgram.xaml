@@ -11,7 +11,6 @@
             <RowDefinition/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        
         <DataGrid DockPanel.Dock="Right" SelectionMode="Extended"  
                           CanUserAddRows="False"
                           Grid.Row="0"
@@ -23,8 +22,6 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="30" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Здание" Binding="{Binding Subdivision.Building}" Width="100" IsReadOnly="True"/>
-
-                
                 <DataGridTemplateColumn Header="Подразделение" Width="100" IsReadOnly="False">
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
@@ -37,7 +34,6 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-
                 <DataGridTemplateColumn Header="Наименование" Width="250" IsReadOnly="True">
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
@@ -51,8 +47,6 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-
-
                 <DataGridTextColumn Header="Мин. площадь" Binding="{Binding Min_area, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="100">
                     <DataGridTextColumn.CellStyle>
                         <Style TargetType="DataGridCell">
@@ -67,14 +61,14 @@
                         </Style>
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Номер помещения" Binding="{Binding}"/>
-
-
+                <DataGridTextColumn Header="Номер помещения" Binding="{Binding RoomNumber}"/>
             </DataGrid.Columns>
         </DataGrid>
-
-
-        <Button Command="{Binding UploadProgramToCsv}" Content="Выгрузить программу в CSV" Grid.Row="1" Width="180" HorizontalAlignment="Right" Margin="3 3 3 3"/>
-
+        <DockPanel Grid.Row="1" >
+            <Button Command="{Binding PushToDbSaveChangesCommand}" Content="Отправить изменения в ДБ" Width="180" HorizontalAlignment="Right" Margin="3 3 3 3" DockPanel.Dock="Right"/>
+            <Button Command="{Binding UploadProgramToCsv}" Content="Выгрузить программу в CSV" Width="180" HorizontalAlignment="Right" Margin="3 3 3 3" DockPanel.Dock="Right"/>
+            
+        </DockPanel>
+        
     </Grid>
 </UserControl>

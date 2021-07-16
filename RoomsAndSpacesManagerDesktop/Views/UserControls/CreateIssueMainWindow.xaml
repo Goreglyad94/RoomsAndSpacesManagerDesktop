@@ -117,7 +117,7 @@
                           FrozenColumnCount ="4"
                           CanUserDeleteRows="False"
                           SelectedItem="{Binding SelectedRoom}" 
-                          ItemsSource="{Binding Rooms, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                          ItemsSource="{Binding Rooms, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, IsAsync=True}" 
                           AutoGenerateColumns="False">
                 <DataGrid.ItemContainerStyle>
                     <Style TargetType="DataGridRow">
@@ -143,7 +143,7 @@
                         </DataGridTemplateColumn.CellEditingTemplate>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Subdivision}"/>
+                                <TextBlock Text="{Binding Subdivision}" TextWrapping="Wrap"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -165,13 +165,12 @@
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </ComboBox>
-
                                 </DockPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Name}" Height="20"/>
+                                <TextBlock Text="{Binding Name}" TextWrapping="Wrap"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -187,21 +186,25 @@
 
                     <DataGridTextColumn Header="Краткое наименование" Width="100" Binding="{Binding ShortName}"/>
                     <DataGridTextColumn Header="Номер помещения" Width="100" Binding="{Binding RoomNumber}"/>
-                    <DataGridTextColumn Header="Мин. площадь" Binding="{Binding Min_area, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell">
-                                <Setter Property="Background" Value="{Binding Min_area_color}"/>
-                                <Style.Triggers>
-                                    <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                        <Setter Property="Background" Value="{Binding Min_area_color}"/>
-                                        <Setter Property="Foreground"  Value="Black"/>
-                                        <Setter Property="BorderBrush" Value="Blue"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
+                    <DataGridTemplateColumn Header="Мин. площадь" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <customControls:CustomTextBlockColumnTemplate PropertyName="Min_area"
+                                    SecondValue="{Binding RoomName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Text="{Binding Min_area, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                       
+                                    FirstValue="{Binding Min_area, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                   
+                                    />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Min_area, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Рабочих мест/посетителей" Binding="{Binding Rab_mesta_posetiteli}"/>
+                    <DataGridTextColumn Header="Количество персонала" Binding="{Binding Kolichestvo_personala}"/>
+                    <DataGridTextColumn Header="Количество посетителей" Binding="{Binding Kolichestvo_posetitelei}"/>
                     <DataGridTextColumn Header="Категория пожароопасности" Binding="{Binding Categoty_pizharoopasnosti}"/>
 
 
@@ -245,7 +248,7 @@
                     <DataGridTemplateColumn Header="Класс чистоты по GMP" Width="100">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <customControls:CustomTextBlockColumnTemplate PropertyName="Class_chistoti_GMP"
+                                <customControls:CustomTextBlockColumnTemplate PropertyName="Class_chistoti_GMP" TextWrapping="Wrap"
                                                                               SecondValue="{Binding RoomName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     Text="{Binding Class_chistoti_GMP, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                       
                                     FirstValue="{Binding Class_chistoti_GMP, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                   

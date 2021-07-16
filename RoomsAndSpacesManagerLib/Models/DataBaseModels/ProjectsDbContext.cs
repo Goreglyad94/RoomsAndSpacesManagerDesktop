@@ -30,10 +30,20 @@ namespace RoomsAndSpacesManagerLib.Models.DataBaseModels
                 return null;
         }
 
+        public List<RoomDto> GetRoomsByModels(BuildingDto building)
+        {
+            List<RoomDto> rooms = new List<RoomDto>();
+
+            foreach (SubdivisionDto subdiv in context.RaSM_Subdivisions.Where(x => x.BuildingId == building.Id))
+            {
+                rooms.AddRange(context.RaSM_Rooms.Where(x => x.SubdivisionId == subdiv.Id));
+            }
+
+            return rooms;
+        }
         public void SaveChanges()
         {
             context.SaveChanges();
         }
-
     }
 }

@@ -56,6 +56,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             UploadProgramToCsv = new RelayCommand(OnUploadProgramToCsvExecutde, CanUploadProgramToCsvExecute);
             ClearTextboxCommand = new RelayCommand(OnClearTextboxCommandExecuted, CanClearTextboxCommandExecute);
             GetEquipmentCommand = new RelayCommand(OnGetEquipmentCommandExecutde, CanGetEquipmentCommandExecute);
+            PushToDbSaveChangesCommand = new RelayCommand(OnPushToDbSaveChangesCommandExecutde, CanPushToDbSaveChangesCommandExecute);
             #endregion
         }
 
@@ -146,6 +147,8 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                 {
                     Buildings = new List<BuildingDto>();
                 }
+
+                OnLoadedSummuryCommandExecutde("");
 
             }
         }
@@ -458,7 +461,8 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             if (RoomNameFiltering != "")
             {
                 RoomsNames = CollectionViewSource.GetDefaultView(allRoomNames);
-                RoomsNames.Filter = delegate (object item) {
+                RoomsNames.Filter = delegate (object item)
+                {
                     RoomNameDto user = item as RoomNameDto;
                     if (user != null && user.Name.ToLower().StartsWith(RoomNameFiltering.ToLower())) return true;
                     return false;
@@ -672,7 +676,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         }
         private bool CanAddNewRowCommandExecute(object p)
         {
-            if (SelectedBuilding == null) return false;
+            if (SelectedSubdivision == null) return false;
             else return true;
         }
         #endregion
@@ -711,14 +715,25 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         public ICommand PushToDbCommand { get; set; }
         private void OnPushToDbCommandExecutde(object p)
         {
-            projContext.AddNewRooms(roomDtos);
-            projContext.SaveChanges();
-            roomDtos = projContext.GetRooms(SelectedSubdivision);
-            Rooms = CollectionViewSource.GetDefaultView(roomDtos);
-            Rooms.Refresh();
-            MessageBox.Show("Данные успешно загруженны в базу данных", "Статус");
+            if (roomDtos != null)
+            {
+                projContext.AddNewRooms(roomDtos);
+                projContext.SaveChanges();
+                roomDtos = projContext.GetRooms(SelectedSubdivision);
+                Rooms = CollectionViewSource.GetDefaultView(roomDtos);
+                Rooms.Refresh();
+                MessageBox.Show("Данные успешно загруженны в базу данных", "Статус");
+            }
+            else
+            {
+                MessageBox.Show("Ошибка! Нет выбранных помещений", "Статус");
+            }
+
         }
-        private bool CanPushToDbCommandExecute(object p) => true;
+        private bool CanPushToDbCommandExecute(object p)
+        {
+            return true;
+        }
         #endregion
 
         #region Комманд. Получить обновления пространств из БД
@@ -745,8 +760,25 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         }
         #endregion
 
-        /*Таблица "Сводная"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
+        #region Комманд. Сохранить изменения в номерах помещений
+
+        public ICommand PushToDbSaveChangesCommand { get; set; }
+
+        private void OnPushToDbSaveChangesCommandExecutde(object obj)
+        {
+            projContext.SaveChanges();
+        }
+        private bool CanPushToDbSaveChangesCommandExecute(object obj) 
+        {
+            if (AllRooms != null && AllRooms.Count != 0) return true;
+            else return false;
+        }
+
+        #endregion
+
+        /*Таблица "Сводная"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+        private List<BuildingDto> buildList;
 
         #region Список всех помещений для проекта
         private List<BuildingDto> _summury;
@@ -765,14 +797,13 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         #endregion
 
         #region Комманд. Загрузка окна Summury
-
         public ICommand LoadedSummuryCommand { get; set; }
         private void OnLoadedSummuryCommandExecutde(object obj)
         {
             int? sss = 0;
             if (SelectedProject != null)
             {
-                List<BuildingDto> buildList = projContext.GetModels(SelectedProject);
+                buildList = projContext.GetModels(SelectedProject);
                 foreach (var build in buildList)
                 {
                     int? summAreaBuild = 0;
@@ -800,7 +831,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                 SummuryArea = sss;
             }
         }
-        private bool CanLoadedSummuryCommandExecute(object obj) => true;
+        private bool CanLoadedSummuryCommandExecute(object obj) => false;
 
         #endregion
 
@@ -820,7 +851,10 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         {
             try
             {
-                uploadToCsvModel.UploadRoomProgramToExcel(SelectedProject);
+                UploadToCsvModel UploadToCsvModel = new UploadToCsvModel(SelectedProject, buildList, Koef);
+                UploadToCsvModel.UploadToExcel();
+                //uploadToCsvModel.UploadRoomProgramToExcel(SelectedProject);
+                //uploadToCsvModel.UploadRoomSummaryToExcel(buildList);
                 MessageBox.Show("Выгрузка завершена", "Статус");
             }
             catch (Exception ex)
@@ -830,6 +864,19 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
 
         }
         private bool CanUploadProgramToCsvExecute(object obj) => true;
+
+        #endregion
+
+        #region Коэффициент умножения площади
+
+        private double koef = 2.5;
+
+        public double Koef
+        {
+            get { return koef; }
+            set { koef = value; }
+        }
+
 
         #endregion
 

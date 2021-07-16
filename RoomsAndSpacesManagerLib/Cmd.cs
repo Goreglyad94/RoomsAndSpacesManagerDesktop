@@ -20,12 +20,17 @@ namespace RoomsAndSpacesManagerLib
 
             Document doc = commandData.Application.ActiveUIDocument.Document;
 
+
+            AddParametersIntoSpacies addParametersIntoSpacies = new AddParametersIntoSpacies();
             SelectRoomEventHendler evHendSelectRoom = new SelectRoomEventHendler();
             ExternalEvent ExEventSelectRoom = ExternalEvent.Create(evHendSelectRoom);
+            ExternalEvent ExEventAddParameters = ExternalEvent.Create(addParametersIntoSpacies);
+
 
             MainWindow mainWindow = new MainWindow();
             MainWindowViewModel vm = new MainWindowViewModel();
             vm.ApplyEventGetRoomFromRvtModel = ExEventSelectRoom;
+            vm.ApplyEventAddParametersIntoSpacies = ExEventAddParameters;
             mainWindow.DataContext = vm;
             mainWindow.Show();
 

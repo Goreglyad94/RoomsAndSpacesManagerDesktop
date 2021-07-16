@@ -19,6 +19,11 @@ namespace RoomsAndSpacesManagerDesktop.Infrastructure.CustomControls
             }
         }
 
+        public CustomTextBlockColumnTemplate()
+        {
+            TextWrapping = TextWrapping.Wrap;
+        }
+
         public static readonly DependencyProperty PropertyNameProperty =
            DependencyProperty.Register("PropertyName", typeof(string), typeof(CustomTextBlockColumnTemplate),
             new FrameworkPropertyMetadata("", new PropertyChangedCallback(PropertyNameChanged)));
@@ -27,10 +32,6 @@ namespace RoomsAndSpacesManagerDesktop.Infrastructure.CustomControls
         {
             ((CustomTextBlockColumnTemplate)d).PropertyName = ((CustomTextBlockColumnTemplate)d).PropertyName;
         }
-
-
-
-
 
         public string FirstValue
         {
@@ -47,6 +48,7 @@ namespace RoomsAndSpacesManagerDesktop.Infrastructure.CustomControls
                 if (FirstValue != propValue)
                 {
                     Background = Brushes.Pink;
+                    
                 }
                 else
                 {
@@ -73,7 +75,7 @@ namespace RoomsAndSpacesManagerDesktop.Infrastructure.CustomControls
             set
             {
                 SetValue(SecondValueProperty, value);
-                string propValue = SecondValue.GetType().GetProperty(PropertyName)?.GetValue(SecondValue)?.ToString();
+                string propValue = SecondValue?.GetType().GetProperty(PropertyName)?.GetValue(SecondValue)?.ToString();
                 if (FirstValue != propValue)
                 {
                     Background = Brushes.Pink;

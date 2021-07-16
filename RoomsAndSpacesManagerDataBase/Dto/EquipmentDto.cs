@@ -10,8 +10,9 @@ using System.Threading.Tasks;
 namespace RoomsAndSpacesManagerDataBase.Dto
 {
     [Table("RaSM_Equipments")]
-    public class EquipmentDto
+    public class EquipmentDto : ViewModel
     {
+        private bool mandatory;
 
         public EquipmentDto()
         {
@@ -36,7 +37,7 @@ namespace RoomsAndSpacesManagerDataBase.Dto
         public string TypeName { get; set; }
         public string Name { get; set; }
         public int Count { get; set; }
-        public bool Mandatory { get; set; }
+        public bool Mandatory { get => mandatory; set => Set(ref mandatory, value); }
         public string Discription { get; set; }
 
         public int RoomId { get; set; }

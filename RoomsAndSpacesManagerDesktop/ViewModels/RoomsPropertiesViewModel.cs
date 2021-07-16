@@ -149,7 +149,11 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             Rooms.Refresh();
         }
 
-        private bool CanAddNewRowCommandExecute(object obj) => true;
+        private bool CanAddNewRowCommandExecute(object obj)
+        {
+            if (SelectedSubCategoties != null) return true;
+            else return false;
+        }
         #endregion
 
         #region Комманд. Закинуть обновления пространств в БД

@@ -16,70 +16,49 @@ namespace RoomsAndSpacesManagerDesktop.Models.CsvModels
     internal class UploadToCsvModel
     {
         RoomAndSpacesDbContext context = new RoomAndSpacesDbContext();
-        internal void UploadRoomProgram(ProjectDto project)
+        private ProjectDto Project { get; set; }
+        private string path;
+        private ExcelPackage excel = new ExcelPackage();
+        private List<BuildingDto> BuildList { get; set; }
+        private double Koef { get; set; }
+        public UploadToCsvModel(ProjectDto project, List<BuildingDto> buildList, double koef)
         {
-            FolderBrowserDialog openFileDialog = new FolderBrowserDialog();
+            this.Project = project;
+            this.BuildList = buildList;
+            this.Koef = koef;
+        }
+        public UploadToCsvModel()
+        {
 
-            openFileDialog.ShowDialog();
-
-            var dfdd = openFileDialog.SelectedPath;
-
-            var isExist = File.Exists(dfdd + @"\Программа.csv");
-
-            if (isExist)
-                File.Delete(dfdd + @"\Программа.csv");
-
-            using (var dd = File.Create(dfdd + @"\Программа.csv"))
-            {
-                StreamWriter sw = new StreamWriter(dd, Encoding.GetEncoding("Windows-1251"));
-                sw.WriteLine("№/№" + ";" + "Наименование помещения" + ";" + "Площадь, м^2" + ";" + "Примечание");
-                int i = 1;
-                foreach (BuildingDto build in context.RaSM_Projects.FirstOrDefault(x => x.Id == project.Id).Buildings)
-                {
-                    sw.WriteLine('\'' + i.ToString() + ";" + build.Name + ";" + ";");
-                    int ii = 1;
-                    foreach (SubdivisionDto subdivision in build.Subdivisions)
-                    {
-                        sw.WriteLine('\'' + i.ToString() + "." + ii.ToString() + ";" + subdivision.Name + ";" + ";");
-                        int iii = 1;
-                        foreach (RoomDto room in subdivision.Rooms)
-                        {
-                            sw.WriteLine('\'' + i.ToString() + "." + ii.ToString() + "." + iii.ToString() + ";" + room.Name + ";" + room.Min_area + ";" + room.Notation);
-                            iii++;
-                        }
-                        ii++;
-                    }
-                    i++;
-                }
-                sw.Close();
-            }
         }
 
-        internal void UploadRoomProgramToExcel(ProjectDto project)
+        public void UploadToExcel()
         {
             FolderBrowserDialog openFileDialog = new FolderBrowserDialog();
-
             openFileDialog.ShowDialog();
+            path = openFileDialog.SelectedPath;
 
-            var dfdd = openFileDialog.SelectedPath;
+            if (File.Exists(path + @"\Программа.xlsx"))
+                File.Delete(path + @"\Программа.xlsx");
 
-
-            var isExist = File.Exists(dfdd + @"\Программа.xlsx");
-
-            if (isExist)
-                File.Delete(dfdd + @"\Программа.xlsx");
-
-            ExcelPackage excel = new ExcelPackage();
             excel.Workbook.Worksheets.Add("Программа помещений");
+            excel.Workbook.Worksheets.Add("Сводная");
 
+
+
+            UploadRoomProgramToExcel(Project);
+            UploadRoomSummaryToExcel(BuildList);
+
+            FileInfo excelFile = new FileInfo(path + @"\Программа.xlsx");
+            excel.SaveAs(excelFile);
+        }
+
+
+        public void UploadRoomProgramToExcel(ProjectDto project)
+        {
             var worksheet = excel.Workbook.Worksheets["Программа помещений"];
-
-
             int rowCount = 1;
             int colCount = 1;
-
-
-            //"№/№" + ";" + "Наименование помещения" + ";" + "Площадь, м^2" + ";" + "Примечание")
 
 
             worksheet.Cells[rowCount, colCount].Value = "№/№";
@@ -91,7 +70,6 @@ namespace RoomsAndSpacesManagerDesktop.Models.CsvModels
             worksheet.Cells[rowCount, colCount].Value = "Примечание";
             colCount = 1;
             rowCount++;
-
 
             int i = 1;
             foreach (BuildingDto build in context.RaSM_Projects.FirstOrDefault(x => x.Id == project.Id).Buildings)
@@ -132,9 +110,60 @@ namespace RoomsAndSpacesManagerDesktop.Models.CsvModels
                 }
                 i++;
             }
+        }
 
-            FileInfo excelFile = new FileInfo(dfdd + @"\Программа.xlsx");
-            excel.SaveAs(excelFile);
+
+        public void UploadRoomSummaryToExcel(List<BuildingDto> buildList)
+        {
+            var worksheet = excel.Workbook.Worksheets["Сводная"];
+            int rowCount = 1;
+            int colCount = 1;
+
+            worksheet.Cells[rowCount, colCount].Value = "№/№";
+            colCount++;
+            worksheet.Cells[rowCount, colCount].Value = "Подразделение";
+            colCount++;
+            worksheet.Cells[rowCount, colCount].Value = "Площадь расчётная, м^2";
+            colCount++;
+            worksheet.Cells[rowCount, colCount].Value = "Ориент. общая площадь, м^2";
+            colCount = 1;
+            rowCount++;
+
+
+
+
+            int n1 = 1;
+
+            double sumarea = 0;
+            double Ksumarea = 0;
+            foreach (BuildingDto build in buildList)
+            {
+                worksheet.Cells[rowCount, 1].Value = n1.ToString();
+                worksheet.Cells[rowCount, 2].Value = build.Name;
+                worksheet.Cells[rowCount, 3].Value = build.SunnuryArea;
+                sumarea += Convert.ToDouble(build.SunnuryArea);
+                Ksumarea += Convert.ToDouble(build.SunnuryArea) * Koef;
+                worksheet.Cells[rowCount, 4].Value = build.SunnuryArea * Koef;
+                rowCount++;
+
+
+
+                int n2 = 1;
+                foreach (SubdivisionDto subdiv in build.Subdivisions)
+                {
+                    worksheet.Cells[rowCount, 1].Value = n1.ToString() + "." + n2.ToString();
+                    worksheet.Cells[rowCount, 2].Value = subdiv.Name;
+                    worksheet.Cells[rowCount, 3].Value = subdiv.SunnuryArea;
+                    worksheet.Cells[rowCount, 4].Value = subdiv.SunnuryArea * Koef;
+                    n2++;
+                    rowCount++;
+                }
+
+                n1++;
+            }
+
+            worksheet.Cells[rowCount, 3].Value = sumarea;
+            worksheet.Cells[rowCount, 4].Value = Ksumarea;
         }
     }
 }

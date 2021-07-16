@@ -1,5 +1,6 @@
 ﻿using OfficeOpenXml;
 using RoomsAndSpacesManagerDataBase.Data.DataBaseContext;
+using RoomsAndSpacesManagerDataBase.Dto;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -40,12 +41,27 @@ namespace RoomAndSpacesManagerConsole.DbModel
 
         }
 
-
         public void Change_1_Field()
         {
             RoomAndSpacesDbContext roomAndSpacesDbContext = new RoomAndSpacesDbContext();
             //var dfdf = roomAndSpacesDbContext.RaSM_RoomNames.Where(x => x.SubCategotyId == 0).ToList();
             roomAndSpacesDbContext.RaSM_RoomNames.RemoveRange(roomAndSpacesDbContext.RaSM_RoomNames.Where(x => x.SubCategotyId == 0));
+            roomAndSpacesDbContext.SaveChanges();
+
+        }
+
+        public void SwapPersonalPosetiteli()
+        {
+            RoomAndSpacesDbContext roomAndSpacesDbContext = new RoomAndSpacesDbContext();
+            foreach (RoomDto room in roomAndSpacesDbContext.RaSM_Rooms.Where(x => x.Rab_mesta_posetiteli != null))
+            {
+                var s = room.Rab_mesta_posetiteli.Split('/');
+                string personal = s[0];
+                string posetiteli = s[1];
+                room.Kolichestvo_personala = personal;
+                room.Kolichestvo_posetitelei = posetiteli;
+            }
+
             roomAndSpacesDbContext.SaveChanges();
 
         }

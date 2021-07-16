@@ -15,8 +15,7 @@ namespace RoomAndSpacesManagerConsole
         
         static void Main(string[] args)
         {
-            AddToRoomNameSubCategoryIdModel addToRoomNameSubCategoryIdModel = new AddToRoomNameSubCategoryIdModel();
-            addToRoomNameSubCategoryIdModel.Change_1_Field();
+           
         }
 
         public static void RoomInfoToDb()

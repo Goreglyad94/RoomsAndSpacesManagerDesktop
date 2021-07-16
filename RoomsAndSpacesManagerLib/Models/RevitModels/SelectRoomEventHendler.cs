@@ -23,13 +23,9 @@ namespace RoomsAndSpacesManagerLib.Models.RevitModels
         public void Execute(UIApplication app)
         {
             Autodesk.Revit.UI.UIDocument uiDoc = app.ActiveUIDocument;
-
-            // Get the element selection of current document.
             Autodesk.Revit.UI.Selection.Selection selection = uiDoc.Selection;
             var selectedIds = uiDoc.Selection.GetElementIds();
-
             Element dd = uiDoc.Document.GetElement(selectedIds.First());
-
             MainWindowViewModel.roomId = (dd as Room).get_Parameter(BuiltInParameter.ROOM_NUMBER).AsString();
             MainWindowViewModel.rvtToomId = dd.Id.IntegerValue;
             using (Transaction trans = new Transaction(app.ActiveUIDocument.Document, "AddToFamilyParam"))
@@ -39,12 +35,8 @@ namespace RoomsAndSpacesManagerLib.Models.RevitModels
                 //dd.LookupParameter("Имя").Set(DbRommId);
                 trans.Commit();
             }
-
             ChangeUI.Invoke(this);
-            
-
         }
-
         public string GetName() => nameof(SelectRoomEventHendler);
     }
 }

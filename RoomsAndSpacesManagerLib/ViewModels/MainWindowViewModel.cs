@@ -2,6 +2,7 @@
 using RoomsAndSpacesManagerDataBase;
 using RoomsAndSpacesManagerDataBase.Data.DataBaseContext;
 using RoomsAndSpacesManagerDataBase.Dto;
+using RoomsAndSpacesManagerLib.Dto;
 using RoomsAndSpacesManagerLib.Infrastructure;
 using RoomsAndSpacesManagerLib.Models.DataBaseModels;
 using RoomsAndSpacesManagerLib.Models.RevitModels;
@@ -20,19 +21,32 @@ namespace RoomsAndSpacesManagerLib.ViewModels
     class MainWindowViewModel : ViewModel
     {
         public ExternalEvent ApplyEventGetRoomFromRvtModel;
+        public ExternalEvent ApplyEventAddParametersIntoSpacies;
 
         public static string roomId;
         public static int rvtToomId;
 
         ProjectsDbContext projectsDbContext = new ProjectsDbContext();
+
         List<RoomDto> roomDtos;
         public MainWindowViewModel()
         {
             Projects = projectsDbContext.GetProjects();
             SelectRoomEventHendler.ChangeUI += OnSelectRevitRoomCommandExecutdeEvent;
+            AddParametersIntoSpacies.ChangeUI += OpenChangedSpaciesList;
             SelectRevitRoomCommand = new RelayCommand(OnSelectRevitRoomCommandExecutde, CanSelectRevitRoomCommandExecute);
             PushToDbCommand = new RelayCommand(OnPushToDbCommandExecuted, CanPushToDbCommandExecute);
+            AddParametersCommand = new RelayCommand(OnAddParametersCommandExecuted, CanAddParametersCommandExecute);
         }
+
+        #region СелектедИнекс ТабКонтрола
+        private int selectedIndexTabControl;
+        public int SelectedIndexTabControl
+        {
+            get => selectedIndexTabControl;
+            set => Set(ref selectedIndexTabControl, value);
+        }
+        #endregion
 
         #region Список проектов. Выбранный проект
         private List<ProjectDto> projects;
@@ -64,7 +78,7 @@ namespace RoomsAndSpacesManagerLib.ViewModels
         }
         #endregion
 
-        #region Список зданий
+        #region Список зданий. Выбранное здание
         private List<BuildingDto> buildings;
         public List<BuildingDto> Buildings
         {
@@ -81,7 +95,7 @@ namespace RoomsAndSpacesManagerLib.ViewModels
                 selectedBuilding = value;
                 if (SelectedBuilding != null)
                 {
-                    //roomDtos = projectsDbContext.GetRooms(SelectedBuilding);
+                    roomDtos = projectsDbContext.GetRoomsByModels(SelectedBuilding);
                     Rooms = CollectionViewSource.GetDefaultView(roomDtos);
                     Rooms.Refresh();
                 }
@@ -99,6 +113,8 @@ namespace RoomsAndSpacesManagerLib.ViewModels
             set => Set(ref rooms, value);
         }
         private static RoomDto selectedRoom;
+    
+
         public static RoomDto SelectedRoom
         {
             get => selectedRoom;
@@ -131,17 +147,44 @@ namespace RoomsAndSpacesManagerLib.ViewModels
         private bool CanSelectRevitRoomCommandExecute(object sander) => true;
         #endregion
 
-
         #region Пуш в БД
         public ICommand PushToDbCommand { get; set; }
 
         private void OnPushToDbCommandExecuted(object obj)
         {
             projectsDbContext.SaveChanges();
-            MessageBox.Show("Изменения успешно внесены в БД!","Статус");
+            MessageBox.Show("Изменения успешно внесены в БД!", "Статус");
         }
 
         private bool CanPushToDbCommandExecute(object obj) => true;
+        #endregion
+
+        #region Комманд. Заполнить параметры пространст
+        public ICommand AddParametersCommand { get; set; }
+
+        private void OnAddParametersCommandExecuted(object obj)
+        {
+            AddParametersIntoSpacies.Rooms = roomDtos;
+
+            ApplyEventAddParametersIntoSpacies.Raise();
+        }
+
+        private bool CanAddParametersCommandExecute(object obj) => true;
+        #endregion
+
+
+        #region Список измененных помещений
+        public static List<SpaceDto> Spacies { get; set; }
+        private void OpenChangedSpaciesList(object obj)
+        {
+            SelectedIndexTabControl = 1;
+            ChangeParametersList = CollectionViewSource.GetDefaultView(Spacies);
+            ChangeParametersList.Refresh();
+        }
+
+        private ICollectionView changeParametersList;
+        public ICollectionView ChangeParametersList { get => changeParametersList; set => Set(ref changeParametersList, value); }
+
         #endregion
     }
 }

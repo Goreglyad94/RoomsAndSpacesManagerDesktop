@@ -26,6 +26,11 @@
                     </HierarchicalDataTemplate>
                 </TreeView.ItemTemplate>
             </TreeView>
+            <DockPanel  DockPanel.Dock="Top" HorizontalAlignment="Left">
+                <TextBlock Text="Коэффициент умножения площади:  "/>
+                <TextBox Text="{Binding Koef, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="50" DockPanel.Dock="Left"/>
+            </DockPanel>
+            
             <TextBlock Text="{Binding SummuryArea, StringFormat='Итого: {0}'}" DockPanel.Dock="Top"/>
         </DockPanel>
     </Grid>

@@ -51,6 +51,7 @@ namespace RoomsAndSpacesManagerLib.Models.RevitHelper
                         return parameterDto;
                     }
                 }
+
                 if (storageType.ToString() == "Double")
                 {
                     double value;

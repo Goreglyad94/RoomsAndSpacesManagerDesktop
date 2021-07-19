@@ -7,7 +7,16 @@
              mc:Ignorable="d" 
              Height="800" Width="600">
     <Grid>
-        <TreeView ItemsSource="{Binding SpacesList}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <ComboBox Margin="3,3,3.333,0" Grid.Row="0" ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject}" Height="24" VerticalAlignment="Top"/>
+        <ComboBox Margin="3 3 3 3" Grid.Row="1" ItemsSource="{Binding Buildings}" SelectedItem="{Binding SelectedBuilding}"/>
+
+        <TreeView ItemsSource="{Binding SpacesList}" Grid.Row="2">
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding parameters}">
                     <HierarchicalDataTemplate.ItemTemplate>
@@ -24,15 +33,14 @@
                         </DataTemplate>
                     </HierarchicalDataTemplate.ItemTemplate>
                     <DockPanel>
-
-
                         <TextBlock Text="{Binding RoomNumber}" Background="#ffd6d4"/>
                         <TextBlock Text="    " Margin="0 3"/>
                         <TextBlock Text="{Binding Name}"/>
-
                     </DockPanel>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
+
+        <Button Grid.Row="3" Margin="2 2 2 2" Content="Обновить параметры в модели" Command="{Binding AddParametersCommand}"/>
     </Grid>
 </Window>

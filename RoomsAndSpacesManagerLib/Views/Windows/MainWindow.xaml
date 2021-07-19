@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RoomsAndSpacesManagerLib.Views.Windows"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             Height="450" Width="800">
     <TabControl SelectedIndex="{Binding SelectedIndexTabControl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
         <TabItem Header="Список помещений">
             <Grid>
@@ -93,17 +93,36 @@
             </Grid>
         </TabItem>
         <TabItem Header="Изменения">
-            <TreeView ItemsSource="{Binding ChangeParametersList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <TreeView  ItemsSource="{Binding ChangeParametersList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate ItemsSource="{Binding parameters}">
+                    <HierarchicalDataTemplate ItemsSource="{Binding Path=parameters}">
                         <TextBlock Text="{Binding Name}"/>
                         <HierarchicalDataTemplate.ItemTemplate>
                             <DataTemplate>
-                                <DataGrid ItemsSource="{Binding parameters}">
-                                </DataGrid>
+                                <DockPanel>
+                                    <TextBlock Text="{Binding Name}" DockPanel.Dock="Left"/>
+                                    <TextBlock Text="  " DockPanel.Dock="Left"/>
+                                    <TextBlock Text="{Binding OldValue}" Background="Pink" DockPanel.Dock="Left"/>
+                                    <TextBlock Text="  " DockPanel.Dock="Left"/>
+                                    <TextBlock Text="{Binding NewValue}" Background="Green" DockPanel.Dock="Left"/>
+                                </DockPanel>
                             </DataTemplate>
                         </HierarchicalDataTemplate.ItemTemplate>
                     </HierarchicalDataTemplate>
+                    <!--<HierarchicalDataTemplate ItemsSource="{Binding parameters}">
+                        <TextBlock Text="{Binding Name}"/>
+                        <HierarchicalDataTemplate.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"/>
+                                <DataGrid  HeadersVisibility="None">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Наме" Binding="{Binding Name}"/>
+                                        <DataGridTextColumn Header="Валук" Binding="{Binding OldValue}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </DataTemplate>
+                        </HierarchicalDataTemplate.ItemTemplate>
+                    </HierarchicalDataTemplate>-->
                 </TreeView.ItemTemplate>
             </TreeView>
         </TabItem>

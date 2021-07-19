@@ -68,7 +68,11 @@
     <Compile Include="Cmd.cs" />
     <Compile Include="Dto\ParameterDto.cs" />
     <Compile Include="Dto\SpaceDto.cs" />
+    <Compile Include="Infrastructure\Base\Command.cs" />
+    <Compile Include="Infrastructure\RelayCommand.cs" />
+    <Compile Include="Models\DbModels\MainDbModel.cs" />
     <Compile Include="Models\RvtHelper\MainModelRvtHelper.cs" />
+    <Compile Include="Models\RvtModels\AddParametersToModelEvHend.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Base\ViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />

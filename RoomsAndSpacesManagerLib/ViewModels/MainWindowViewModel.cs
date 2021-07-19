@@ -172,7 +172,6 @@ namespace RoomsAndSpacesManagerLib.ViewModels
         private bool CanAddParametersCommandExecute(object obj) => true;
         #endregion
 
-
         #region Список измененных помещений
         public static List<SpaceDto> Spacies { get; set; }
         private void OpenChangedSpaciesList(object obj)

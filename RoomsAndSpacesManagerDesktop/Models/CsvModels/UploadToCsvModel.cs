@@ -44,8 +44,6 @@ namespace RoomsAndSpacesManagerDesktop.Models.CsvModels
             excel.Workbook.Worksheets.Add("Программа помещений");
             excel.Workbook.Worksheets.Add("Сводная");
 
-
-
             UploadRoomProgramToExcel(Project);
             UploadRoomSummaryToExcel(BuildList);
 

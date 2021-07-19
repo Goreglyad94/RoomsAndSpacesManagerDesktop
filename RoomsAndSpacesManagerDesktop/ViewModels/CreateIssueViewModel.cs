@@ -740,7 +740,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         public ICommand PullFromDbCommand { get; set; }
         private void OnPullFromDbCommandExecutde(object p)
         {
-            MainExcelModel mainExcelModel = new MainExcelModel();
+            MainExcelModel.CreateXslxIssues(projContext.GetRooms(SelectedSubdivision));
         }
         private bool CanPullFromDbCommandExecute(object p) => true;
         #endregion

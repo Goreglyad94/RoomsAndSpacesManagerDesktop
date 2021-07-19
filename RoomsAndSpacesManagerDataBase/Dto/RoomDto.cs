@@ -103,11 +103,12 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                 if (RoomNameId != 0)
                 {
                     RoomName = context.RaSM_RoomNames.FirstOrDefault(x => x.Id == RoomNameId);
-                    Name = RoomName.Name;
+                    Name = RoomName?.Name;
                 }
 
             }
         }
+        
         public string ShortName { get; set; }
         public string RoomNumber { get; set; }
 
@@ -120,6 +121,7 @@ namespace RoomsAndSpacesManagerDataBase.Dto
                 Set(ref min_area, value);
             }
         }
+
         public string Class_chistoti_SanPin
         {
             get => class_chistoti_SanPin;

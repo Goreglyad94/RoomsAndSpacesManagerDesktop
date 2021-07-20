@@ -4,16 +4,13 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 
-
 namespace RoomsAndSpacesManagerDesktop.Infrastructure.CustomControls
 {
     class CustomColumnTemplate : DataGridTemplateColumn
     {
         public CustomColumnTemplate()
         {
-            CustomTextBlockColumnTemplate customTextBlockColumnTemplate = new CustomTextBlockColumnTemplate();
-            customTextBlockColumnTemplate.DataContext = BindingDataContext;
-            CellTemplate = new System.Windows.DataTemplate(new CustomTextBlockColumnTemplate());
+            CellEditingTemplate = new DataTemplate(new TextBlock());
         }
 
         public RoomDto BindingDataContext
@@ -36,7 +33,5 @@ namespace RoomsAndSpacesManagerDesktop.Infrastructure.CustomControls
         {
             ((CustomColumnTemplate)d).BindingDataContext = ((CustomColumnTemplate)d).BindingDataContext;
         }
-
-
     }
 }

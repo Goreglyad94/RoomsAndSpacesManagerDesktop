@@ -29,17 +29,17 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         RoomsDbContext roomsContext = new RoomsDbContext();
         UploadToCsvModel uploadToCsvModel = new UploadToCsvModel();
         List<RoomNameDto> roomsNamesList;
-        List<RoomNameDto> allRoomNames { get; set; }
+        
         #endregion
 
         public CreateIssueViewModel()
         {
             allRoomNames = roomsContext.GetAllRoomNames();
-
             Projects = projContext.GetProjects();
             Categories = roomsContext.GetCategories();
 
             #region Команды
+
             PushToDbCommand = new RelayCommand(OnPushToDbCommandExecutde, CanPushToDbCommandExecute);
             PullFromDbCommand = new RelayCommand(OnPullFromDbCommandExecutde, CanPullFromDbCommandExecute);
             AddNewRowCommand = new RelayCommand(OnAddNewRowCommandExecutde, CanAddNewRowCommandExecute);
@@ -57,6 +57,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             ClearTextboxCommand = new RelayCommand(OnClearTextboxCommandExecuted, CanClearTextboxCommandExecute);
             GetEquipmentCommand = new RelayCommand(OnGetEquipmentCommandExecutde, CanGetEquipmentCommandExecute);
             PushToDbSaveChangesCommand = new RelayCommand(OnPushToDbSaveChangesCommandExecutde, CanPushToDbSaveChangesCommandExecute);
+
             #endregion
         }
 
@@ -364,6 +365,9 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         #endregion
 
         #region Список исходных помещений
+
+        List<RoomNameDto> allRoomNames { get; set; }
+
         private ICollectionView roomsNames;
         public ICollectionView RoomsNames
         {
@@ -442,6 +446,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         #endregion
 
         #region Комманда при отрисовке комбобокса
+
         private ICommand renderComboboxCommand;
         public ICommand RenderComboboxCommand
         {
@@ -469,7 +474,6 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                 };
                 RoomsNames.Refresh();
             }
-
         }
         private bool CanRenderComboboxCommandExecute(object p) => true;
 
@@ -535,6 +539,22 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                 selectedRoom = value;
             }
         }
+
+        #endregion
+
+        #region Филтер. По Id
+
+        private string idFilter;
+
+        public string IdFilter
+        {
+            get { return idFilter; }
+            set
+            {
+                idFilter = value;
+            }
+        }
+
 
         #endregion
 
@@ -778,7 +798,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         #endregion
 
         /*Таблица "Сводная"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-        private List<BuildingDto> buildList;
+        
 
         #region Список всех помещений для проекта
         private List<BuildingDto> _summury;
@@ -797,6 +817,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         #endregion
 
         #region Комманд. Загрузка окна Summury
+        private List<BuildingDto> buildList;
         public ICommand LoadedSummuryCommand { get; set; }
         private void OnLoadedSummuryCommandExecutde(object obj)
         {
@@ -881,7 +902,6 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         #endregion
 
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
 
     }
 }

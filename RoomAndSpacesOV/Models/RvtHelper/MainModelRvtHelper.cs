@@ -21,6 +21,10 @@ namespace RoomAndSpacesOV.Models.RvtHelper
                 if (storageType.ToString() == "String")
                 {
                     string propValue = roomDto.GetType().GetProperty(dtoProp)?.GetValue(roomDto)?.ToString();
+
+                    if (propValue == null)
+                        propValue = "";
+
                     if (param.AsString() != propValue)
                     {
                         ParameterDto parameterDto = new ParameterDto();
@@ -36,23 +40,26 @@ namespace RoomAndSpacesOV.Models.RvtHelper
                 {
                     string propValue = roomDto.GetType().GetProperty(dtoProp)?.GetValue(roomDto)?.ToString();
 
-                    if (propValue == null)
-                        return null;
+                    
 
                     int value;
                     if (!int.TryParse(propValue, out value))
-                        return null;
+                        value = 0;
+
+                    if (propValue == null | propValue == "")
+                        value = 0;
+
+
 
                     if (param.AsInteger() == value)
                         return null;
 
                     ParameterDto parameterDto = new ParameterDto();
                     parameterDto.Name = paramName;
-                    parameterDto.NewValue = propValue.ToString();
+                    parameterDto.NewValue = value.ToString();
                     parameterDto.OldValue = param.AsInteger().ToString();
                     param?.Set(value);
                     return parameterDto;
-
                 }
 
 
@@ -60,11 +67,15 @@ namespace RoomAndSpacesOV.Models.RvtHelper
                 {
                     double value;
                     string propValue = roomDto.GetType().GetProperty(dtoProp)?.GetValue(roomDto)?.ToString();
-                    if (propValue == null)
-                        return null;
+                    
                     if (!double.TryParse(propValue, out value))
-                        return null;
-                    if (param.AsDouble() != value & param.AsDouble() != UnitUtils.ConvertToInternalUnits(value, DisplayUnitType.DUT_SQUARE_METERS))
+                        value = 0;
+
+
+                    if (propValue == null | propValue == "")
+                        value = 0;
+
+                    if (param.AsDouble() != value && param.AsDouble() != UnitUtils.ConvertToInternalUnits(value, DisplayUnitType.DUT_SQUARE_METERS) && param.AsDouble() != UnitUtils.ConvertToInternalUnits(value, DisplayUnitType.DUT_CELSIUS))
                     {
                         ParameterDto parameterDto = new ParameterDto();
                         parameterDto.Name = paramName;
@@ -72,6 +83,9 @@ namespace RoomAndSpacesOV.Models.RvtHelper
                         parameterDto.OldValue = param.AsDouble().ToString();
                         if (param.DisplayUnitType == DisplayUnitType.DUT_SQUARE_METERS)
                             value = UnitUtils.ConvertToInternalUnits(value, DisplayUnitType.DUT_SQUARE_METERS);
+
+                        if (param.DisplayUnitType == DisplayUnitType.DUT_CELSIUS)
+                            value = UnitUtils.ConvertToInternalUnits(value, DisplayUnitType.DUT_CELSIUS);
                         param?.Set(value);
                         return parameterDto;
                     }

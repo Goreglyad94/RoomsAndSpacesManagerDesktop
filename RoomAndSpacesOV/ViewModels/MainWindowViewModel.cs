@@ -21,6 +21,7 @@ namespace RoomAndSpacesOV.ViewModels
     class MainWindowViewModel : ViewModel
     {
         public static List<SpaceDto> SpaciesList { get; set; }
+        public static List<RoomDto> UnfoundedRooms { get; set; }
         public ExternalEvent AddParamtersToModelExEvent { get; set; }
         public MainWindowViewModel()
         {
@@ -43,6 +44,13 @@ namespace RoomAndSpacesOV.ViewModels
         {
             SpacesList = CollectionViewSource.GetDefaultView(SpaciesList);
             SpacesList.Refresh();
+
+            if (UnfoundedRooms != null & UnfoundedRooms.Count != 0)
+            {
+                UnfoundedRoomsList = CollectionViewSource.GetDefaultView(UnfoundedRooms);
+                UnfoundedRoomsList.Refresh();
+                ListCount = UnfoundedRooms.Count;
+            }
         }
         #endregion
 
@@ -76,12 +84,15 @@ namespace RoomAndSpacesOV.ViewModels
         }
 
         private BuildingDto selectedBuilding;
-      
 
         public BuildingDto SelectedBuilding
         {
             get { return selectedBuilding; }
-            set { selectedBuilding = value; }
+            set 
+            { 
+                selectedBuilding = value; 
+
+            }
         }
 
         #endregion
@@ -96,7 +107,7 @@ namespace RoomAndSpacesOV.ViewModels
             {
                 AddParametersToModelEvHend.RoomsDto = MainDbModel.GetRoomsByBuilding(SelectedBuilding);
             }
-            catch (Exception ex )
+            catch (Exception ex)
             {
 
                 throw ex;
@@ -111,6 +122,21 @@ namespace RoomAndSpacesOV.ViewModels
 
             return true;
         }
+        #endregion
+
+
+        #region Список отсутсвующиз помещений
+        private ICollectionView unfoundedRoomsList;
+        public ICollectionView UnfoundedRoomsList { get => unfoundedRoomsList; set => Set( ref unfoundedRoomsList, value); }
+
+        private int listCount;
+
+        public int ListCount
+        {
+            get { return listCount; }
+            set { Set(ref listCount, value); }
+        }
+
         #endregion
     }
 }

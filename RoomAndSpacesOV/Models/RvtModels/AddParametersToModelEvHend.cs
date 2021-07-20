@@ -48,55 +48,46 @@ namespace RoomAndSpacesOV.Models.RvtModels
                     };
 
                     #region Внесение параметров
-
                     if (roomDto != null)
                     {
-                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Класс чистоты по СанПиН", "Class_chistoti_SanPin", item, roomDto));
-                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Класс чистоты по СП 158", "Class_chistoti_SP_158", item, roomDto));
-                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Нагрузка ЭОМ", "El_Nagruzka", item, roomDto));
-                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Относительная влажность_Текст", "Ot_vlazhnost", item, roomDto));
-                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Примечание АР", "Discription_AR", item, roomDto));
-                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Примечание ВК", "Equipment_VK", item, roomDto));
-                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Примечание КР", "Nagruzki_na_perekririe", item, roomDto));
-                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Примечание МГ", "Discription_GSV", item, roomDto));
-                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Примечание ОВ", "Discription_OV", item, roomDto));
-                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Примечание ЭОМ", "Discription_EOM", item, roomDto));
-                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Примечание СС", "Discription_SS", item, roomDto));
-                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Примечание ХС", "Discription_HS", item, roomDto));
-                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Приток кратность", "Pritok", item, roomDto));
-                        space.parameters.Add(mainModelRvtHelper.SetPropertt("M1_Вытяжка кратность", "Vityazhka", item, roomDto));
-                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Расчетная площадь", "Summary_Area", item, roomDto));
-                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Температура максимальная С", "T_max", item, roomDto));
-                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Температура минимальная С", "T_min", item, roomDto));
-                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Температура расчетная С", "T_calc", item, roomDto));
-                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Мощность_ТХ", "El_Nagruzka", item, roomDto));
-                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Освещенность_ТХ", "Osveshennost_pro_obshem_osvech", item, roomDto));
-                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Количество пациентов", nameof(roomDto.Kolichestvo_personala), item, roomDto));
-                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Количество персонала", nameof(roomDto.Kolichestvo_posetitelei), item, roomDto));
+                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Вытяжка кратность", nameof(roomDto.Vityazhka), item, roomDto));
+                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Группа по электробезопасности", nameof(roomDto.Group_el_bez), item, roomDto));
+                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Категория пожароопасности", nameof(roomDto.Categoty_pizharoopasnosti), item, roomDto));
+                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Класс чистоты по СанПиН", nameof(roomDto.Class_chistoti_SanPin), item, roomDto));
+                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Класс чистоты по СП 158", nameof(roomDto.Class_chistoti_SP_158), item, roomDto));
+                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Количество пациентов", nameof(roomDto.Kolichestvo_posetitelei), item, roomDto));
+                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Количество персонала", nameof(roomDto.Kolichestvo_personala), item, roomDto));
+                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Мощность_ТХ", nameof(roomDto.El_Nagruzka), item, roomDto));
+                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Освещенность_ТХ", nameof(roomDto.Osveshennost_pro_obshem_osvech), item, roomDto));
+                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Относительная влажность_Текст", nameof(roomDto.Ot_vlazhnost), item, roomDto));
+                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Примечание АР", nameof(roomDto.Discription_AR), item, roomDto));
+                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Примечание ВК", nameof(roomDto.Equipment_VK), item, roomDto));
+                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Примечание КР", nameof(roomDto.Nagruzki_na_perekririe), item, roomDto));
+                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Примечание МГ", nameof(roomDto.Discription_GSV), item, roomDto));
+                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Примечание ОВ", nameof(roomDto.Discription_OV), item, roomDto));
+                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Примечание ТГ", nameof(roomDto.Discription_GSV), item, roomDto));
+                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Примечание ЭМ", nameof(roomDto.Discription_EOM), item, roomDto));
+                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Примечание СС", nameof(roomDto.Discription_SS), item, roomDto));
+                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Примечание ХС", nameof(roomDto.Discription_HS), item, roomDto));
+                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Приток кратность", nameof(roomDto.Pritok), item, roomDto));
+                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Расчетная площадь", nameof(roomDto.Min_area), item, roomDto));
+                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Температура максимальная С", nameof(roomDto.T_max), item, roomDto));
+                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Температура минимальная С", nameof(roomDto.T_min), item, roomDto));
+                        space.parameters.Add(mainModelRvtHelper.SetPropertt("М1_Температура расчетная С", nameof(roomDto.T_calc), item, roomDto));
                         space.parameters.RemoveAll(x => x == null);
                     }
-
-                    if (roomDto?.Rab_mesta_posetiteli != null & roomDto?.Rab_mesta_posetiteli != "")
-                    {
-                        var roomDtodeee = roomDto?.Rab_mesta_posetiteli.Split('/');
-
-                        int pac;
-                        int.TryParse(roomDtodeee[1], out pac);
-
-                        if (pac != default)
-                            item.LookupParameter("М1_Количество пациентов")?.Set(pac);
-
-                        int per;
-                        int.TryParse(roomDtodeee[0], out per);
-
-                        if (per != default)
-                            item.LookupParameter("М1_Количество персонала")?.Set(per);
-                    }
                     #endregion
+
+                    RoomsDto.Remove(roomDto);
+
                     spacesDto.Add(space);
                 }
+
+
+
                 transaction.Commit();
                 MainWindowViewModel.SpaciesList = spacesDto.Where(x => x.parameters.Count != 0).ToList();
+                MainWindowViewModel.UnfoundedRooms = RoomsDto;
                 ChangeUI?.Invoke(this);
             }
         }

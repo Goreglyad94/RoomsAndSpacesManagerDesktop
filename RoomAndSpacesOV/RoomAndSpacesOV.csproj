@@ -49,8 +49,9 @@
     <Reference Include="RevitAPIUI">
       <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2021\RevitAPIUI.dll</HintPath>
     </Reference>
-    <Reference Include="RoomsAndSpacesManagerDataBase">
-      <HintPath>..\RoomsAndSpacesManagerDataBase\bin\Debug\RoomsAndSpacesManagerDataBase.dll</HintPath>
+    <Reference Include="RoomsAndSpacesManagerDataBase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\ProgramData\Autodesk\Revit\Addins\2021\M1-IOS\General\RoomsAndSpacesManagerDataBase.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -69,6 +70,7 @@
     <Compile Include="Dto\ParameterDto.cs" />
     <Compile Include="Dto\SpaceDto.cs" />
     <Compile Include="Infrastructure\Base\Command.cs" />
+    <Compile Include="Infrastructure\CustomControls\CustomTubItem.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="Models\DbModels\MainDbModel.cs" />
     <Compile Include="Models\RvtHelper\MainModelRvtHelper.cs" />

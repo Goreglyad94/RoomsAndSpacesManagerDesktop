@@ -16,6 +16,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsAndSpacesManagerLib", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomAndSpacesOV", "RoomAndSpacesOV\RoomAndSpacesOV.csproj", "{73E2B54C-177A-4E1E-B3B8-F5AEC4D76F70}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsAndSpacesManagerDesktop.CreateIssuesForm", "RoomsAndSpacesManagerDesktop.CreateIssuesForm\RoomsAndSpacesManagerDesktop.CreateIssuesForm.csproj", "{01E6C8B0-62F0-4EDA-96E6-D1351FF26757}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsAndSpacesManagerDesktop.ViewModelBase", "RoomsAndSpacesManagerDesktop.ViewModelBase\RoomsAndSpacesManagerDesktop.ViewModelBase.csproj", "{97ED37C3-3444-4ED0-82FF-0179443D9E58}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomsAndSpacesManagerDesktop.WpfTest", "RoomsAndSpacesManagerDesktop.WpfTest\RoomsAndSpacesManagerDesktop.WpfTest.csproj", "{BD72A9F9-B562-403A-9753-3C4BF0F8C8E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +46,18 @@ Global
 		{73E2B54C-177A-4E1E-B3B8-F5AEC4D76F70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73E2B54C-177A-4E1E-B3B8-F5AEC4D76F70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73E2B54C-177A-4E1E-B3B8-F5AEC4D76F70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01E6C8B0-62F0-4EDA-96E6-D1351FF26757}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01E6C8B0-62F0-4EDA-96E6-D1351FF26757}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01E6C8B0-62F0-4EDA-96E6-D1351FF26757}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01E6C8B0-62F0-4EDA-96E6-D1351FF26757}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97ED37C3-3444-4ED0-82FF-0179443D9E58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97ED37C3-3444-4ED0-82FF-0179443D9E58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97ED37C3-3444-4ED0-82FF-0179443D9E58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97ED37C3-3444-4ED0-82FF-0179443D9E58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD72A9F9-B562-403A-9753-3C4BF0F8C8E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD72A9F9-B562-403A-9753-3C4BF0F8C8E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD72A9F9-B562-403A-9753-3C4BF0F8C8E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD72A9F9-B562-403A-9753-3C4BF0F8C8E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

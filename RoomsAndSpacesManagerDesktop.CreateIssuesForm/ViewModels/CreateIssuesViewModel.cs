@@ -1,5 +1,4 @@
-﻿using RoomsAndSpacesManagerDesktop.ViewModelBase.ViewModelBase;
-using RoomsAndSpacesManagerDesktop.ViewModelBase.CommandBase;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +12,8 @@ using System.ComponentModel;
 using RoomsAndSpacesManagerDataBase.Dto.RoomInfrastructure;
 using RoomsAndSpacesManagerDesktop.CreateIssuesForm.Models.DatabaseModels;
 using RoomsAndSpacesManagerDesktop.CreateIssuesForm.Models.ExcelModels;
+using RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels.Base;
+using RoomsAndSpacesManagerDesktop.CreateIssuesForm.Infrastructure.Commands;
 
 namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
 {

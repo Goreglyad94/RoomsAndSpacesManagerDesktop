@@ -544,16 +544,16 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
 
         #region Филтер. По Id
 
-        private string idFilter;
+        //private string idFilter;
 
-        public string IdFilter
-        {
-            get { return idFilter; }
-            set
-            {
-                idFilter = value;
-            }
-        }
+        //public string IdFilter
+        //{
+        //    get { return idFilter; }
+        //    set
+        //    {
+        //        idFilter = value;
+        //    }
+        //}
 
 
         #endregion

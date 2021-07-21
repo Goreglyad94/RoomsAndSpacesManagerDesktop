@@ -544,16 +544,16 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
 
         #region Филтер. По Id
 
-        private string idFilter;
+        //private string idFilter;
 
-        public string IdFilter
-        {
-            get { return idFilter; }
-            set
-            {
-                idFilter = value;
-            }
-        }
+        //public string IdFilter
+        //{
+        //    get { return idFilter; }
+        //    set
+        //    {
+        //        idFilter = value;
+        //    }
+        //}
 
 
         #endregion
@@ -799,7 +799,6 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
 
         /*Таблица "Сводная"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
         
-
         #region Список всех помещений для проекта
         private List<BuildingDto> _summury;
         public List<BuildingDto> _Summury

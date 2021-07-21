@@ -12,6 +12,7 @@ using RoomsAndSpacesManagerDataBase.Dto;
 using System.ComponentModel;
 using RoomsAndSpacesManagerDataBase.Dto.RoomInfrastructure;
 using RoomsAndSpacesManagerDesktop.CreateIssuesForm.Models.DatabaseModels;
+using RoomsAndSpacesManagerDesktop.CreateIssuesForm.Models.ExcelModels;
 
 namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
 {
@@ -21,7 +22,7 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
         ProjectsDbContext projContext = new ProjectsDbContext();
         List<RoomDto> roomDtos;
         RoomsDbContext roomsContext = new RoomsDbContext();
-        UploadToCsvModel uploadToCsvModel = new UploadToCsvModel();
+        //UploadToCsvModel uploadToCsvModel = new UploadToCsvModel();
         List<RoomNameDto> roomsNamesList;
 
         #endregion
@@ -452,7 +453,7 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
         {
             if (p != null)
             {
-                roomsNamesList = RoomsPropertiesViewModel.roomsContext.GetRoomNames(p as SubCategoryDto);
+                roomsNamesList = roomsContext.GetRoomNames(p as SubCategoryDto);
                 RoomsNames = CollectionViewSource.GetDefaultView(roomsNamesList);
                 RoomsNames.Refresh();
             }
@@ -707,13 +708,13 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
         /// <param name="p"></param>
         private void OnCopySubdivisionCommndExecutde(object p)
         {
-            CopySubDivisionViewModel.projContext = projContext;
-            CopySubDivisionViewModel.selectedBuildingId = SelectedBuilding.Id;
-            CopySubdivisionWindow copySubdivisionWindow = new CopySubdivisionWindow();
-            CopySubDivisionViewModel copySubDivisionViewModel = new CopySubDivisionViewModel();
-            copySubDivisionViewModel.copySubdivisionWindow = copySubdivisionWindow;
-            copySubdivisionWindow.DataContext = copySubDivisionViewModel;
-            copySubdivisionWindow.ShowDialog();
+            //CopySubDivisionViewModel.projContext = projContext;
+            //CopySubDivisionViewModel.selectedBuildingId = SelectedBuilding.Id;
+            //CopySubdivisionWindow copySubdivisionWindow = new CopySubdivisionWindow();
+            //CopySubDivisionViewModel copySubDivisionViewModel = new CopySubDivisionViewModel();
+            //copySubDivisionViewModel.copySubdivisionWindow = copySubdivisionWindow;
+            //copySubdivisionWindow.DataContext = copySubDivisionViewModel;
+            //copySubdivisionWindow.ShowDialog();
 
             Subdivisions = projContext.GetSubdivisions(SelectedBuilding);
         }
@@ -866,8 +867,8 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
         {
             try
             {
-                UploadToCsvModel UploadToCsvModel = new UploadToCsvModel(SelectedProject, buildList, Koef);
-                UploadToCsvModel.UploadToExcel();
+                //UploadToCsvModel UploadToCsvModel = new UploadToCsvModel(SelectedProject, buildList, Koef);
+                //UploadToCsvModel.UploadToExcel();
                 //uploadToCsvModel.UploadRoomProgramToExcel(SelectedProject);
                 //uploadToCsvModel.UploadRoomSummaryToExcel(buildList);
                 MessageBox.Show("Выгрузка завершена", "Статус");

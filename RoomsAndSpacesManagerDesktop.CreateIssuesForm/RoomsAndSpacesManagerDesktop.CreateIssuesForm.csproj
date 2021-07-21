@@ -65,6 +65,7 @@
     <Compile Include="Infrastructure\Commands\Base\Command.cs" />
     <Compile Include="Infrastructure\Commands\RelayCommand.cs" />
     <Compile Include="Infrastructure\CustomControlClasses\CustomTextBlockCellTemplate.cs" />
+    <Compile Include="Infrastructure\Mediators\Mediator.cs" />
     <Compile Include="Models\DatabaseModels\Base\MainDatabaseContext.cs" />
     <Compile Include="Models\DatabaseModels\EquipmentDbContext.cs" />
     <Compile Include="Models\DatabaseModels\ProjectsDbContext.cs" />
@@ -84,9 +85,16 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ViewModels\Base\ViewModel.cs" />
-    <Compile Include="ViewModels\CreateIssuesViewModel.cs" />
-    <Compile Include="Views\CreateIssuesMainForm.xaml.cs">
-      <DependentUpon>CreateIssuesMainForm.xaml</DependentUpon>
+    <Compile Include="ViewModels\CreateIssueViewModel.cs" />
+    <Compile Include="ViewModels\SelectionProjectsViewModel.cs" />
+    <Compile Include="Views\Body\CreateIssueUserControl.xaml.cs">
+      <DependentUpon>CreateIssueUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Head\SelectionProjectsUserControl.xaml.cs">
+      <DependentUpon>SelectionProjectsUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainUserControl.xaml.cs">
+      <DependentUpon>MainUserControl.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -100,7 +108,15 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Page Include="Views\CreateIssuesMainForm.xaml">
+    <Page Include="Views\Body\CreateIssueUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Head\SelectionProjectsUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

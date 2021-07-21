@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,24 +13,31 @@ using RoomsAndSpacesManagerDesktop.CreateIssuesForm.Models.DatabaseModels;
 using RoomsAndSpacesManagerDesktop.CreateIssuesForm.Models.ExcelModels;
 using RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels.Base;
 using RoomsAndSpacesManagerDesktop.CreateIssuesForm.Infrastructure.Commands;
+using RoomsAndSpacesManagerDesktop.CreateIssuesForm.Infrastructure.Mediators;
 
 namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
 {
-    class CreateIssueViewModel : ViewModel
+    internal class CreateIssueViewModel : ViewModel
     {
         #region филды
         ProjectsDbContext projContext = new ProjectsDbContext();
         List<RoomDto> roomDtos;
         RoomsDbContext roomsContext = new RoomsDbContext();
         //UploadToCsvModel uploadToCsvModel = new UploadToCsvModel();
+
+
+
         List<RoomNameDto> roomsNamesList;
 
+
+        private SubdivisionDto SelectedSubdivision { get; set; }
         #endregion
 
         public CreateIssueViewModel()
         {
+            Mediator.Register("ThrowSubdivision", OnChangeView);
+
             allRoomNames = roomsContext.GetAllRoomNames();
-            Projects = projContext.GetProjects();
             Categories = roomsContext.GetCategories();
 
             #region Команды
@@ -39,12 +45,8 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
             PushToDbCommand = new RelayCommand(OnPushToDbCommandExecutde, CanPushToDbCommandExecute);
             PullFromDbCommand = new RelayCommand(OnPullFromDbCommandExecutde, CanPullFromDbCommandExecute);
             AddNewRowCommand = new RelayCommand(OnAddNewRowCommandExecutde, CanAddNewRowCommandExecute);
-            AddNewProjectCommand = new RelayCommand(OnAddNewProjectCommandExecutde, CanAddNewProjectCommandExecute);
-            AddNewBuildingCommand = new RelayCommand(OnAddNewBuildingCommandExecutde, CanAddNewBuildingCommandExecute);
-            DeleteCommand = new RelayCommand(OnDeleteCommandExecutde, CanDeleteCommandExecute);
             DeleteIssueCommand = new RelayCommand(OnDeleteIssueCommandExecutde, CanDeleteIssueCommandExecute);
             SetDefaultValueCommand = new RelayCommand(OnSetDefaultValueCommandExecutde, CanSetDefaultValueCommandExecute);
-            AddNewSubdivisionCommand = new RelayCommand(OnAddNewSubdivisionCommandExecutde, CanAddNewSubdivisionCommandExecute);
             RenderComboboxCommand = new RelayCommand(OnRenderComboboxCommandExecutde, CanRenderComboboxCommandExecute);
             LoadedCommand = new RelayCommand(OnLoadedCommandExecutde, CanLoadedCommandExecute);
             CopySubdivisionCommnd = new RelayCommand(OnCopySubdivisionCommndExecutde, CanCopySubdivisionCommndExecute);
@@ -56,6 +58,17 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
 
             #endregion
         }
+
+        #region Получить Сабдивижен из ВьюМодели проектов
+        public void OnChangeView(object obj)
+        {
+            SelectedSubdivision = obj as SubdivisionDto;
+
+            roomDtos = projContext.GetRooms(SelectedSubdivision);
+            Rooms = CollectionViewSource.GetDefaultView(roomDtos);
+            Rooms.Refresh();
+        }
+        #endregion
 
         /*MainWindow~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -69,239 +82,9 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
                 Rooms = CollectionViewSource.GetDefaultView(roomDtos);
                 Rooms.Refresh();
             }
-
-
         }
 
         private bool CanLoadedCommandExecute(object obj) => true;
-        #endregion
-
-        /*Создание нового проекта и здания~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
-        #region Имена новых проекта и здания
-        private string newProjectName;
-        public string NewProjectName
-        {
-            get => newProjectName;
-            set => Set(ref newProjectName, value);
-        }
-
-        private string newBuildingName;
-        public string NewBuildingName
-        {
-            get => newBuildingName;
-            set => Set(ref newBuildingName, value);
-        }
-
-        private string newSubdivisionName;
-        public string NewSubdivisionName
-        {
-            get => newSubdivisionName;
-            set => Set(ref newSubdivisionName, value);
-        }
-
-        #endregion
-
-        #region СелектедПроджект для добавления новых проектов
-        private ProjectDto selectedProjectForAdd;
-
-        public ProjectDto SelectedProjectForAdd
-        {
-            get { return selectedProjectForAdd; }
-            set
-            {
-                selectedProjectForAdd = value;
-            }
-        }
-        #endregion
-
-        /*Верхняя панель. Список проектов и зданий~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
-        #region Список проектов. Выбранный проект
-        private List<ProjectDto> projects;
-        /// <summary> Список проектов. Из БД </summary>
-        public List<ProjectDto> Projects
-        {
-            get => projects;
-            set => Set(ref projects, value);
-        }
-        private ProjectDto selectedProject;
-
-        public ProjectDto SelectedProject
-        {
-            get { return selectedProject; }
-            set
-            {
-                selectedProject = value;
-                if (SelectedProject != null)
-                {
-                    if (SelectedProject.Buildings != null)
-                        Buildings = projContext.GetModels(SelectedProject);
-
-                    AllRooms = projContext.GetAllRoomsByProject(SelectedProject).OrderBy(x => x.Subdivision.BuildingId).ToList();
-                }
-                else
-                {
-                    Buildings = new List<BuildingDto>();
-                }
-
-                OnLoadedSummuryCommandExecutde("");
-
-            }
-        }
-        #endregion
-
-        #region Список зданий. Выбранное здание
-        private List<BuildingDto> buildings;
-        /// <summary> Список проектов. Из БД </summary>
-        public List<BuildingDto> Buildings
-        {
-            get => buildings;
-            set => Set(ref buildings, value);
-        }
-
-        private BuildingDto selectedBuilding;
-
-        public BuildingDto SelectedBuilding
-        {
-            get { return selectedBuilding; }
-            set
-            {
-                selectedBuilding = value;
-                if (SelectedBuilding != null)
-                {
-                    if (SelectedBuilding.Subdivisions != null)
-                        Subdivisions = projContext.GetSubdivisions(SelectedBuilding);
-                }
-                else
-                    Subdivisions = null;
-            }
-        }
-        #endregion
-
-        #region Список подразделений. Выбранное подразделение
-        private List<SubdivisionDto> subdivisions;
-        /// <summary> Список проектов. Из БД </summary>
-        public List<SubdivisionDto> Subdivisions
-        {
-            get => subdivisions;
-            set => Set(ref subdivisions, value);
-        }
-
-        private SubdivisionDto selectedSubdivision;
-
-        public SubdivisionDto SelectedSubdivision
-        {
-            get { return selectedSubdivision; }
-            set
-            {
-                selectedSubdivision = value;
-                if (SelectedSubdivision != null)
-                {
-                    roomDtos = projContext.GetRooms(SelectedSubdivision);
-                    Rooms = CollectionViewSource.GetDefaultView(roomDtos);
-                    Rooms.Refresh();
-                }
-                else
-                    Rooms = null;
-            }
-        }
-        #endregion
-
-        #region Комманда. Создать новый проект
-        public ICommand AddNewProjectCommand { get; set; }
-        private void OnAddNewProjectCommandExecutde(object p)
-        {
-            projContext.AddNewProjects(new ProjectDto()
-            {
-                Name = NewProjectName
-            });
-            Projects = projContext.GetProjects();
-            NewProjectName = string.Empty;
-            if (Buildings != null && Buildings.Count != 0)
-            {
-                Buildings.Clear();
-                OnPropertyChanged(nameof(Buildings));
-            }
-
-        }
-        private bool CanAddNewProjectCommandExecute(object p) => true;
-        #endregion
-
-        #region Комманда. Создать новую модель
-        public ICommand AddNewBuildingCommand { get; set; }
-        private void OnAddNewBuildingCommandExecutde(object p)
-        {
-            if (p != null)
-            {
-                projContext.AddNewBuilding(new BuildingDto()
-                {
-                    ProjectId = (p as ProjectDto).Id,
-                    Name = NewBuildingName
-                });
-                Buildings = projContext.GetModels(p as ProjectDto);
-            }
-            NewBuildingName = string.Empty;
-
-        }
-        private bool CanAddNewBuildingCommandExecute(object p)
-        {
-            if (p != null)
-            {
-                return true;
-            }
-            else { return false; }
-        }
-        #endregion
-
-        #region Комманда. Создать новое подразделение
-        public ICommand AddNewSubdivisionCommand { get; set; }
-        private void OnAddNewSubdivisionCommandExecutde(object p)
-        {
-            if (p != null)
-            {
-                projContext.AddNewSubdivision(new SubdivisionDto()
-                {
-                    BuildingId = (p as BuildingDto).Id,
-                    Name = NewSubdivisionName
-                });
-                Subdivisions = projContext.GetSubdivisions(p as BuildingDto);
-            }
-            NewBuildingName = string.Empty;
-
-        }
-        private bool CanAddNewSubdivisionCommandExecute(object p)
-        {
-            if (p != null)
-            {
-                return true;
-            }
-            else { return false; }
-        }
-        #endregion
-
-        #region Комманда удаления проектов и зданий
-        public ICommand DeleteCommand { get; set; }
-        private void OnDeleteCommandExecutde(object p)
-        {
-            if (p is ProjectDto)
-            {
-                projContext.RemoveProject(p as ProjectDto);
-                Projects = projContext.GetProjects();
-            }
-            if (p is BuildingDto)
-            {
-                projContext.RemoveBuilding(p as BuildingDto);
-                Buildings = projContext.GetModels(SelectedProject);
-            }
-            if (p is SubdivisionDto)
-            {
-                projContext.RemoveSubDivision(p as SubdivisionDto);
-                Subdivisions = projContext.GetSubdivisions(SelectedBuilding);
-            }
-
-        }
-        private bool CanDeleteCommandExecute(object p) => true;
         #endregion
 
         /*Верхняя панель. Список категорий~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -677,7 +460,7 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
         /// <param name="p"></param>
         private void OnAddNewRowCommandExecutde(object p)
         {
-            if (SelectedBuilding != null)
+            if (SelectedSubdivision != null)
             {
                 roomDtos.Add(new RoomDto()
                 {
@@ -717,11 +500,11 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
             //copySubdivisionWindow.DataContext = copySubDivisionViewModel;
             //copySubdivisionWindow.ShowDialog();
 
-            Subdivisions = projContext.GetSubdivisions(SelectedBuilding);
+            //Subdivisions = projContext.GetSubdivisions(SelectedBuilding);
         }
         private bool CanCopySubdivisionCommndExecute(object p)
         {
-            if (SelectedBuilding == null) return false;
+            //if (SelectedBuilding == null) return false;
 
             return true;
         }
@@ -817,36 +600,36 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
         public ICommand LoadedSummuryCommand { get; set; }
         private void OnLoadedSummuryCommandExecutde(object obj)
         {
-            int? sss = 0;
-            if (SelectedProject != null)
-            {
-                buildList = projContext.GetModels(SelectedProject);
-                foreach (var build in buildList)
-                {
-                    int? summAreaBuild = 0;
-                    foreach (var subDiv in build.Subdivisions)
-                    {
-                        int? summAreaSubdiv = 0;
-                        foreach (var room in subDiv.Rooms)
-                        {
-                            if (room.Min_area != null)
-                            {
-                                int i;
-                                int.TryParse(room.Min_area, out i);
-                                summAreaSubdiv += i;
-                            }
+            //int? sss = 0;
+            //if (SelectedProject != null)
+            //{
+            //    buildList = projContext.GetModels(SelectedProject);
+            //    foreach (var build in buildList)
+            //    {
+            //        int? summAreaBuild = 0;
+            //        foreach (var subDiv in build.Subdivisions)
+            //        {
+            //            int? summAreaSubdiv = 0;
+            //            foreach (var room in subDiv.Rooms)
+            //            {
+            //                if (room.Min_area != null)
+            //                {
+            //                    int i;
+            //                    int.TryParse(room.Min_area, out i);
+            //                    summAreaSubdiv += i;
+            //                }
 
-                        }
-                        subDiv.SunnuryArea = summAreaSubdiv;
-                        summAreaBuild += summAreaSubdiv;
-                    }
-                    build.SunnuryArea = summAreaBuild;
-                    sss += summAreaBuild;
-                }
-                Summury = CollectionViewSource.GetDefaultView(buildList);
-                Summury.Refresh();
-                SummuryArea = sss;
-            }
+            //            }
+            //            subDiv.SunnuryArea = summAreaSubdiv;
+            //            summAreaBuild += summAreaSubdiv;
+            //        }
+            //        build.SunnuryArea = summAreaBuild;
+            //        sss += summAreaBuild;
+            //    }
+            //    Summury = CollectionViewSource.GetDefaultView(buildList);
+            //    Summury.Refresh();
+            //    SummuryArea = sss;
+            //}
         }
         private bool CanLoadedSummuryCommandExecute(object obj) => false;
 

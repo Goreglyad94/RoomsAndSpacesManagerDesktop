@@ -14,17 +14,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.Views
+namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.Views.Head
 {
     /// <summary>
-    /// Логика взаимодействия для CreateIssuesMainForm.xaml
+    /// Логика взаимодействия для SelectionProjectsUserControl.xaml
     /// </summary>
-    public partial class CreateIssuesMainForm : UserControl
+    public partial class SelectionProjectsUserControl : UserControl
     {
-        public CreateIssuesMainForm()
+        public SelectionProjectsUserControl()
         {
             InitializeComponent();
-            DataContext = new CreateIssueViewModel();
         }
     }
 }

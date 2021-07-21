@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace RoomsAndSpacesManagerDesktop.ViewModelBase.CommandBase
+
+namespace RoomsAndSpacesManagerDesktop.ViewModelBase.CommandBase.Base
 {
     public abstract class Command : ICommand
     {

@@ -45,7 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandBase\Command.cs" />
+    <Compile Include="CommandBase\Base\Command.cs" />
+    <Compile Include="CommandBase\RelayCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModelBase\ViewModel.cs" />
   </ItemGroup>

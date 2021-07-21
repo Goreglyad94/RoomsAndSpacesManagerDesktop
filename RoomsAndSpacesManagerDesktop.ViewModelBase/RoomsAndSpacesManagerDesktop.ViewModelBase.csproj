@@ -35,10 +35,6 @@
     <Reference Include="RoomsAndSpacesManagerDataBase">
       <HintPath>..\RoomsAndSpacesManagerDataBase\bin\Debug\RoomsAndSpacesManagerDataBase.dll</HintPath>
     </Reference>
-    <Reference Include="RoomsAndSpacesManagerDesktop.ViewModelBase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\RoomsAndSpacesManagerDesktop.ViewModelBase.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

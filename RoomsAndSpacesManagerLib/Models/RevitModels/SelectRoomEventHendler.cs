@@ -31,7 +31,7 @@ namespace RoomsAndSpacesManagerLib.Models.RevitModels
             using (Transaction trans = new Transaction(app.ActiveUIDocument.Document, "AddToFamilyParam"))
             {
                 trans.Start();
-                dd.LookupParameter("М1_ID_задания").Set(DbRommId);
+                dd.LookupParameter("М1_ID_задания")?.Set(DbRommId);
                 //dd.LookupParameter("Имя").Set(DbRommId);
                 trans.Commit();
             }

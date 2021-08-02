@@ -190,6 +190,7 @@
     <Compile Include="Models\DbModels\ProjectsDbContext.cs" />
     <Compile Include="Models\DbModels\RoomsDbContext.cs" />
     <Compile Include="Models\ExcelModels\MainExcelModel.cs" />
+    <Compile Include="Models\SqlModel\SqlMainModel.cs" />
     <Compile Include="ViewModels\Base\ViewModel.cs" />
     <Compile Include="ViewModels\CopySubDivisionViewModel.cs" />
     <Compile Include="ViewModels\CreateIssueViewModel.cs" />

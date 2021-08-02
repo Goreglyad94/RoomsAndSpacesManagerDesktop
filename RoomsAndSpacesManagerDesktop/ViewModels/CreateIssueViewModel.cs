@@ -16,6 +16,7 @@ using RoomsAndSpacesManagerDesktop.Models.CsvModels;
 using RoomsAndSpacesManagerDesktop.Models.DbModels;
 using RoomsAndSpacesManagerDesktop.Models.DbModels.Base;
 using RoomsAndSpacesManagerDesktop.Models.ExcelModels;
+using RoomsAndSpacesManagerDesktop.Models.SqlModel;
 using RoomsAndSpacesManagerDesktop.ViewModels.Base;
 using RoomsAndSpacesManagerDesktop.Views.Windows;
 
@@ -41,7 +42,8 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             #region Команды
 
             PushToDbCommand = new RelayCommand(OnPushToDbCommandExecutde, CanPushToDbCommandExecute);
-            PullFromDbCommand = new RelayCommand(OnPullFromDbCommandExecutde, CanPullFromDbCommandExecute);
+            UploadProgramToExcelCommand = new RelayCommand(OnUploadProgramToExcelCommandExecutde, CanUploadProgramToExcelCommandExecute);
+            UploadEquipmentToExcelCommand = new RelayCommand(OnUploadEquipmentToExcelCommandExecutde, CanUploadEquipmentToExcelCommandExecute);
             AddNewRowCommand = new RelayCommand(OnAddNewRowCommandExecutde, CanAddNewRowCommandExecute);
             AddNewProjectCommand = new RelayCommand(OnAddNewProjectCommandExecutde, CanAddNewProjectCommandExecute);
             AddNewBuildingCommand = new RelayCommand(OnAddNewBuildingCommandExecutde, CanAddNewBuildingCommandExecute);
@@ -386,14 +388,28 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                 AddRoomInfo();
                 EquipmentDbContext equipmentDbContext = new EquipmentDbContext();
 
-
-
                 if (SelectedRoom.Id != 0)
                 {
                     equipmentDbContext.RemoveAllEquipment(SelectedRoom);
 
-                    List<EquipmentDto> equipment = equipmentDbContext.GetEquipments(SelectedRoomName).Select(x => new EquipmentDto(x) { RoomId = SelectedRoom.Id }).ToList();
-                    equipmentDbContext.AddNewEquipments(equipment, SelectedRoom);
+                    #region Сортировка списка. Чтобы были только первые позиции в списке
+                    List<EquipmentDto> equpmets = equipmentDbContext.GetEquipments(SelectedRoomName).Where(x => x.RoomNameId == SelectedRoomName.Id).Select(x => new EquipmentDto(x) { RoomId = SelectedRoom.Id, Mandatory = false }).ToList();
+                    equpmets.Sort((x, y) => x.Number.CompareTo(y.Number));
+
+                    int activeNumber = default;
+
+                    foreach (EquipmentDto eq in equpmets)
+                    {
+                        if (!activeNumber.Equals(eq.Number))
+                        {
+                            activeNumber = eq.Number;
+                            eq.Mandatory = true;
+                        }
+                    } 
+                    #endregion
+
+                    //List<EquipmentDto> equipment = equipmentDbContext.GetEquipmentsWithSortItems(SelectedRoomName);
+                    equipmentDbContext.AddNewEquipments(equpmets, SelectedRoom);
                 }
 
                 selectedRoomName = null;
@@ -753,13 +769,22 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         }
         #endregion
 
-        #region Комманд. Получить обновления пространств из БД
-        public ICommand PullFromDbCommand { get; set; }
-        private void OnPullFromDbCommandExecutde(object p)
+        #region Комманд. Выгрузить программу в эксель
+        public ICommand UploadProgramToExcelCommand { get; set; }
+        private void OnUploadProgramToExcelCommandExecutde(object p)
         {
-            MainExcelModel.CreateXslxIssues(projContext.GetRooms(SelectedSubdivision));
+            MainExcelModel.UploadProgramToExcel(projContext.GetRooms(SelectedSubdivision));
         }
-        private bool CanPullFromDbCommandExecute(object p) => true;
+        private bool CanUploadProgramToExcelCommandExecute(object p) => true;
+        #endregion
+
+        #region Комманд. Выгрузить список оборудвания в эксель
+        public ICommand UploadEquipmentToExcelCommand { get; set; }
+        private void OnUploadEquipmentToExcelCommandExecutde(object p)
+        {
+            SqlMainModel.GetEqupmentByProjects(SelectedProject);
+        }
+        private bool CanUploadEquipmentToExcelCommandExecute(object p) => true;
         #endregion
 
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -795,7 +820,6 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
 
         /*Таблица "Сводная"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
         
-
         #region Список всех помещений для проекта
         private List<BuildingDto> _summury;
         public List<BuildingDto> _Summury

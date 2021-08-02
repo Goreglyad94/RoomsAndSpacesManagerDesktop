@@ -21,6 +21,28 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
         {
             return context.RaSM_RoomEquipments.Where(x => x.RoomNameId == roomName.Id).ToList();
         }
+
+        public List<EquipmentDto> GetEquipmentsWithSortItems(RoomNameDto roomName, RoomDto room)
+        {
+            List<EquipmentDto> equpmets = context.RaSM_RoomEquipments
+                .Where(x => x.RoomNameId == roomName.Id)
+                .Select(x => new EquipmentDto(x) { RoomId = room.Id, Mandatory = false })
+                .ToList();
+            equpmets.Sort((x, y) => x.Number.CompareTo(y.Number));
+
+            int activeNumber = default;
+
+            foreach (EquipmentDto eq in equpmets)
+            {
+                if (!activeNumber.Equals(eq.Number))
+                {
+                    activeNumber = eq.Number;
+                    eq.Mandatory = true;
+                }
+            }
+            return equpmets;
+        }
+
         public void AddNewEquipment(RoomNameDto roomName)
         {
             context.RaSM_RoomEquipments.Add(new RoomEquipmentDto() { RoomNameId = roomName.Id });

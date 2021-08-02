@@ -2,8 +2,10 @@
 using RoomsAndSpacesManagerDataBase.Dto;
 using RoomsAndSpacesManagerDataBase.Dto.RoomInfrastructure;
 using RoomsAndSpacesManagerDesktop.Models.DbModels;
+using RoomsAndSpacesManagerDesktop.Models.SqlModel;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -77,7 +79,7 @@ namespace RoomsAndSpacesManagerDesktop.Models.ExcelModels
 
         }
 
-        public static void CreateXslxIssues(List<RoomDto> rooms)
+        public static void UploadProgramToExcel (List<RoomDto> rooms)
         {
             ExcelPackage excel = new ExcelPackage();
 
@@ -92,7 +94,7 @@ namespace RoomsAndSpacesManagerDesktop.Models.ExcelModels
 
             excel.Workbook.Worksheets.Add("Сформированное задание");
 
-            var worksheet = excel.Workbook.Worksheets["Сформированное задание"];
+            ExcelWorksheet worksheet = excel.Workbook.Worksheets["Сформированное задание"];
             int rowCount = 1;
             int colCount = 1;
 
@@ -216,20 +218,14 @@ namespace RoomsAndSpacesManagerDesktop.Models.ExcelModels
                 worksheet.Cells[rowCount, colCount].Value = item.Kolichestvo_personala?.ToString();
                 colCount++;
 
-
                 worksheet.Cells[rowCount, colCount].Value = item.Kolichestvo_posetitelei?.ToString();
                 colCount++;
-
 
                 worksheet.Cells[rowCount, colCount].Value = item.Categoty_pizharoopasnosti?.ToString();
                 colCount++;
 
-
                 worksheet.Cells[rowCount, colCount].Value = item.Class_chistoti_SanPin?.ToString();
                 colCount++;
-
-
-
 
                 worksheet.Cells[rowCount, colCount].Value = item.Class_chistoti_SP_158?.ToString();
                 colCount++;
@@ -300,12 +296,85 @@ namespace RoomsAndSpacesManagerDesktop.Models.ExcelModels
 
                 colCount = 1;
 
-
-
-
                 rowCount++;
             }
 
+            FileInfo excelFile = new FileInfo(path);
+            excel.SaveAs(excelFile);
+        }
+
+        /// <summary>
+        /// Выгрузка списка оборудования по проекту в Эксель
+        /// </summary>
+        /// <param name="project"></param>
+        public static void UploadEquipmentToExcel(SqlDataReader sqlDataReader, string projectName)
+        {
+            ExcelPackage excel = new ExcelPackage();
+
+            FolderBrowserDialog openFileDialog = new FolderBrowserDialog();
+            openFileDialog.ShowDialog();
+            string path;
+            path = openFileDialog.SelectedPath + "\\" + projectName + ".xlsx";
+
+            if (File.Exists(path))
+                File.Delete(path);
+
+            excel.Workbook.Worksheets.Add("Оборудование");
+
+            ExcelWorksheet worksheet = excel.Workbook.Worksheets["Оборудование"];
+            int rowCount = 1;
+            int colCount = 1;
+
+
+            worksheet.Cells[rowCount, colCount].Value = "Id оборудования";
+            colCount++;
+
+            worksheet.Cells[rowCount, colCount].Value = "Здание";
+            colCount++;
+
+            worksheet.Cells[rowCount, colCount].Value = "Подразделение";
+            colCount++;
+
+            worksheet.Cells[rowCount, colCount].Value = "Наименование помещения";
+            colCount++;
+
+            worksheet.Cells[rowCount, colCount].Value = "Код классификатора";
+            colCount++;
+
+            worksheet.Cells[rowCount, colCount].Value = "Наименование оборудования";
+            colCount++;
+
+            worksheet.Cells[rowCount, colCount].Value = "Кол-во";
+            colCount++;
+
+            rowCount++;
+            colCount = 1;
+
+            while (sqlDataReader.Read())
+            {
+                worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(0);
+                colCount++;
+
+                worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(1);
+                colCount++;
+
+                worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(2);
+                colCount++;
+
+                worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(3);
+                colCount++;
+
+                worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(4);
+                colCount++;
+
+                worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(5);
+                colCount++;
+
+                worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(6);
+                
+                colCount = 1;
+                rowCount++;
+            }
             FileInfo excelFile = new FileInfo(path);
             excel.SaveAs(excelFile);
         }

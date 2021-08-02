@@ -41,6 +41,9 @@ namespace RoomsAndSpacesManagerLib.Models.RevitModels
                 trans.Start();
                 foreach (RoomDto room in Rooms)
                 {
+                    if (room.RoomNumber == null)
+                        continue;
+
                     Room rvtRoom = elements.FirstOrDefault(x => x.LookupParameter("Номер").AsString() == room.RoomNumber);
 
                     SpaceDto spaceDto = new SpaceDto() 

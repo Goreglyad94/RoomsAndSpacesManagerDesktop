@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -28,7 +29,7 @@ namespace RoomsAndSpacesManagerLib.ViewModels
 
         ProjectsDbContext projectsDbContext = new ProjectsDbContext();
 
-        List<RoomDto> roomDtos;
+        List<RoomDto> roomDtos { get; set; }
         public MainWindowViewModel()
         {
             Projects = projectsDbContext.GetProjects();
@@ -184,6 +185,20 @@ namespace RoomsAndSpacesManagerLib.ViewModels
         private ICollectionView changeParametersList;
         public ICollectionView ChangeParametersList { get => changeParametersList; set => Set(ref changeParametersList, value); }
 
+        #endregion
+
+
+        #region AssembliesList
+
+        public List<Assembly> AsembliesList { get; set; }
+
+
+        private List<Assembly> GetAssembly()
+        {
+            var dsrfdfdf = AppDomain.CurrentDomain.GetAssemblies().Where(x => x.FullName.ToLower().Contains("room")).ToList();
+            MessageBox.Show(dsrfdfdf.Count().ToString());
+            return dsrfdfdf;
+        }
         #endregion
     }
 }

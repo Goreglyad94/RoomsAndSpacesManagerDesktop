@@ -18,24 +18,29 @@ namespace RoomsAndSpacesManagerLib.Models.RevitModels
     {
         public static event Action<object> ChangeUI;
         public static int DbRommId;
-
-        
         public void Execute(UIApplication app)
         {
             Autodesk.Revit.UI.UIDocument uiDoc = app.ActiveUIDocument;
             Autodesk.Revit.UI.Selection.Selection selection = uiDoc.Selection;
             var selectedIds = uiDoc.Selection.GetElementIds();
-            Element dd = uiDoc.Document.GetElement(selectedIds.First());
-            MainWindowViewModel.roomId = (dd as Room).get_Parameter(BuiltInParameter.ROOM_NUMBER).AsString();
-            MainWindowViewModel.rvtToomId = dd.Id.IntegerValue;
-            using (Transaction trans = new Transaction(app.ActiveUIDocument.Document, "AddToFamilyParam"))
+            if (selectedIds.Count != 0)
             {
-                trans.Start();
-                dd.LookupParameter("М1_ID_задания").Set(DbRommId);
-                //dd.LookupParameter("Имя").Set(DbRommId);
-                trans.Commit();
+                Element dd = uiDoc.Document.GetElement(selectedIds.First());
+                MainWindowViewModel.roomId = (dd as Room).get_Parameter(BuiltInParameter.ROOM_NUMBER).AsString();
+                MainWindowViewModel.rvtToomId = dd.Id.IntegerValue;
+                using (Transaction trans = new Transaction(app.ActiveUIDocument.Document, "AddToFamilyParam"))
+                {
+                    trans.Start();
+                    dd.LookupParameter("М1_ID_задания")?.Set(DbRommId);
+                    //dd.LookupParameter("Имя").Set(DbRommId);
+                    trans.Commit();
+                }
+                ChangeUI.Invoke(this);
             }
-            ChangeUI.Invoke(this);
+            else
+            {
+                TaskDialog.Show("Ошибка", "Для назначения помещению номера, требуется выбрать помещение в модели Revit");
+            }
         }
         public string GetName() => nameof(SelectRoomEventHendler);
     }

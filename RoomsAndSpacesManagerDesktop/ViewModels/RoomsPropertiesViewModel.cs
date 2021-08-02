@@ -29,8 +29,36 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             AddNewRowCommand = new RelayCommand(OnAddNewRowCommandExecutde, CanAddNewRowCommandExecute);
             DeleteRoomCommand = new RelayCommand(OnDeleteRoomCommandExecutde, CanDeleteRoomCommandExecute);
             GetRoomEquipments = new RelayCommand(OnGetRoomEquipmentsExecutde, CanGetRoomEquipmentsExecute);
+            LoadedCommand = new RelayCommand(OnLoadedCommandExecutde, CanLoadedCommandExecute);
             #endregion
         }
+
+        /*MainWindow~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+        #region Комманд. Рендер окна
+
+        public ICommand LoadedCommand { get; set; }
+        private async void OnLoadedCommandExecutde(object obj)
+        {
+            if (RoomsList == null | RoomsList?.Count == 0)
+            {
+                RoomsList = roomsContext.GetAllRoomNames();
+                Rooms = CollectionViewSource.GetDefaultView(RoomsList);
+                Rooms.Filter = delegate (object item)
+                {
+                    RoomNameDto user = item as RoomNameDto;
+                    if (user != null && user.Name.ToLower().StartsWith(RoomNameFiltering.ToLower())) return true;
+                    return false;
+                };
+                Rooms.Refresh();
+            }
+        }
+
+        private bool CanLoadedCommandExecute(object obj) => true;
+
+        #endregion
+
+        /*Верхняя панель. Список категорий и подкатегорий~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
         #region Combobox - Список категорий
         private List<CategoryDto> categories;
@@ -50,10 +78,13 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             set
             {
                 Set(ref selectedCategoties, value);
-                SubCategories = roomsContext.GetSubCategotyes(SelectedCategoties);
-                RoomsList = new List<RoomNameDto>();
-                Rooms = CollectionViewSource.GetDefaultView(RoomsList);
-                Rooms.Refresh();
+                if (SelectedCategoties != null)
+                {
+                    SubCategories = roomsContext.GetSubCategotyes(SelectedCategoties);
+                    RoomsList = new List<RoomNameDto>();
+                    Rooms = CollectionViewSource.GetDefaultView(RoomsList);
+                    Rooms.Refresh();
+                }
             }
         }
         #endregion
@@ -94,7 +125,39 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
 
         #endregion
 
+        #region Фильтер помещений по имени и ID
+
+        private string roomNameFiltering = string.Empty;
+
+        public string RoomNameFiltering
+        {
+            get { return roomNameFiltering; }
+            set 
+            { 
+                if (RoomNameFiltering != "")
+                {
+                    RoomsList = roomsContext.GetAllRoomNames();
+                    Rooms = CollectionViewSource.GetDefaultView(RoomsList);
+                    Rooms.Filter = delegate (object item)
+                    {
+                        RoomNameDto user = item as RoomNameDto;
+                        if (user != null && user.Name.ToLower().Contains(RoomNameFiltering.ToLower())) return true;
+                        return false;
+                    };
+                    Rooms.Refresh();
+                }
+                roomNameFiltering = value;
+                CollectionViewSource.GetDefaultView(RoomsList).Refresh();
+            }
+        }
+
+
+        #endregion
+
+        /*Центральная панель. Список комнат~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
         #region Список комнат
+
         private List<RoomNameDto> roomsList;
         public List<RoomNameDto> RoomsList
         {
@@ -110,6 +173,8 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         }
 
         #endregion
+
+        /*Нижнаяя панель. Комманды взаимодвествия с БД~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
         #region Комманд. Удаление помещения
         public ICommand DeleteRoomCommand { get; set; }
@@ -196,7 +261,6 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         } 
         private bool CanGetRoomEquipmentsExecute(object p) => true;
         #endregion
-
-        
+      
     }
 }

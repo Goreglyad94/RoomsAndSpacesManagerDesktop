@@ -41,6 +41,10 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
             context.SaveChanges();
         }
 
+        /// <summary>
+        /// Удалитить комнаты из исходжного списка помещений
+        /// </summary>
+        /// <param name="roomNameDto"></param>
         public void RemoveRoom(RoomNameDto roomNameDto)
         {
             context.RaSM_RoomNames.Remove(roomNameDto);
@@ -74,7 +78,7 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
         }
 
         /// <summary>
-        /// Получить список имен комнат
+        /// Получить список имен комнат по подкатегрии
         /// </summary>
         /// <returns></returns>
         public List<RoomNameDto> GetRoomNames(SubCategoryDto subCat)
@@ -82,16 +86,34 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
             return context.RaSM_RoomNames.Where(x => x.SubCategotyId == subCat.Id).ToList();
         }
 
+
+        /// <summary>
+        /// Получить весь список помещений асинхронно
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<RoomNameDto>> GetAllRoomNamesAsync()
+        {
+            return await Task.Run(() => context.RaSM_RoomNames.ToList());
+        }
+
+        /// <summary>
+        /// Получить весь список помещений
+        /// </summary>
+        /// <returns></returns>
         public List<RoomNameDto> GetAllRoomNames()
         {
             return context.RaSM_RoomNames.ToList();
         }
 
+        /// <summary>
+        /// Получить список помещений по категории
+        /// </summary>
+        /// <param name="category"></param>
+        /// <returns></returns>
         public List<RoomNameDto> GetAllRoomNamesByCategoty(CategoryDto category)
         {
             return context.RaSM_RoomNames.ToList();
         }
-
 
         #endregion
     }

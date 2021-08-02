@@ -689,9 +689,6 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                 });
                 Rooms = CollectionViewSource.GetDefaultView(roomDtos);
                 Rooms.Refresh();
-
-                //RoomsNames = CollectionViewSource.GetDefaultView(roomsNamesList);
-                //RoomsNames.Refresh();
             }
         }
         private bool CanAddNewRowCommandExecute(object p)
@@ -779,7 +776,6 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             set { Set(ref allRooms, value); }
         }
         #endregion
-
 
         #region Комманд. Сохранить изменения в номерах помещений
 

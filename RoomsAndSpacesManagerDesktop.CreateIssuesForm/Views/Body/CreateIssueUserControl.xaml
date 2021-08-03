@@ -58,11 +58,10 @@
                     </Style>
                 </DataGrid.ItemContainerStyle>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Id}" Width="54" IsReadOnly="True">
+                    <DataGridTextColumn Binding="{Binding Id}" Width="30" IsReadOnly="True">
                         <DataGridTextColumn.Header>
                             <DockPanel>
                                 <TextBlock Text="Id " DockPanel.Dock="Left"/>
-                                <!--<TextBox Width="30" Text="{Binding IdFilter, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" DockPanel.Dock="Left"/>-->
                             </DockPanel>
                         </DataGridTextColumn.Header>
                     </DataGridTextColumn>

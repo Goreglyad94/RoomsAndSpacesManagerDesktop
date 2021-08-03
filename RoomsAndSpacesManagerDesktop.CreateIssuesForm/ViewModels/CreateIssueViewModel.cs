@@ -36,7 +36,7 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
         public CreateIssueViewModel()
         {
             Mediator.Register("ThrowSubdivision", OnChangeView);
-
+            Mediator.Register("ThrowDivision", OnChangeColumnDatagridBySelectedDivision);
             allRoomNames = roomsContext.GetAllRoomNames();
             Categories = roomsContext.GetCategories();
 
@@ -68,6 +68,16 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
             Rooms = CollectionViewSource.GetDefaultView(roomDtos);
             Rooms.Refresh();
         }
+
+        #endregion
+
+        #region Получить раздел из TabContol. Скрыть столбцы в зависимости от выбранного раздела
+
+        public void OnChangeColumnDatagridBySelectedDivision(object obj)
+        {
+            MessageBox.Show((string)obj);
+        }
+
         #endregion
 
         /*MainWindow~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -309,8 +319,8 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
             set => Set(ref rooms, value);
         }
 
-        private static RoomDto selectedRoom;
-        public static RoomDto SelectedRoom
+        private RoomDto selectedRoom;
+        public RoomDto SelectedRoom
         {
             get => selectedRoom;
             set
@@ -318,22 +328,6 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
                 selectedRoom = value;
             }
         }
-
-        #endregion
-
-        #region Филтер. По Id
-
-        //private string idFilter;
-
-        //public string IdFilter
-        //{
-        //    get { return idFilter; }
-        //    set
-        //    {
-        //        idFilter = value;
-        //    }
-        //}
-
 
         #endregion
 

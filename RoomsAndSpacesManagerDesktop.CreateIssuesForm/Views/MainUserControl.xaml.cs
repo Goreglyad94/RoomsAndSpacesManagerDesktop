@@ -26,6 +26,7 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.Views
             InitializeComponent();
             HeadProjects.DataContext = new SelectionProjectsViewModel();
             BodyCreateUssue.DataContext = new CreateIssueViewModel();
+            LeftButtonPanel.DataContext = new ButtonPanelViewModel();
         }
     }
 }

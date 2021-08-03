@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -65,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Infrastructure\Commands\Base\Command.cs" />
     <Compile Include="Infrastructure\Commands\RelayCommand.cs" />
+    <Compile Include="Infrastructure\CustomControlClasses\CustomComboboxSelectDivision.cs" />
     <Compile Include="Infrastructure\CustomControlClasses\CustomTextBlockCellTemplate.cs" />
     <Compile Include="Infrastructure\Mediators\Mediator.cs" />
     <Compile Include="Models\DatabaseModels\Base\MainDatabaseContext.cs" />
@@ -86,6 +88,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ViewModels\Base\ViewModel.cs" />
+    <Compile Include="ViewModels\ButtonPanelViewModel.cs" />
     <Compile Include="ViewModels\CreateIssueViewModel.cs" />
     <Compile Include="ViewModels\SelectionProjectsViewModel.cs" />
     <Compile Include="Views\Body\CreateIssueUserControl.xaml.cs">
@@ -93,6 +96,9 @@
     </Compile>
     <Compile Include="Views\Head\SelectionProjectsUserControl.xaml.cs">
       <DependentUpon>SelectionProjectsUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LeftFuncPanel\ButtonPanel.xaml.cs">
+      <DependentUpon>ButtonPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainUserControl.xaml.cs">
       <DependentUpon>MainUserControl.xaml</DependentUpon>
@@ -114,6 +120,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Head\SelectionProjectsUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LeftFuncPanel\ButtonPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

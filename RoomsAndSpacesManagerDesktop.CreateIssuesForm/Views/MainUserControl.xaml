@@ -6,18 +6,83 @@
              xmlns:local="clr-namespace:RoomsAndSpacesManagerDesktop.CreateIssuesForm.Views"
              xmlns:head="clr-namespace:RoomsAndSpacesManagerDesktop.CreateIssuesForm.Views.Head"
               xmlns:body="clr-namespace:RoomsAndSpacesManagerDesktop.CreateIssuesForm.Views.Body"
+               xmlns:leftPanel="clr-namespace:RoomsAndSpacesManagerDesktop.CreateIssuesForm.Views.LeftFuncPanel"
+              xmlns:cc="clr-namespace:RoomsAndSpacesManagerDesktop.CreateIssuesForm.Infrastructure.CustomControlClasses"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <LinearGradientBrush x:Key="NormalBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientBrush.GradientStops>
+                <GradientStopCollection>
+                    <GradientStop Color="White" Offset="0.0"/>
+                    <GradientStop Color="White" Offset="1.0"/>
+                </GradientStopCollection>
+            </GradientBrush.GradientStops>
+        </LinearGradientBrush>
+
+        <SolidColorBrush x:Key="WindowBackgroundBrush" Color="White" />
+
+        <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="ToggleButton">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="20" />
+                </Grid.ColumnDefinitions>
+                <Border x:Name="Border" Grid.ColumnSpan="2" CornerRadius="2" Background="{StaticResource NormalBrush}" BorderThickness="1" />
+                <Border Grid.Column="0" CornerRadius="2,0,0,2"  Margin="1" Background="{StaticResource WindowBackgroundBrush}" BorderThickness="0,0,1,0" />
+                <Path x:Name="Arrow" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Data="M 0 0 L 4 4 L 8 0 Z"/>
+            </Grid>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="ComboBoxTextBox" TargetType="TextBox">
+            <Border x:Name="PART_ContentHost" Focusable="False" Background="{TemplateBinding Background}" />
+        </ControlTemplate>
+
+        <Style x:Key="MyComboBox" TargetType="ComboBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <ToggleButton Name="ToggleButton" Template="{StaticResource ComboBoxToggleButton}" Grid.Column="2" Focusable="false" IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}" ClickMode="Press"/>
+                            <ContentPresenter Name="ContentSite" IsHitTestVisible="False" Margin="3,3,23,3" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                            <TextBox x:Name="PART_EditableTextBox" Style="{x:Null}" Template="{StaticResource ComboBoxTextBox}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3,3,23,3" Focusable="True" Background="Transparent" Visibility="Hidden" IsReadOnly="{TemplateBinding IsReadOnly}"/>
+                            <Popup Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" Focusable="False" PopupAnimation="Slide">
+                                <Grid Name="DropDown" SnapsToDevicePixels="True" MinWidth="{TemplateBinding ActualWidth}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <Border x:Name="DropDownBorder" Background="{StaticResource WindowBackgroundBrush}" BorderThickness="1"/>
+                                    <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </ScrollViewer>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <head:SelectionProjectsUserControl x:Name="HeadProjects"  Grid.Row="0"/>
-        <TabControl Grid.Row="1">
-            <TabItem Header="Формирование задания">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <leftPanel:ButtonPanel x:Name="LeftButtonPanel"  Grid.RowSpan="2" Grid.Column="0" />
+
+        <head:SelectionProjectsUserControl x:Name="HeadProjects"  Grid.Row="0" Grid.Column="1"/>
+        <TabControl Grid.Row="1" Grid.Column="1">
+            <TabItem>
+                <TabItem.Header>
+                    <cc:CustomComboboxSelectDivision Width="100"/>
+                </TabItem.Header>
                 <body:CreateIssueUserControl x:Name="BodyCreateUssue" />
             </TabItem>
         </TabControl>
+        
     </Grid>
 </UserControl>

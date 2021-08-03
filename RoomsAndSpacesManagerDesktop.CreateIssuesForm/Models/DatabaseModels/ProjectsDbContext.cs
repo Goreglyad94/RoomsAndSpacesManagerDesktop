@@ -44,13 +44,23 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.Models.DatabaseModels
         }
 
         /// <summary>
-        /// Добавить новое помещение в БД
+        /// Добавить новые помещения в БД
         /// </summary>
         /// <param name="rooms"></param>
         public void AddNewRooms(List<RoomDto> rooms)
         {
             context.RaSM_Rooms.AddRange(rooms.Where(x => x.Id == default).ToList());
             context.SaveChanges();
+        }
+
+        public List<RoomDto> AddNewRoom(SubdivisionDto subdiv)
+        {
+            context.RaSM_Rooms.Add(new RoomDto() 
+            {
+                SubdivisionId = subdiv.Id
+            });
+            context.SaveChanges();
+            return context.RaSM_Rooms.Where(x => x.SubdivisionId == subdiv.Id).ToList();
         }
 
         #endregion

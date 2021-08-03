@@ -93,7 +93,6 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.Models.DatabaseModels
             return context.RaSM_RoomNames.ToList();
         }
 
-
         #endregion
     }
 }

@@ -1,6 +1,7 @@
 ﻿using OfficeOpenXml;
 using RoomsAndSpacesManagerDataBase.Dto;
 using RoomsAndSpacesManagerDataBase.Dto.RoomInfrastructure;
+using RoomsAndSpacesManagerDesktop.CreateIssuesForm.Interfaces;
 using RoomsAndSpacesManagerDesktop.CreateIssuesForm.Models.DatabaseModels;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,15 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.Models.ExcelModels
 {
     class MainExcelModel
     {
+        //IUploadService UploadService;
+        //public MainExcelModel(IUploadService uploadService)
+        //{
+        //    UploadService = uploadService;
+        //    bool b = uploadService.UploadToExcel();
+        //}
+
+
+
         public void AddToDbFromExcelEqupment(RoomNameDto roomName)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();

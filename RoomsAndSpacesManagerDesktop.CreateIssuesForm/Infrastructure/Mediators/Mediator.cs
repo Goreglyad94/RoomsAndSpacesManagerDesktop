@@ -35,7 +35,7 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.Infrastructure.Mediators
                 pl_dict[token].Remove(callback);
         }
 
-        static public void NotifyColleagues(string token, object args)
+        static public void NotifyColleagues(string token, object args = null)
         {
             if (pl_dict.ContainsKey(token))
                 foreach (var callback in pl_dict[token])

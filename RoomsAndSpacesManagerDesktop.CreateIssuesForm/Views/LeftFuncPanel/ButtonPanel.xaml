@@ -14,14 +14,14 @@
                     <Setter Property="DockPanel.Dock" Value="Top"/>
                     <Setter Property="VerticalAlignment" Value="Top"/>
                     <Setter Property="Margin" Value="5 5 5 5" />
-                    <Setter Property="Width" Value="30"/>
-                    <Setter Property="Height" Value="30"/>
+                    <Setter Property="Width" Value="32"/>
+                    <Setter Property="Height" Value="32"/>
                 </Style>
             </DockPanel.Resources>
-            <Button Margin="5 10 5 5"/>
-            <Button />
-            <Button />
-            <Button />
+            <Button Margin="5 10 5 5" Content="Саве" Command="{Binding SaveChangesCommand}"/>
+            <Button Content="НС" Command="{Binding AddNewRowCommand}" />
+            <Button Content="СП" Command="{Binding CopySubdivisionCommnd}"/>
+            <Button  Content="ВЭСТ" Command="{Binding UploadToExcelProgramAndSummaryCommand}"/>
             <Button />
         </DockPanel>
     </Grid>

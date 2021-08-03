@@ -21,7 +21,7 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
     {
         #region филды
         ProjectsDbContext projContext = new ProjectsDbContext();
-        List<RoomDto> roomDtos;
+        private List<RoomDto> roomDtos;
         RoomsDbContext roomsContext = new RoomsDbContext();
         //UploadToCsvModel uploadToCsvModel = new UploadToCsvModel();
 
@@ -35,21 +35,28 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
 
         public CreateIssueViewModel()
         {
+            #region Медиаторы
             Mediator.Register("ThrowSubdivision", OnChangeView);
             Mediator.Register("ThrowDivision", OnChangeColumnDatagridBySelectedDivision);
+            Mediator.Register("AddNewRow", OnAddNewRow);
+            Mediator.Register("SaveChanges", OnSaveChanges);
+            Mediator.Register("CopySubdivisios", OnCopySubdivisios);
+            #endregion
+
+
             allRoomNames = roomsContext.GetAllRoomNames();
             Categories = roomsContext.GetCategories();
 
             #region Команды
 
-            PushToDbCommand = new RelayCommand(OnPushToDbCommandExecutde, CanPushToDbCommandExecute);
+            //PushToDbCommand = new RelayCommand(OnPushToDbCommandExecutde, CanPushToDbCommandExecute);
             PullFromDbCommand = new RelayCommand(OnPullFromDbCommandExecutde, CanPullFromDbCommandExecute);
-            AddNewRowCommand = new RelayCommand(OnAddNewRowCommandExecutde, CanAddNewRowCommandExecute);
+            //AddNewRowCommand = new RelayCommand(OnAddNewRowCommandExecutde, CanAddNewRowCommandExecute);
             DeleteIssueCommand = new RelayCommand(OnDeleteIssueCommandExecutde, CanDeleteIssueCommandExecute);
             SetDefaultValueCommand = new RelayCommand(OnSetDefaultValueCommandExecutde, CanSetDefaultValueCommandExecute);
             RenderComboboxCommand = new RelayCommand(OnRenderComboboxCommandExecutde, CanRenderComboboxCommandExecute);
             LoadedCommand = new RelayCommand(OnLoadedCommandExecutde, CanLoadedCommandExecute);
-            CopySubdivisionCommnd = new RelayCommand(OnCopySubdivisionCommndExecutde, CanCopySubdivisionCommndExecute);
+            //CopySubdivisionCommnd = new RelayCommand(OnCopySubdivisionCommndExecutde, CanCopySubdivisionCommndExecute);
             LoadedSummuryCommand = new RelayCommand(OnLoadedSummuryCommandExecutde, CanLoadedSummuryCommandExecute);
             UploadProgramToCsv = new RelayCommand(OnUploadProgramToCsvExecutde, CanUploadProgramToCsvExecute);
             ClearTextboxCommand = new RelayCommand(OnClearTextboxCommandExecuted, CanClearTextboxCommandExecute);
@@ -446,96 +453,119 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
         /*Нижняя панель. Интерфейс добавления строки и синхронизации с БД~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
         #region Добавить новую строку комнаты с Айдишником здания
-        public ICommand AddNewRowCommand { get; set; }
 
-        /// <summary>
-        /// Метод. Добавть новую строку
-        /// </summary>
-        /// <param name="p"></param>
-        private void OnAddNewRowCommandExecutde(object p)
+        public async void OnAddNewRow(object obj)
         {
             if (SelectedSubdivision != null)
             {
-                roomDtos.Add(new RoomDto()
-                {
-                    SubdivisionId = SelectedSubdivision.Id
-                });
+                roomDtos = projContext.AddNewRoom(SelectedSubdivision);
                 Rooms = CollectionViewSource.GetDefaultView(roomDtos);
                 Rooms.Refresh();
-
-                //RoomsNames = CollectionViewSource.GetDefaultView(roomsNamesList);
-                //RoomsNames.Refresh();
             }
         }
-        private bool CanAddNewRowCommandExecute(object p)
-        {
-            if (SelectedSubdivision == null) return false;
-            else return true;
-        }
+
+        //public ICommand AddNewRowCommand { get; set; }
+
+        ///// <summary>
+        ///// Метод. Добавть новую строку
+        ///// </summary>
+        ///// <param name="p"></param>
+        //private void OnAddNewRowCommandExecutde(object p)
+        //{
+        //    if (SelectedSubdivision != null)
+        //    {
+        //        roomDtos.Add(new RoomDto()
+        //        {
+        //            SubdivisionId = SelectedSubdivision.Id
+        //        });
+        //        Rooms = CollectionViewSource.GetDefaultView(roomDtos);
+        //        Rooms.Refresh();
+
+        //        //RoomsNames = CollectionViewSource.GetDefaultView(roomsNamesList);
+        //        //RoomsNames.Refresh();
+        //    }
+        //}
+        //private bool CanAddNewRowCommandExecute(object p)
+        //{
+        //    if (SelectedSubdivision == null) return false;
+        //    else return true;
+        //}
         #endregion
 
         #region Копировать подразделение из другого здания
-        public ICommand CopySubdivisionCommnd { get; set; }
 
-
-
-        public static List<SubdivisionDto> CopySubdivisionList { get; set; }
-        /// <summary>
-        /// Метод. Добавть новую строку
-        /// </summary>
-        /// <param name="p"></param>
-        private void OnCopySubdivisionCommndExecutde(object p)
+        private void OnCopySubdivisios(object obj)
         {
-            //CopySubDivisionViewModel.projContext = projContext;
-            //CopySubDivisionViewModel.selectedBuildingId = SelectedBuilding.Id;
-            //CopySubdivisionWindow copySubdivisionWindow = new CopySubdivisionWindow();
-            //CopySubDivisionViewModel copySubDivisionViewModel = new CopySubDivisionViewModel();
-            //copySubDivisionViewModel.copySubdivisionWindow = copySubdivisionWindow;
-            //copySubdivisionWindow.DataContext = copySubDivisionViewModel;
-            //copySubdivisionWindow.ShowDialog();
-
-            //Subdivisions = projContext.GetSubdivisions(SelectedBuilding);
+            MessageBox.Show("Попытка скопирвоать подразделение!");
         }
-        private bool CanCopySubdivisionCommndExecute(object p)
-        {
-            //if (SelectedBuilding == null) return false;
+        //public ICommand CopySubdivisionCommnd { get; set; }
 
-            return true;
-        }
+        //public static List<SubdivisionDto> CopySubdivisionList { get; set; }
+        ///// <summary>
+        ///// Метод. Добавть новую строку
+        ///// </summary>
+        ///// <param name="p"></param>
+        //private void OnCopySubdivisionCommndExecutde(object p)
+        //{
+        //    //CopySubDivisionViewModel.projContext = projContext;
+        //    //CopySubDivisionViewModel.selectedBuildingId = SelectedBuilding.Id;
+        //    //CopySubdivisionWindow copySubdivisionWindow = new CopySubdivisionWindow();
+        //    //CopySubDivisionViewModel copySubDivisionViewModel = new CopySubDivisionViewModel();
+        //    //copySubDivisionViewModel.copySubdivisionWindow = copySubdivisionWindow;
+        //    //copySubdivisionWindow.DataContext = copySubDivisionViewModel;
+        //    //copySubdivisionWindow.ShowDialog();
+
+        //    //Subdivisions = projContext.GetSubdivisions(SelectedBuilding);
+        //}
+        //private bool CanCopySubdivisionCommndExecute(object p)
+        //{
+        //    //if (SelectedBuilding == null) return false;
+
+        //    return true;
+        //}
+
         #endregion
 
         #region Комманд. Закинуть обновления пространств в БД
-        public ICommand PushToDbCommand { get; set; }
-        private void OnPushToDbCommandExecutde(object p)
-        {
-            if (roomDtos != null)
-            {
-                projContext.AddNewRooms(roomDtos);
-                projContext.SaveChanges();
-                roomDtos = projContext.GetRooms(SelectedSubdivision);
-                Rooms = CollectionViewSource.GetDefaultView(roomDtos);
-                Rooms.Refresh();
-                MessageBox.Show("Данные успешно загруженны в базу данных", "Статус");
-            }
-            else
-            {
-                MessageBox.Show("Ошибка! Нет выбранных помещений", "Статус");
-            }
 
-        }
-        private bool CanPushToDbCommandExecute(object p)
+        public void OnSaveChanges(object obj)
         {
-            return true;
+            projContext.SaveChanges();
         }
+
+        //public ICommand PushToDbCommand { get; set; }
+        //private void OnPushToDbCommandExecutde(object p)
+        //{
+        //    if (roomDtos != null)
+        //    {
+        //        projContext.AddNewRooms(roomDtos);
+        //        projContext.SaveChanges();
+        //        roomDtos = projContext.GetRooms(SelectedSubdivision);
+        //        Rooms = CollectionViewSource.GetDefaultView(roomDtos);
+        //        Rooms.Refresh();
+        //        MessageBox.Show("Данные успешно загруженны в базу данных", "Статус");
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Ошибка! Нет выбранных помещений", "Статус");
+        //    }
+
+        //}
+        //private bool CanPushToDbCommandExecute(object p)
+        //{
+        //    return true;
+        //}
         #endregion
 
-        #region Комманд. Получить обновления пространств из БД
+        #region Выгрузка в Эксель
+
         public ICommand PullFromDbCommand { get; set; }
         private void OnPullFromDbCommandExecutde(object p)
         {
             MainExcelModel.CreateXslxIssues(projContext.GetRooms(SelectedSubdivision));
         }
         private bool CanPullFromDbCommandExecute(object p) => true;
+
         #endregion
 
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

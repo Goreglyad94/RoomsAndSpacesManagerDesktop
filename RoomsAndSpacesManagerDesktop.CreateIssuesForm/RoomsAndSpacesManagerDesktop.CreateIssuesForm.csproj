@@ -69,6 +69,7 @@
     <Compile Include="Infrastructure\CustomControlClasses\CustomComboboxSelectDivision.cs" />
     <Compile Include="Infrastructure\CustomControlClasses\CustomTextBlockCellTemplate.cs" />
     <Compile Include="Infrastructure\Mediators\Mediator.cs" />
+    <Compile Include="Interfaces\IUploadService.cs" />
     <Compile Include="Models\DatabaseModels\Base\MainDatabaseContext.cs" />
     <Compile Include="Models\DatabaseModels\EquipmentDbContext.cs" />
     <Compile Include="Models\DatabaseModels\ProjectsDbContext.cs" />

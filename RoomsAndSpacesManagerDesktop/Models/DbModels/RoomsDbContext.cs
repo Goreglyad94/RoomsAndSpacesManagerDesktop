@@ -47,7 +47,7 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
         /// <param name="roomNameDto"></param>
         public void RemoveRoom(RoomNameDto roomNameDto)
         {
-            context.RaSM_RoomNames.Remove(roomNameDto);
+            context.RaSM_RoomNames.Remove(context.RaSM_RoomNames.FirstOrDefault(x => x.Id == roomNameDto.Id));
             context.SaveChanges();
         }
 

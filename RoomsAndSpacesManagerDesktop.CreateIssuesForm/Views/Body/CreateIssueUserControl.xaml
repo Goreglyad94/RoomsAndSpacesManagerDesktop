@@ -6,8 +6,12 @@
              xmlns:customControls="clr-namespace:RoomsAndSpacesManagerDesktop.CreateIssuesForm.Infrastructure.CustomControlClasses"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RoomsAndSpacesManagerDesktop.CreateIssuesForm.Views.Body"
+             xmlns:bindProxy="clr-namespace:RoomsAndSpacesManagerDesktop.CreateIssuesForm.Infrastructure.Frizzablies"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="1200">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadedCommand}"/>
@@ -23,7 +27,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="0" Grid.Column="0">
             <TextBlock Text="Категория: " DockPanel.Dock="Left"  VerticalAlignment="Center"/>
@@ -33,16 +37,20 @@
             <TextBlock Text="Подкатегория: " DockPanel.Dock="Left"  VerticalAlignment="Center"/>
             <ComboBox x:Name="SubCatsList" ItemsSource="{Binding SubCategories}" SelectedItem="{Binding SelectedSubCategoties}" DockPanel.Dock="Left" Width="150"  Height="25" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 2 20 2"/>
         </DockPanel>
-
+        
         <DockPanel Grid.Row="1" Grid.ColumnSpan="4">
             <DataGrid DockPanel.Dock="Right" SelectionMode="Extended"  
                           CanUserAddRows="False"
                           FrozenColumnCount ="4"
+                          Margin="-3 0 -2 -3"
                           EnableRowVirtualization="True"
                           CanUserDeleteRows="False"
                           SelectedItem="{Binding SelectedRoom}" 
                           ItemsSource="{Binding Rooms, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, IsAsync=True}" 
                           AutoGenerateColumns="False">
+                <!--<DataGrid.Resources>
+                    <bindProxy:BindingProxy x:Key="proxy" Data="{Binding}"/>
+                </DataGrid.Resources>-->
                 <DataGrid.ItemContainerStyle>
                     <Style TargetType="DataGridRow">
                         <Setter Property="Tag" Value="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" />
@@ -58,7 +66,7 @@
                     </Style>
                 </DataGrid.ItemContainerStyle>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Id}" Width="30" IsReadOnly="True">
+                    <DataGridTextColumn Binding="{Binding Id}" Width="30" IsReadOnly="True" Visibility="{Binding Path=DataContext.Min_area_vis, Converter={ StaticResource BooleanToVisibilityConverter}}" >
                         <DataGridTextColumn.Header>
                             <DockPanel>
                                 <TextBlock Text="Id " DockPanel.Dock="Left"/>
@@ -112,8 +120,7 @@
                                 <customControls:CustomTextBlockCellTemplate PropertyName="Min_area"
                                     SecondValue="{Binding RoomName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     Text="{Binding Min_area, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                       
-                                    FirstValue="{Binding Min_area, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                   
-                                    />
+                                    FirstValue="{Binding Min_area, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                         <DataGridTemplateColumn.CellEditingTemplate>
@@ -122,11 +129,11 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Рабочих мест/посетителей" Binding="{Binding Rab_mesta_posetiteli}"/>
-                    <DataGridTextColumn Header="Количество персонала" Binding="{Binding Kolichestvo_personala}"/>
-                    <DataGridTextColumn Header="Количество посетителей" Binding="{Binding Kolichestvo_posetitelei}"/>
-                    <DataGridTextColumn Header="Категория пожароопасности" Binding="{Binding Categoty_pizharoopasnosti}"/>
-                    <DataGridTemplateColumn Header="Класс чистоты по СанПиН" Width="100">
+                    <DataGridTextColumn Header="Рабочих мест/посетителей" Binding="{Binding Rab_mesta_posetiteli}" />
+                    <DataGridTextColumn Header="Количество персонала" Binding="{Binding Kolichestvo_personala}" />
+                    <DataGridTextColumn Header="Количество посетителей" Binding="{Binding Kolichestvo_posetitelei}" />
+                    <DataGridTextColumn Header="Категория пожароопасности" Binding="{Binding Categoty_pizharoopasnosti}" />
+                    <DataGridTemplateColumn Header="Класс чистоты по СанПиН" Width="100"  >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <customControls:CustomTextBlockCellTemplate PropertyName="Class_chistoti_SanPin"
@@ -142,7 +149,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Класс чистоты по СП 158" Width="100">
+                    <DataGridTemplateColumn Header="Класс чистоты по СП 158" Width="100"  >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <customControls:CustomTextBlockCellTemplate PropertyName="Class_chistoti_SP_158"
@@ -157,7 +164,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Класс чистоты по GMP" Width="100">
+                    <DataGridTemplateColumn Header="Класс чистоты по GMP" Width="100"  >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <customControls:CustomTextBlockCellTemplate PropertyName="Class_chistoti_GMP" TextWrapping="Wrap"
@@ -173,7 +180,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Примечание АР" Width="100">
+                    <DataGridTemplateColumn Header="Примечание АР" Width="100"  >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <customControls:CustomTextBlockCellTemplate PropertyName="Discription_AR"
@@ -188,7 +195,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Температура расчётная, °C" Width="100">
+                    <DataGridTemplateColumn Header="Температура расчётная, °C" Width="100" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <customControls:CustomTextBlockCellTemplate PropertyName="T_calc"
@@ -203,7 +210,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Температура мин, °C"  Width="100">
+                    <DataGridTemplateColumn Header="Температура мин, °C"  Width="100" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <customControls:CustomTextBlockCellTemplate PropertyName="T_min"
@@ -218,7 +225,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Температура макс, °C" Width="100">
+                    <DataGridTemplateColumn Header="Температура макс, °C" Width="100" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <customControls:CustomTextBlockCellTemplate PropertyName="T_max"
@@ -233,7 +240,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Приток" Width="100">
+                    <DataGridTemplateColumn Header="Приток" Width="100" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <customControls:CustomTextBlockCellTemplate PropertyName="Pritok"
@@ -248,7 +255,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Вытяжка" Width="100">
+                    <DataGridTemplateColumn Header="Вытяжка" Width="100" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <customControls:CustomTextBlockCellTemplate PropertyName="Vityazhka"
@@ -263,7 +270,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Относительная влажность,%" Width="100">
+                    <DataGridTemplateColumn Header="Относительная влажность,%" Width="100" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <customControls:CustomTextBlockCellTemplate PropertyName="Ot_vlazhnost"
@@ -278,7 +285,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Примечание ОВ" Width="100">
+                    <DataGridTemplateColumn Header="Примечание ОВ" Width="100" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <customControls:CustomTextBlockCellTemplate PropertyName="Discription_OV"
@@ -293,7 +300,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Оборудование ВК" Width="100">
+                    <DataGridTemplateColumn Header="Оборудование ВК" Width="100" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <customControls:CustomTextBlockCellTemplate PropertyName="Equipment_VK"
@@ -308,7 +315,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="КЕО при бок. ест. осв." Width="100">
+                    <DataGridTemplateColumn Header="КЕО при бок. ест. осв." Width="100" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <customControls:CustomTextBlockCellTemplate PropertyName="KEO_est_osv"
@@ -323,7 +330,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="КЕО при бок. совм. осв." Width="100">
+                    <DataGridTemplateColumn Header="КЕО при бок. совм. осв." Width="100" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <customControls:CustomTextBlockCellTemplate PropertyName="KEO_sovm_osv"
@@ -338,7 +345,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Освещенность при общем освещении, лк"  Width="100">
+                    <DataGridTemplateColumn Header="Освещенность при общем освещении, лк"  Width="100" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <customControls:CustomTextBlockCellTemplate PropertyName="Osveshennost_pro_obshem_osvech"
@@ -353,8 +360,8 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Электрическая нагрузка, кВт" Binding="{Binding El_Nagruzka}"/>
-                    <DataGridTemplateColumn Header="Группа по электробезопасности" Width="100">
+                    <DataGridTextColumn Header="Электрическая нагрузка, кВт" Binding="{Binding El_Nagruzka}" />
+                    <DataGridTemplateColumn Header="Группа по электробезопасности" Width="100" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <customControls:CustomTextBlockCellTemplate PropertyName="Group_el_bez"
@@ -369,7 +376,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Примечание ЭОМ" Width="100">
+                    <DataGridTemplateColumn Header="Примечание ЭОМ" Width="100" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <customControls:CustomTextBlockCellTemplate PropertyName="Discription_EOM"
@@ -384,7 +391,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Оборудование СС"  Width="100">
+                    <DataGridTemplateColumn Header="Оборудование СС"  Width="100" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <customControls:CustomTextBlockCellTemplate PropertyName="Discription_SS"
@@ -399,8 +406,8 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Нагрузка на перекрытие" Binding="{Binding Nagruzki_na_perekririe}"/>
-                    <DataGridTemplateColumn Header="Примечание АК, АТХ"  Width="100">
+                    <DataGridTextColumn Header="Нагрузка на перекрытие" Binding="{Binding Nagruzki_na_perekririe}" />
+                    <DataGridTemplateColumn Header="Примечание АК, АТХ"  Width="100" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <customControls:CustomTextBlockCellTemplate PropertyName="Discription_AK_ATH"
@@ -415,7 +422,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Технологические газы" Width="100">
+                    <DataGridTemplateColumn Header="Технологические газы" Width="100" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <customControls:CustomTextBlockCellTemplate PropertyName="Discription_GSV"
@@ -430,7 +437,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Холодоснабжение" Width="100">
+                    <DataGridTemplateColumn Header="Холодоснабжение" Width="100" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <customControls:CustomTextBlockCellTemplate PropertyName="Discription_HS"
@@ -451,7 +458,7 @@
 
 
 
-        <DockPanel Grid.Column="0" Grid.Row="2">
+        <!--<DockPanel Grid.Column="0" Grid.Row="2">
             <Button Content="Добавить строку" Command="{Binding AddNewRowCommand}" HorizontalAlignment="Left" Margin="10 0 0 0"  Width="100" Height="25"/>
             <Button Content="Скопировать подразделение" Command="{Binding CopySubdivisionCommnd}" HorizontalAlignment="Left" Margin="10 0 0 0" Width="100" Height="25"/>
         </DockPanel>
@@ -459,7 +466,7 @@
         <DockPanel Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2">
             <Button Command="{Binding PushToDbCommand}" Content="Отправить изменения в БД" Width="160" Height="25" DockPanel.Dock="Right" Margin="0 0 10 0"/>
             <Button Command="{Binding PullFromDbCommand}" Content="Выгрузить в эксель" Width="160" Height="25" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"/>
-        </DockPanel>
+        </DockPanel>-->
     </Grid>
 </UserControl>
 

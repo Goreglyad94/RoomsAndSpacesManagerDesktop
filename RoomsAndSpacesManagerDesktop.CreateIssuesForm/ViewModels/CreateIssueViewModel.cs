@@ -41,6 +41,7 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
             Mediator.Register("AddNewRow", OnAddNewRow);
             Mediator.Register("SaveChanges", OnSaveChanges);
             Mediator.Register("CopySubdivisios", OnCopySubdivisios);
+            Mediator.Register("SelectDivision", OnSelectDivision);
             #endregion
 
 
@@ -89,7 +90,7 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
 
         /*MainWindow~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-        #region Команда рендера окна
+        #region Команда рендера окна +
         public ICommand LoadedCommand { get; set; }
         private void OnLoadedCommandExecutde(object obj)
         {
@@ -115,9 +116,6 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
         }
 
         private CategoryDto selectedCategoties;
-        /// <summary>
-        /// Выбранная категория помещений
-        /// </summary>
         public CategoryDto SelectedCategoties
         {
             get { return selectedCategoties; }
@@ -140,7 +138,6 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
                 Set(ref subCategories, value);
             }
         }
-
 
         private SubCategoryDto selectedSubCategoties;
         /// <summary>
@@ -450,6 +447,30 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
 
         #endregion
 
+        #region Медиатор. Сокрытие столбцов для показа выбранного раздела
+
+        private void OnSelectDivision(object obj)
+        {
+
+        }
+
+        #endregion
+
+        #region Пропсы. Визабили стобцов
+
+        private bool min_area_vis = false;
+        public bool Min_area_vis
+        {
+            get { return min_area_vis; }
+            set 
+            { 
+                Set(ref min_area_vis, value); 
+            }
+        }
+
+
+        #endregion
+
         /*Нижняя панель. Интерфейс добавления строки и синхронизации с БД~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
         #region Добавить новую строку комнаты с Айдишником здания
@@ -499,7 +520,6 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
             MessageBox.Show("Попытка скопирвоать подразделение!");
         }
         //public ICommand CopySubdivisionCommnd { get; set; }
-
         //public static List<SubdivisionDto> CopySubdivisionList { get; set; }
         ///// <summary>
         ///// Метод. Добавть новую строку
@@ -523,7 +543,6 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
 
         //    return true;
         //}
-
         #endregion
 
         #region Комманд. Закинуть обновления пространств в БД

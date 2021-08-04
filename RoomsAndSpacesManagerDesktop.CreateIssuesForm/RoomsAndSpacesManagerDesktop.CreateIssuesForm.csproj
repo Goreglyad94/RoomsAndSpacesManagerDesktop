@@ -68,6 +68,7 @@
     <Compile Include="Infrastructure\Commands\RelayCommand.cs" />
     <Compile Include="Infrastructure\CustomControlClasses\CustomComboboxSelectDivision.cs" />
     <Compile Include="Infrastructure\CustomControlClasses\CustomTextBlockCellTemplate.cs" />
+    <Compile Include="Infrastructure\Frizzablies\BindingProxy.cs" />
     <Compile Include="Infrastructure\Mediators\Mediator.cs" />
     <Compile Include="Interfaces\IUploadService.cs" />
     <Compile Include="Models\DatabaseModels\Base\MainDatabaseContext.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="ViewModels\Base\ViewModel.cs" />
     <Compile Include="ViewModels\ButtonPanelViewModel.cs" />
     <Compile Include="ViewModels\CreateIssueViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\SelectionProjectsViewModel.cs" />
     <Compile Include="Views\Body\CreateIssueUserControl.xaml.cs">
       <DependentUpon>CreateIssueUserControl.xaml</DependentUpon>
@@ -114,7 +116,9 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\save.png" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Views\Body\CreateIssueUserControl.xaml">
       <SubType>Designer</SubType>
@@ -138,6 +142,15 @@
       <Project>{99734086-64C1-43AF-9F99-2DEA19BE6CB6}</Project>
       <Name>RoomsAndSpacesManagerDataBase</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\upload.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

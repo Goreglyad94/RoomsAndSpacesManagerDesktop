@@ -83,6 +83,10 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.Models.DatabaseModels
             return context.RaSM_RoomNames.Where(x => x.SubCategotyId == subCat.Id).ToList();
         }
 
+        public async Task<List<RoomNameDto>> GetAllRoomNamesAsync()
+        {
+            return await Task.Run(() => GetAllRoomNames());
+        }
         public List<RoomNameDto> GetAllRoomNames()
         {
             return context.RaSM_RoomNames.ToList();

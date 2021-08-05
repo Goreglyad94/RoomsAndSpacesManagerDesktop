@@ -24,15 +24,10 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
         private List<RoomDto> roomDtos;
         RoomsDbContext roomsContext = new RoomsDbContext();
         //UploadToCsvModel uploadToCsvModel = new UploadToCsvModel();
-
-
-
         List<RoomNameDto> roomsNamesList;
-
 
         private SubdivisionDto SelectedSubdivision { get; set; }
         #endregion
-
         public CreateIssueViewModel()
         {
             #region Медиаторы
@@ -43,10 +38,8 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
             Mediator.Register("CopySubdivisios", OnCopySubdivisios);
             Mediator.Register("SelectDivision", OnSelectDivision);
             #endregion
-
-
-            allRoomNames = roomsContext.GetAllRoomNames();
-            Categories = roomsContext.GetCategories();
+           
+            
 
             #region Команды
 
@@ -71,7 +64,7 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
         public void OnChangeView(object obj)
         {
             SelectedSubdivision = obj as SubdivisionDto;
-
+            
             roomDtos = projContext.GetRooms(SelectedSubdivision);
             Rooms = CollectionViewSource.GetDefaultView(roomDtos);
             Rooms.Refresh();
@@ -92,8 +85,10 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
 
         #region Команда рендера окна +
         public ICommand LoadedCommand { get; set; }
-        private void OnLoadedCommandExecutde(object obj)
+        private async void OnLoadedCommandExecutde(object obj)
         {
+            Categories = roomsContext.GetCategories();
+            allRoomNames = await roomsContext.GetAllRoomNamesAsync();
             if (SelectedSubdivision != null)
             {
                 roomDtos = projContext.GetRooms(SelectedSubdivision);
@@ -112,7 +107,7 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
         public List<CategoryDto> Categories
         {
             get { return categories; }
-            set { categories = value; }
+            set { Set(ref categories, value); }
         }
 
         private CategoryDto selectedCategoties;
@@ -149,9 +144,6 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
             set
             {
                 selectedSubCategoties = value;
-
-
-
             }
         }
 
@@ -467,7 +459,6 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
                 Set(ref min_area_vis, value); 
             }
         }
-
 
         #endregion
 

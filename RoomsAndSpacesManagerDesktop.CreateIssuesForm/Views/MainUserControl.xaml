@@ -63,20 +63,28 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="44"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <leftPanel:ButtonPanel x:Name="LeftButtonPanel"  Grid.Row="1" Grid.Column="0" />
+        <leftPanel:ButtonPanel x:Name="LeftButtonPanel"  Grid.Row="2" Grid.Column="0" />
         <head:SelectionProjectsUserControl x:Name="HeadProjects"  Grid.Row="0" Grid.Column="1"/>
-        <TabControl Grid.Row="1" Grid.Column="1">
+        <head:SelectionCategoriesUserControl x:Name="HeadCategories"  Grid.Row="1" Grid.Column="1"/>
+        <TabControl Grid.Row="2" Grid.Column="1">
             <TabItem>
                 <TabItem.Header>
                     <ComboBox ItemsSource="{Binding DivisionsList}" SelectedItem="{Binding SelectedDivision, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100"/>
                 </TabItem.Header>
                 <body:CreateIssueUserControl x:Name="BodyCreateUssue" />
+            </TabItem>
+            <TabItem Header="Программа помещений">
+                <body:RoomsProgramUserControl x:Name="BodyRoomsProgram"/>
+            </TabItem>
+            <TabItem Header="Сводная">
+                <body:SummaryUserControl x:Name="BodySummary"/>
             </TabItem>
         </TabControl>
     </Grid>

@@ -80,9 +80,6 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             this.El_Nagruzka = oldRoom.El_Nagruzka;
         }
 
-
-
-
         #region Поля для выгрузки
         public int Id { get; set; }
 
@@ -265,28 +262,43 @@ namespace RoomsAndSpacesManagerDataBase.Dto
         
 
         public int ArRoomId { get => arRoomId; set => Set(ref arRoomId, value); }
-
+        #endregion
 
 
         #region SupClass
+
         private RoomNameDto roomName;
         [NotMapped]
-        public RoomNameDto RoomName { get => roomName; set => Set(ref roomName, value); }
+        public RoomNameDto RoomName 
+        { 
+            get => roomName; 
+            set => Set(ref roomName, value); 
+        }
 
+        #endregion
 
+        #region MyRegion
+        public void SetNewRoomProperties(RoomNameDto roomName)
+        {
+            var thisProperties = this.GetType().GetProperties().Select(x => x.Name);
+            var roomNameProperties = roomName.GetType().GetProperties().Select(x => x.Name);
 
+            var result = thisProperties.Intersect(roomNameProperties).ToList();
+            result.Remove("Id");
 
+            foreach (string propName in result)
+            {
+                this.GetType().GetProperty(propName).SetValue(this, roomName.GetType().GetProperty(propName).GetValue(roomName, null));
+            }
 
-
-
-
-
+            this.RoomNameId = roomName.Id;
+        }
         #endregion
 
         public int SubdivisionId { get; set; }
         public virtual SubdivisionDto Subdivision { get; set; }
 
         public virtual ICollection<EquipmentDto> Equipments { get; set; }
-        #endregion
+       
     }
 }

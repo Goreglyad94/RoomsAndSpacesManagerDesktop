@@ -93,15 +93,13 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
                     if (SelectedProject.Buildings != null)
                         Buildings = projContext.GetModels(SelectedProject);
 
-                    //AllRooms = projContext.GetAllRoomsByProject(SelectedProject).OrderBy(x => x.Subdivision.BuildingId).ToList();
+                    Mediator.NotifyColleagues("ThrowProjectOnRoomProgramViewModel", SelectedProject);
+                    Mediator.NotifyColleagues("ThrowProjectOnSummaryViewModel", SelectedProject);
                 }
                 else
                 {
                     Buildings = new List<BuildingDto>();
                 }
-
-                //OnLoadedSummuryCommandExecutde("");
-
             }
         }
         #endregion

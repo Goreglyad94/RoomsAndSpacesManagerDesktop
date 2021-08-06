@@ -93,9 +93,21 @@
     <Compile Include="ViewModels\ButtonPanelViewModel.cs" />
     <Compile Include="ViewModels\CreateIssueViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\RoomsProgramViewModel.cs" />
+    <Compile Include="ViewModels\SelectionCategoriesViewModel.cs" />
     <Compile Include="ViewModels\SelectionProjectsViewModel.cs" />
+    <Compile Include="ViewModels\SummaryViewModel.cs" />
     <Compile Include="Views\Body\CreateIssueUserControl.xaml.cs">
       <DependentUpon>CreateIssueUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Body\RoomsProgramUserControl.xaml.cs">
+      <DependentUpon>RoomsProgramUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Body\SummaryUserControl.xaml.cs">
+      <DependentUpon>SummaryUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Head\SelectionCategoriesUserControl.xaml.cs">
+      <DependentUpon>SelectionCategoriesUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Head\SelectionProjectsUserControl.xaml.cs">
       <DependentUpon>SelectionProjectsUserControl.xaml</DependentUpon>
@@ -121,6 +133,18 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\Body\CreateIssueUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Body\RoomsProgramUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Body\SummaryUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Head\SelectionCategoriesUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

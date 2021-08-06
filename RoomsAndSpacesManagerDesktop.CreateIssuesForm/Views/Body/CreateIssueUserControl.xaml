@@ -29,15 +29,7 @@
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <DockPanel Grid.Row="0" Grid.Column="0">
-            <TextBlock Text="Категория: " DockPanel.Dock="Left"  VerticalAlignment="Center"/>
-            <ComboBox ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategoties}" DockPanel.Dock="Left" Height="25" Width="150" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 2 20 2"/>
-        </DockPanel>
-        <DockPanel Grid.Row="0" Grid.Column="1">
-            <TextBlock Text="Подкатегория: " DockPanel.Dock="Left"  VerticalAlignment="Center"/>
-            <ComboBox x:Name="SubCatsList" ItemsSource="{Binding SubCategories}" SelectedItem="{Binding SelectedSubCategoties}" DockPanel.Dock="Left" Width="150"  Height="25" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 2 20 2"/>
-        </DockPanel>
-        
+
         <DockPanel Grid.Row="1" Grid.ColumnSpan="4">
             <DataGrid DockPanel.Dock="Right" SelectionMode="Extended"  
                           CanUserAddRows="False"
@@ -99,7 +91,7 @@
                                     <ComboBox VirtualizingPanel.IsVirtualizing="True" IsDropDownOpen="{Binding Path=DataContext.IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" DockPanel.Dock="Bottom" Height="20" ItemsSource="{Binding Path=DataContext.RoomsNames, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" SelectedItem="{Binding Path=DataContext.SelectedRoomName, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="DropDownOpened">
-                                                <i:InvokeCommandAction Command="{Binding Path=DataContext.RenderComboboxCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding ElementName=SubCatsList,Path=SelectedItem}"/>
+                                                <i:InvokeCommandAction Command="{Binding Path=DataContext.RenderComboboxCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </ComboBox>

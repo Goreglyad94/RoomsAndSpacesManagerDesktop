@@ -57,8 +57,9 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
 
         public void OnUploadToExcelProgramAndSummaryCommandExecuted(object obj)
         {
-            Mediator.NotifyColleagues("CopySubdivisios");
+            Mediator.NotifyColleagues("UploadProgramAndSummaryToExcel");
         }
+
         #endregion
     }
 }

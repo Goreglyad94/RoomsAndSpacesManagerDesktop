@@ -33,29 +33,27 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
             #region Медиаторы
             Mediator.Register("ThrowSubdivision", OnChangeView);
             Mediator.Register("ThrowDivision", OnChangeColumnDatagridBySelectedDivision);
+            Mediator.Register("ThrowSubCategories", OnSelectCategories);
             Mediator.Register("AddNewRow", OnAddNewRow);
             Mediator.Register("SaveChanges", OnSaveChanges);
             Mediator.Register("CopySubdivisios", OnCopySubdivisios);
             Mediator.Register("SelectDivision", OnSelectDivision);
+            Mediator.Register("UploadProgramAndSummaryToExcel", UploadProgramAndSummaryToExcel);
             #endregion
-           
-            
+
+
 
             #region Команды
 
-            //PushToDbCommand = new RelayCommand(OnPushToDbCommandExecutde, CanPushToDbCommandExecute);
-            PullFromDbCommand = new RelayCommand(OnPullFromDbCommandExecutde, CanPullFromDbCommandExecute);
-            //AddNewRowCommand = new RelayCommand(OnAddNewRowCommandExecutde, CanAddNewRowCommandExecute);
             DeleteIssueCommand = new RelayCommand(OnDeleteIssueCommandExecutde, CanDeleteIssueCommandExecute);
             SetDefaultValueCommand = new RelayCommand(OnSetDefaultValueCommandExecutde, CanSetDefaultValueCommandExecute);
             RenderComboboxCommand = new RelayCommand(OnRenderComboboxCommandExecutde, CanRenderComboboxCommandExecute);
             LoadedCommand = new RelayCommand(OnLoadedCommandExecutde, CanLoadedCommandExecute);
-            //CopySubdivisionCommnd = new RelayCommand(OnCopySubdivisionCommndExecutde, CanCopySubdivisionCommndExecute);
             LoadedSummuryCommand = new RelayCommand(OnLoadedSummuryCommandExecutde, CanLoadedSummuryCommandExecute);
             UploadProgramToCsv = new RelayCommand(OnUploadProgramToCsvExecutde, CanUploadProgramToCsvExecute);
             ClearTextboxCommand = new RelayCommand(OnClearTextboxCommandExecuted, CanClearTextboxCommandExecute);
             GetEquipmentCommand = new RelayCommand(OnGetEquipmentCommandExecutde, CanGetEquipmentCommandExecute);
-            PushToDbSaveChangesCommand = new RelayCommand(OnPushToDbSaveChangesCommandExecutde, CanPushToDbSaveChangesCommandExecute);
+            //PushToDbSaveChangesCommand = new RelayCommand(OnPushToDbSaveChangesCommandExecutde, CanPushToDbSaveChangesCommandExecute);
 
             #endregion
         }
@@ -83,11 +81,11 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
 
         /*MainWindow~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-        #region Команда рендера окна +
+        #region Команда рендера окна
+
         public ICommand LoadedCommand { get; set; }
         private async void OnLoadedCommandExecutde(object obj)
         {
-            Categories = roomsContext.GetCategories();
             allRoomNames = await roomsContext.GetAllRoomNamesAsync();
             if (SelectedSubdivision != null)
             {
@@ -98,58 +96,22 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
         }
 
         private bool CanLoadedCommandExecute(object obj) => true;
-        #endregion
-
-        /*Верхняя панель. Список категорий~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
-        #region Combobox - Список категорий
-        private List<CategoryDto> categories;
-        public List<CategoryDto> Categories
-        {
-            get { return categories; }
-            set { Set(ref categories, value); }
-        }
-
-        private CategoryDto selectedCategoties;
-        public CategoryDto SelectedCategoties
-        {
-            get { return selectedCategoties; }
-            set
-            {
-                Set(ref selectedCategoties, value);
-                SubCategories = roomsContext.GetSubCategotyes(SelectedCategoties);
-            }
-        }
-        #endregion
-
-        #region Combobox - список подкатегорий
-
-        private List<SubCategoryDto> subCategories;
-        public List<SubCategoryDto> SubCategories
-        {
-            get { return subCategories; }
-            set
-            {
-                Set(ref subCategories, value);
-            }
-        }
-
-        private SubCategoryDto selectedSubCategoties;
-        /// <summary>
-        /// Выбранная подкатегория помещений
-        /// </summary>
-        public SubCategoryDto SelectedSubCategoties
-        {
-            get { return selectedSubCategoties; }
-            set
-            {
-                selectedSubCategoties = value;
-            }
-        }
 
         #endregion
 
-        #region Список исходных помещений
+        /*Центральная. Список категорий~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+        #region Медиатор. Получение выбранной подкатегории
+
+        private SubCategoryDto selectedSubcategories;
+        private void OnSelectCategories(object obj)
+        {
+            selectedSubcategories = obj as SubCategoryDto;
+        } 
+
+        #endregion
+
+        #region Список исходных помещений (для выбора в комбобоксе при редактировании строки). Выбранное исходное помещение. Присываивание новому помещению нового списва оборудования
 
         List<RoomNameDto> allRoomNames { get; set; }
 
@@ -161,55 +123,24 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
         }
 
         private RoomNameDto selectedRoomName;
-
         public RoomNameDto SelectedRoomName
         {
             get { return selectedRoomName; }
             set
             {
                 selectedRoomName = value;
-                AddRoomInfo();
+                SelectedRoom.SetNewRoomProperties(SelectedRoomName);
+
                 EquipmentDbContext equipmentDbContext = new EquipmentDbContext();
-
-
-
                 if (SelectedRoom.Id != 0)
                 {
                     equipmentDbContext.RemoveAllEquipment(SelectedRoom);
-
                     List<EquipmentDto> equipment = equipmentDbContext.GetEquipments(SelectedRoomName).Select(x => new EquipmentDto(x) { RoomId = SelectedRoom.Id }).ToList();
                     equipmentDbContext.AddNewEquipments(equipment, SelectedRoom);
                 }
 
                 selectedRoomName = null;
             }
-        }
-
-        private void AddRoomInfo()
-        {
-            SelectedRoom.RoomNameId = SelectedRoomName.Id;
-            SelectedRoom.Min_area = SelectedRoomName.Min_area;
-            SelectedRoom.Class_chistoti_GMP = SelectedRoomName.Class_chistoti_GMP;
-            SelectedRoom.Class_chistoti_SanPin = SelectedRoomName.Class_chistoti_SanPin;
-            SelectedRoom.Class_chistoti_SP_158 = SelectedRoomName.Class_chistoti_SP_158;
-            SelectedRoom.T_calc = SelectedRoomName.T_calc;
-            SelectedRoom.T_max = SelectedRoomName.T_max;
-            SelectedRoom.T_min = SelectedRoomName.T_min;
-            SelectedRoom.Pritok = SelectedRoomName.Pritok;
-            SelectedRoom.Vityazhka = SelectedRoomName.Vityazhka;
-            SelectedRoom.Ot_vlazhnost = SelectedRoomName.Ot_vlazhnost;
-            SelectedRoom.KEO_est_osv = SelectedRoomName.KEO_est_osv;
-            SelectedRoom.KEO_sovm_osv = SelectedRoomName.KEO_sovm_osv;
-            SelectedRoom.Discription_OV = SelectedRoomName.Discription_OV;
-            SelectedRoom.Osveshennost_pro_obshem_osvech = SelectedRoomName.Osveshennost_pro_obshem_osvech;
-            SelectedRoom.Group_el_bez = SelectedRoomName.Group_el_bez;
-            SelectedRoom.Discription_EOM = SelectedRoomName.Discription_EOM;
-            SelectedRoom.Discription_AR = SelectedRoomName.Discription_AR;
-            SelectedRoom.Equipment_VK = SelectedRoomName.Equipment_VK;
-            SelectedRoom.Discription_SS = SelectedRoomName.Discription_SS;
-            SelectedRoom.Discription_AK_ATH = SelectedRoomName.Discription_AK_ATH;
-            SelectedRoom.Discription_GSV = SelectedRoomName.Discription_GSV;
-            SelectedRoom.Discription_HS = SelectedRoomName.Discription_HS;
         }
 
         #region Флаг разворачивания Comboboxa
@@ -227,23 +158,17 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
 
         #endregion
 
-
         #endregion
 
-        #region Комманда при отрисовке комбобокса
+        #region Комманд. Отрисовке комбобокса
 
-        private ICommand renderComboboxCommand;
-        public ICommand RenderComboboxCommand
-        {
-            get => renderComboboxCommand;
-            set => renderComboboxCommand = value;
-        }
-
+        public ICommand RenderComboboxCommand { get; set; }
         private void OnRenderComboboxCommandExecutde(object p)
         {
-            if (p != null)
+
+            if (selectedSubcategories != null)
             {
-                roomsNamesList = roomsContext.GetRoomNames(p as SubCategoryDto);
+                roomsNamesList = roomsContext.GetRoomNames(selectedSubcategories as SubCategoryDto);
                 RoomsNames = CollectionViewSource.GetDefaultView(roomsNamesList);
                 RoomsNames.Refresh();
             }
@@ -284,17 +209,9 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
             }
         }
 
-        private bool UserFilter(object item)
-        {
-            if (String.IsNullOrEmpty(RoomNameFiltering))
-                return true;
-            else
-                return ((item as RoomNameDto).Name.IndexOf(RoomNameFiltering, StringComparison.OrdinalIgnoreCase) >= 0);
-        }
-
         #endregion
 
-        #region Анлоадед текстбокс
+        #region Комманд. Анлоадед текстбокс
 
         public ICommand ClearTextboxCommand { get; set; }
         private void OnClearTextboxCommandExecuted(object obj)
@@ -305,9 +222,10 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
 
         #endregion
 
-        /*Центральная панель. Список проектов и зданий~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+        /*Центральная панель. Список помещений~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
         #region Список помещений. Выбранное помещение
+
         private ICollectionView rooms;
         public ICollectionView Rooms
         {
@@ -462,10 +380,9 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
 
         #endregion
 
-        /*Нижняя панель. Интерфейс добавления строки и синхронизации с БД~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+        /*Нижняя панель. Медиаторы~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-        #region Добавить новую строку комнаты с Айдишником здания
-
+        #region Медиатор. Добавить новую строку комнаты с Айдишником здания
         public async void OnAddNewRow(object obj)
         {
             if (SelectedSubdivision != null)
@@ -475,107 +392,33 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
                 Rooms.Refresh();
             }
         }
-
-        //public ICommand AddNewRowCommand { get; set; }
-
-        ///// <summary>
-        ///// Метод. Добавть новую строку
-        ///// </summary>
-        ///// <param name="p"></param>
-        //private void OnAddNewRowCommandExecutde(object p)
-        //{
-        //    if (SelectedSubdivision != null)
-        //    {
-        //        roomDtos.Add(new RoomDto()
-        //        {
-        //            SubdivisionId = SelectedSubdivision.Id
-        //        });
-        //        Rooms = CollectionViewSource.GetDefaultView(roomDtos);
-        //        Rooms.Refresh();
-
-        //        //RoomsNames = CollectionViewSource.GetDefaultView(roomsNamesList);
-        //        //RoomsNames.Refresh();
-        //    }
-        //}
-        //private bool CanAddNewRowCommandExecute(object p)
-        //{
-        //    if (SelectedSubdivision == null) return false;
-        //    else return true;
-        //}
         #endregion
 
-        #region Копировать подразделение из другого здания
+        #region Медиатор. Копировать подразделение из другого здания
 
         private void OnCopySubdivisios(object obj)
         {
             MessageBox.Show("Попытка скопирвоать подразделение!");
         }
-        //public ICommand CopySubdivisionCommnd { get; set; }
-        //public static List<SubdivisionDto> CopySubdivisionList { get; set; }
-        ///// <summary>
-        ///// Метод. Добавть новую строку
-        ///// </summary>
-        ///// <param name="p"></param>
-        //private void OnCopySubdivisionCommndExecutde(object p)
-        //{
-        //    //CopySubDivisionViewModel.projContext = projContext;
-        //    //CopySubDivisionViewModel.selectedBuildingId = SelectedBuilding.Id;
-        //    //CopySubdivisionWindow copySubdivisionWindow = new CopySubdivisionWindow();
-        //    //CopySubDivisionViewModel copySubDivisionViewModel = new CopySubDivisionViewModel();
-        //    //copySubDivisionViewModel.copySubdivisionWindow = copySubdivisionWindow;
-        //    //copySubdivisionWindow.DataContext = copySubDivisionViewModel;
-        //    //copySubdivisionWindow.ShowDialog();
 
-        //    //Subdivisions = projContext.GetSubdivisions(SelectedBuilding);
-        //}
-        //private bool CanCopySubdivisionCommndExecute(object p)
-        //{
-        //    //if (SelectedBuilding == null) return false;
-
-        //    return true;
-        //}
         #endregion
 
-        #region Комманд. Закинуть обновления пространств в БД
+        #region Медиатор. Закинуть обновления пространств в БД
 
         public void OnSaveChanges(object obj)
         {
             projContext.SaveChanges();
         }
 
-        //public ICommand PushToDbCommand { get; set; }
-        //private void OnPushToDbCommandExecutde(object p)
-        //{
-        //    if (roomDtos != null)
-        //    {
-        //        projContext.AddNewRooms(roomDtos);
-        //        projContext.SaveChanges();
-        //        roomDtos = projContext.GetRooms(SelectedSubdivision);
-        //        Rooms = CollectionViewSource.GetDefaultView(roomDtos);
-        //        Rooms.Refresh();
-        //        MessageBox.Show("Данные успешно загруженны в базу данных", "Статус");
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("Ошибка! Нет выбранных помещений", "Статус");
-        //    }
-
-        //}
-        //private bool CanPushToDbCommandExecute(object p)
-        //{
-        //    return true;
-        //}
         #endregion
 
-        #region Выгрузка в Эксель
+        #region Медиатор. Выгрузка в Эксель
 
-        public ICommand PullFromDbCommand { get; set; }
-        private void OnPullFromDbCommandExecutde(object p)
+        private void UploadProgramAndSummaryToExcel(object obj)
         {
-            MainExcelModel.CreateXslxIssues(projContext.GetRooms(SelectedSubdivision));
+            MainExcelModel.CreateXslxProgramAndSummary(projContext.GetRooms(SelectedSubdivision));
         }
-        private bool CanPullFromDbCommandExecute(object p) => true;
-
+ 
         #endregion
 
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -583,35 +426,34 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
         #region Список помещений для целого проекта с сортировкой. Помещения получаются при выборе проекта. 
-        private List<RoomDto> allRooms;
+
+        //private List<RoomDto> allRooms;
 
 
-        public List<RoomDto> AllRooms
-        {
-            get { return allRooms; }
-            set { Set(ref allRooms, value); }
-        }
-        #endregion
+        //public List<RoomDto> AllRooms
+        //{
+        //    get { return allRooms; }
+        //    set { Set(ref allRooms, value); }
+        //}
+        //#endregion
 
+        //#region Комманд. Сохранить изменения в номерах помещений
 
-        #region Комманд. Сохранить изменения в номерах помещений
+        //public ICommand PushToDbSaveChangesCommand { get; set; }
 
-        public ICommand PushToDbSaveChangesCommand { get; set; }
-
-        private void OnPushToDbSaveChangesCommandExecutde(object obj)
-        {
-            projContext.SaveChanges();
-        }
-        private bool CanPushToDbSaveChangesCommandExecute(object obj)
-        {
-            if (AllRooms != null && AllRooms.Count != 0) return true;
-            else return false;
-        }
+        //private void OnPushToDbSaveChangesCommandExecutde(object obj)
+        //{
+        //    projContext.SaveChanges();
+        //}
+        //private bool CanPushToDbSaveChangesCommandExecute(object obj)
+        //{
+        //    if (AllRooms != null && AllRooms.Count != 0) return true;
+        //    else return false;
+        //}
 
         #endregion
 
         /*Таблица "Сводная"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
 
         #region Список всех помещений для проекта
         private List<BuildingDto> _summury;

@@ -95,6 +95,7 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
 
                     Mediator.NotifyColleagues("ThrowProjectOnRoomProgramViewModel", SelectedProject);
                     Mediator.NotifyColleagues("ThrowProjectOnSummaryViewModel", SelectedProject);
+                    Mediator.NotifyColleagues("ThrowProjectOnCreateIssueViewModel", SelectedProject);
                 }
                 else
                 {

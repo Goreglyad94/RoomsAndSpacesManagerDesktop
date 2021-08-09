@@ -14,6 +14,8 @@ using RoomsAndSpacesManagerDesktop.CreateIssuesForm.Models.ExcelModels;
 using RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels.Base;
 using RoomsAndSpacesManagerDesktop.CreateIssuesForm.Infrastructure.Commands;
 using RoomsAndSpacesManagerDesktop.CreateIssuesForm.Infrastructure.Mediators;
+using RoomsAndSpacesManagerDesktop.CreateIssuesForm.Interfaces;
+using RoomsAndSpacesManagerDesktop.CreateIssuesForm.Models.UploadModels;
 
 namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
 {
@@ -25,13 +27,18 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
         RoomsDbContext roomsContext = new RoomsDbContext();
         //UploadToCsvModel uploadToCsvModel = new UploadToCsvModel();
         List<RoomNameDto> roomsNamesList;
-
+        IUploadService uploadService;
+        ProjectDto SelectionProject;
         private SubdivisionDto SelectedSubdivision { get; set; }
+
+        ISqlRequestService sqlRequestService;
         #endregion
-        public CreateIssueViewModel()
+        public CreateIssueViewModel(ISqlRequestService _sqlRequestService)
         {
+            sqlRequestService = _sqlRequestService;
             #region Медиаторы
             Mediator.Register("ThrowSubdivision", OnChangeView);
+            Mediator.Register("Project", OnChangeView);
             Mediator.Register("ThrowDivision", OnChangeColumnDatagridBySelectedDivision);
             Mediator.Register("ThrowSubCategories", OnSelectCategories);
             Mediator.Register("AddNewRow", OnAddNewRow);
@@ -39,9 +46,10 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
             Mediator.Register("CopySubdivisios", OnCopySubdivisios);
             Mediator.Register("SelectDivision", OnSelectDivision);
             Mediator.Register("UploadProgramAndSummaryToExcel", UploadProgramAndSummaryToExcel);
+            Mediator.Register("ThrowProjectOnCreateIssueViewModel", OnGetProject);
             #endregion
 
-
+            uploadService = new UploadMainModel();
 
             #region Команды
 
@@ -77,6 +85,14 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
             MessageBox.Show((string)obj);
         }
 
+        #endregion
+
+
+        #region Получить выбранный проект
+        private void OnGetProject(object obj)
+        {
+            SelectionProject = obj as ProjectDto;
+        }
         #endregion
 
         /*MainWindow~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -416,7 +432,10 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
 
         private void UploadProgramAndSummaryToExcel(object obj)
         {
-            MainExcelModel.CreateXslxProgramAndSummary(projContext.GetRooms(SelectedSubdivision));
+            //sqlRequestService.GetSqlResponse();
+            //MainExcelModel.CreateXslxProgramAndSummary(projContext.GetRooms(SelectedSubdivision));
+            uploadService.UploadAllUssues(SelectionProject.Id, SelectionProject.Name);
+            uploadService.UploadRoomProgram(SelectionProject.Id, SelectionProject.Name);
         }
  
         #endregion

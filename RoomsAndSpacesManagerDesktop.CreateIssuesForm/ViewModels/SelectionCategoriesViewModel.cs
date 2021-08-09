@@ -63,7 +63,6 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
                 Mediator.NotifyColleagues("ThrowSubCategories", SelectedSubCategoties);
             }
         }
-
         #endregion
     }
 }

@@ -1,4 +1,6 @@
-﻿using RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels;
+﻿using RoomsAndSpacesManagerDesktop.CreateIssuesForm.Models.ExcelModels;
+using RoomsAndSpacesManagerDesktop.CreateIssuesForm.Models.SqlRequestModels;
+using RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,13 +23,19 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.Views
     /// </summary>
     public partial class MainUserControl : UserControl
     {
+        
+
         public MainUserControl()
         {
             InitializeComponent();
+
+            MainExcelModel mainExcelModel = new MainExcelModel();
+            SqlRequestModel sqlRequestModel = new SqlRequestModel();
+
             DataContext = new MainViewModel();
             HeadProjects.DataContext = new SelectionProjectsViewModel();
             HeadCategories.DataContext = new SelectionCategoriesViewModel();
-            BodyCreateUssue.DataContext = new CreateIssueViewModel();
+            BodyCreateUssue.DataContext = new CreateIssueViewModel(sqlRequestModel);
             LeftButtonPanel.DataContext = new ButtonPanelViewModel();
             BodyRoomsProgram.DataContext = new RoomsProgramViewModel();
             BodySummary.DataContext = new SummaryViewModel();

@@ -70,12 +70,16 @@
     <Compile Include="Infrastructure\CustomControlClasses\CustomTextBlockCellTemplate.cs" />
     <Compile Include="Infrastructure\Frizzablies\BindingProxy.cs" />
     <Compile Include="Infrastructure\Mediators\Mediator.cs" />
+    <Compile Include="Interfaces\ISqlRequestService.cs" />
+    <Compile Include="Interfaces\IExcelService.cs" />
     <Compile Include="Interfaces\IUploadService.cs" />
     <Compile Include="Models\DatabaseModels\Base\MainDatabaseContext.cs" />
     <Compile Include="Models\DatabaseModels\EquipmentDbContext.cs" />
     <Compile Include="Models\DatabaseModels\ProjectsDbContext.cs" />
     <Compile Include="Models\DatabaseModels\RoomsDbContext.cs" />
     <Compile Include="Models\ExcelModels\MainExcelModel.cs" />
+    <Compile Include="Models\SqlRequestModels\SqlRequestModel.cs" />
+    <Compile Include="Models\UploadModels\UploadMainModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

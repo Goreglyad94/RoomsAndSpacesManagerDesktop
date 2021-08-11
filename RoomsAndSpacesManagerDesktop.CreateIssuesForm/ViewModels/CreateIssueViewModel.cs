@@ -47,6 +47,7 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
             Mediator.Register("SelectDivision", OnSelectDivision);
             Mediator.Register("UploadProgramAndSummaryToExcel", UploadProgramAndSummaryToExcel);
             Mediator.Register("ThrowProjectOnCreateIssueViewModel", OnGetProject);
+            Mediator.Register("ThrowAreaK", OnGetAreaK);
             #endregion
 
             uploadService = new UploadMainModel();
@@ -86,7 +87,6 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
         }
 
         #endregion
-
 
         #region Получить выбранный проект
         private void OnGetProject(object obj)
@@ -428,14 +428,22 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
 
         #endregion
 
+        #region Медиатор. Получить коэффициент умножения площади
+        public double k;
+        private void OnGetAreaK(object obj)
+        {
+            k = (double)obj;
+        }
+        #endregion
+
         #region Медиатор. Выгрузка в Эксель
 
         private void UploadProgramAndSummaryToExcel(object obj)
         {
             //sqlRequestService.GetSqlResponse();
             //MainExcelModel.CreateXslxProgramAndSummary(projContext.GetRooms(SelectedSubdivision));
-            uploadService.UploadAllUssues(SelectionProject.Id, SelectionProject.Name);
-            uploadService.UploadRoomProgram(SelectionProject.Id, SelectionProject.Name);
+            //uploadService.UploadAllUssues(SelectionProject.Id, SelectionProject.Name);
+            uploadService.UploadRoomProgram(SelectionProject, k);
         }
  
         #endregion

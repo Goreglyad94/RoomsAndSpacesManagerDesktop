@@ -21,7 +21,22 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
             #region Медиаторы
             Mediator.Register("ThrowProjectOnSummaryViewModel", OnGetProject);
             #endregion
+
+            #region Комманды
+            LoadedSummuryCommand = new RelayCommand(OnLoadedSummuryCommandExecuted);
+            #endregion
         }
+
+        #region Комманд. Загрузка окна
+
+        public ICommand LoadedSummuryCommand { get; set; }
+
+        private void OnLoadedSummuryCommandExecuted(object obj)
+        {
+
+        }
+
+        #endregion
 
         #region Медиатор. Выбранный проект
 
@@ -96,7 +111,11 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
         public double Koef
         {
             get { return koef; }
-            set { koef = value; }
+            set 
+            { 
+                koef = value;
+                Mediator.NotifyColleagues("ThrowAreaK", Koef);
+            }
         }
 
         #endregion

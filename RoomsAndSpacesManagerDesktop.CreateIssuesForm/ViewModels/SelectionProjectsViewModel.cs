@@ -19,16 +19,13 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
 
         public SelectionProjectsViewModel()
         {
-
             Projects = projContext.GetProjects();
-
             #region Комманды. Регистрация
             AddNewProjectCommand = new RelayCommand(OnAddNewProjectCommandExecutde, CanAddNewProjectCommandExecute);
             AddNewBuildingCommand = new RelayCommand(OnAddNewBuildingCommandExecutde, CanAddNewBuildingCommandExecute);
             DeleteCommand = new RelayCommand(OnDeleteCommandExecutde, CanDeleteCommandExecute);
             AddNewSubdivisionCommand = new RelayCommand(OnAddNewSubdivisionCommandExecutde, CanAddNewSubdivisionCommandExecute); 
             #endregion
-
         }
 
         /*Создание нового проекта и здания~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -73,6 +70,7 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
         /*Верхняя панель. Список проектов и зданий~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
         #region Список проектов. Выбранный проект
+
         private List<ProjectDto> projects;
         /// <summary> Список проектов. Из БД </summary>
         public List<ProjectDto> Projects
@@ -103,6 +101,7 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
                 }
             }
         }
+
         #endregion
 
         #region Список зданий. Выбранное здание
@@ -255,6 +254,5 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.ViewModels
         #endregion
 
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
     }
 }

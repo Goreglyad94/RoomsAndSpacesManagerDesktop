@@ -1,4 +1,7 @@
-﻿using RoomsAndSpacesManagerDesktop.CreateIssuesForm.Interfaces;
+﻿using OfficeOpenXml;
+using RoomsAndSpacesManagerDataBase.Data.DataBaseContext;
+using RoomsAndSpacesManagerDataBase.Dto;
+using RoomsAndSpacesManagerDesktop.CreateIssuesForm.Interfaces;
 using RoomsAndSpacesManagerDesktop.CreateIssuesForm.Models.ExcelModels;
 using RoomsAndSpacesManagerDesktop.CreateIssuesForm.Models.SqlRequestModels;
 using System;
@@ -11,44 +14,14 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.Models.UploadModels
 {
     class UploadMainModel : IUploadService
     {
-        private readonly List<string> allUssuesColumns = new List<string>()
+        private readonly string AllIssuesRequest;
+        private readonly List<string> allUssuesColumns;
+        public UploadMainModel()
         {
-             "Id",
-             "Здание",
-             "Подразделение",
-             "Имя помещения",
-             "Имя помещения",
-             "Номер помещения",
-             "Минимальная площадь",
-             "Количество персонала",
-             "Количество посетителей",
-             "Категория пожароопасности",
-             "Класс чистоты по СанПИН",
-             "Класс чистоты по СП 158",
-             "Класс чистоты GMP",
-             "Примечание АР",
-             "Расчетная температура",
-             "Минимальная температура",
-             "Максимальная температура",
-             "Приток",
-             "Вытяжка",
-             "Относительная влажность",
-             "Примечание ОВ",
-             "Примечание ВК",
-             "КЕО естественного освещения",
-             "КЕО совмещенного освещения",
-             "Освещенность при общем освещении",
-             "Электрическая нагрузка",
-             "Группа по электробезопасности",
-             "Примечание ЭОМ",
-             "Примечание СС",
-             "Нагрузка на перекрытие",
-             "Примечание АК/АТХ",
-             "Примечание ГСВ",
-             "Примечание ХС"
-        };
+            sqlRequestService = new SqlRequestModel();
+            excelService = new MainExcelModel();
 
-        const string AllIssuesRequest = "SELECT room.Id " +
+            AllIssuesRequest = "SELECT room.Id " +
                                         ", build.Name " +
                                         ",subdiv.Name " +
                                         ",roomName.Name " +
@@ -88,36 +61,50 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.Models.UploadModels
                                         "left join RaSM_RoomNames roomName on room.RoomNameId = roomName.Id " +
                                         "where proj.Id = ";
 
-
-        private readonly List<string> roomProgramColumns = new List<string>()
+            allUssuesColumns = new List<string>()
         {
-             "№/№",
-             "Наименование помещения",
-             "Площадь, м^2",
-             "Примечание",
+             "Id",
+             "Здание",
+             "Подразделение",
+             "Имя помещения",
+             "Имя помещения",
+             "Номер помещения",
+             "Минимальная площадь",
+             "Количество персонала",
+             "Количество посетителей",
+             "Категория пожароопасности",
+             "Класс чистоты по СанПИН",
+             "Класс чистоты по СП 158",
+             "Класс чистоты GMP",
+             "Примечание АР",
+             "Расчетная температура",
+             "Минимальная температура",
+             "Максимальная температура",
+             "Приток",
+             "Вытяжка",
+             "Относительная влажность",
+             "Примечание ОВ",
+             "Примечание ВК",
+             "КЕО естественного освещения",
+             "КЕО совмещенного освещения",
+             "Освещенность при общем освещении",
+             "Электрическая нагрузка",
+             "Группа по электробезопасности",
+             "Примечание ЭОМ",
+             "Примечание СС",
+             "Нагрузка на перекрытие",
+             "Примечание АК/АТХ",
+             "Примечание ГСВ",
+             "Примечание ХС"
         };
 
-        const string RoomProgramRequest = "SELECT room.Id" +
-            ",build.Name " +
-            ",subdiv.Name " +
-            ",room.ShortName " +
-            ",room.Min_area " +
-            ",room.RoomNumber " +
-            "FROM RaSM_Rooms room " +
-            "left join RaSM_SubdivisionDto subdiv on room.SubdivisionId = subdiv.Id " +
-            "left join RaSM_Buildings build on subdiv.BuildingId = build.Id " +
-            "left join RaSM_Projects proj on build.ProjectId = proj.Id " +
-            "left join RaSM_RoomNames roomName on room.RoomNameId = roomName.Id " +
-            "where proj.Id = ";
-
+        }
 
         ISqlRequestService sqlRequestService;
         IExcelService excelService;
-        public UploadMainModel()
-        {
-            sqlRequestService = new SqlRequestModel();
-            excelService = new MainExcelModel();
-        }
+
+
+        RoomAndSpacesDbContext context = new RoomAndSpacesDbContext();
 
         public bool UploadAllUssues(int projectId, string projectName)
         {
@@ -137,21 +124,125 @@ namespace RoomsAndSpacesManagerDesktop.CreateIssuesForm.Models.UploadModels
             return true;
         }
 
-        public bool UploadRoomProgram(int projectId, string projectName)
+        public bool UploadRoomProgram(ProjectDto project, double k)
         {
-            var ojectTeble = sqlRequestService.GetSqlResponse(RoomProgramRequest + projectId.ToString());
+            //var ojectTeble = sqlRequestService.GetSqlResponse(RoomProgramRequest + projectId.ToString());
 
             var excelDocument = excelService.CreateExcelDocument();
-            var workSheet = excelService.CraeteExcelWorksheet(excelDocument, "Программа помещений");
+            ExcelWorksheet workSheetRoomProgram = excelService.CraeteExcelWorksheet(excelDocument, "Программа помещений");
+            UploadRoomProgramToExcel(project, ref workSheetRoomProgram);
 
-            excelService.WriteRow(allUssuesColumns, workSheet);
+            ExcelWorksheet workSheetSummary = excelService.CraeteExcelWorksheet(excelDocument, "Сводная");
+            //UploadRoomSummaryToExcel(project, ref workSheetSummary, k);
 
-            for (int i = 0; i < ojectTeble.Count; i++)
+            excelService.SaveExcelSocument(excelDocument, "Программа - " + project.Name);
+
+            return true;
+        }
+
+        private void UploadRoomProgramToExcel(ProjectDto project, ref ExcelWorksheet worksheet)
+        {
+            int rowCount = 1;
+            int colCount = 1;
+
+
+            worksheet.Cells[rowCount, colCount].Value = "№/№";
+            colCount++;
+            worksheet.Cells[rowCount, colCount].Value = "Наименование помещения";
+            colCount++;
+            worksheet.Cells[rowCount, colCount].Value = "Площадь, м^2";
+            colCount++;
+            worksheet.Cells[rowCount, colCount].Value = "Примечание";
+            colCount = 1;
+            rowCount++;
+
+            int i = 1;
+            foreach (BuildingDto build in context.RaSM_Projects.FirstOrDefault(x => x.Id == project.Id).Buildings)
             {
-                excelService.WriteRow(ojectTeble[i], workSheet);
-            }
+                worksheet.Cells[rowCount, colCount].Value = i;
+                colCount++;
+                worksheet.Cells[rowCount, colCount].Value = build.Name;
+                colCount = 1;
+                rowCount++;
+                int ii = 1;
+                foreach (SubdivisionDto subdivision in build.Subdivisions)
+                {
+                    string iis = i.ToString() + "." + ii.ToString();
 
-            excelService.SaveExcelSocument(excelDocument, "Программа: " + projectName);
+                    worksheet.Cells[rowCount, colCount].Value = iis;
+                    colCount++;
+                    worksheet.Cells[rowCount, colCount].Value = subdivision.Name;
+                    colCount = 1;
+                    rowCount++;
+
+                    int iii = 1;
+                    foreach (RoomDto room in subdivision.Rooms)
+                    {
+                        string iiis = i.ToString() + "." + ii.ToString() + "." + iii.ToString();
+
+                        worksheet.Cells[rowCount, colCount].Value = iiis;
+                        colCount++;
+                        worksheet.Cells[rowCount, colCount].Value = room.ShortName;
+                        colCount++;
+                        worksheet.Cells[rowCount, colCount].Value = room.Min_area;
+                        colCount++;
+                        worksheet.Cells[rowCount, colCount].Value = room.Notation;
+                        colCount = 1;
+                        rowCount++;
+                        iii++;
+                    }
+                    ii++;
+                }
+                i++;
+            }
+        }
+
+
+
+        public bool UploadRoomSummary(List<BuildingDto> buildings, double Koef, ref ExcelWorksheet worksheet)
+        {
+            int rowCount = 1;
+            int colCount = 1;
+
+            worksheet.Cells[rowCount, colCount].Value = "№/№";
+            colCount++;
+            worksheet.Cells[rowCount, colCount].Value = "Подразделение";
+            colCount++;
+            worksheet.Cells[rowCount, colCount].Value = "Площадь расчётная, м^2";
+            colCount++;
+            worksheet.Cells[rowCount, colCount].Value = "Ориент. общая площадь, м^2";
+            colCount = 1;
+            rowCount++;
+
+            int n1 = 1;
+
+            double sumarea = 0;
+            double Ksumarea = 0;
+            foreach (BuildingDto build in buildings)
+            {
+                worksheet.Cells[rowCount, 1].Value = n1.ToString();
+                worksheet.Cells[rowCount, 2].Value = build.Name;
+                worksheet.Cells[rowCount, 3].Value = build.SunnuryArea;
+                sumarea += Convert.ToDouble(build.SunnuryArea);
+                Ksumarea += Convert.ToDouble(build.SunnuryArea) * Koef;
+                worksheet.Cells[rowCount, 4].Value = build.SunnuryArea * Koef;
+                rowCount++;
+
+                int n2 = 1;
+                foreach (SubdivisionDto subdiv in build.Subdivisions)
+                {
+                    worksheet.Cells[rowCount, 1].Value = n1.ToString() + "." + n2.ToString();
+                    worksheet.Cells[rowCount, 2].Value = subdiv.Name;
+                    worksheet.Cells[rowCount, 3].Value = subdiv.SunnuryArea;
+                    worksheet.Cells[rowCount, 4].Value = subdiv.SunnuryArea * Koef;
+                    n2++;
+                    rowCount++;
+                }
+                n1++;
+            }
+            worksheet.Cells[rowCount, 3].Value = sumarea;
+            worksheet.Cells[rowCount, 4].Value = Ksumarea;
+
 
             return true;
         }

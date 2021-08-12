@@ -531,10 +531,11 @@
             <Button Content="Скопировать подразделение" Command="{Binding CopySubdivisionCommnd}" HorizontalAlignment="Left" Margin="10 0 0 0" Width="100" Height="25"/>
         </DockPanel>
 
-        <DockPanel Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2">
+        <DockPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3">
             <Button Command="{Binding PushToDbCommand}" Content="Отправить изменения в БД" Width="160" Height="25" DockPanel.Dock="Right" Margin="0 0 10 0"/>
-            <Button Command="{Binding UploadProgramToExcelCommand}" Content="Выгрузить программу" Width="160" Height="25" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"/>
-            <Button Command="{Binding UploadEquipmentToExcelCommand}" Content="Выгрузить оборудование" Width="160" Height="25" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"/>
+            <Button Command="{Binding UploadProgramToExcelCommand}" Content="Выгрузить задание" Width="160" Height="25" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"/>
+            <Button Command="{Binding UploadStandartEquipmentToExcelCommand}" Content="Выгрузить по стандарту" Width="160" Height="25" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"/>
+            <Button Command="{Binding UploadAllEquipmentToExcelCommand}" Content="Выгрузить все оборудование" Width="165" Height="25" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"/>
         </DockPanel>
     </Grid>
 </UserControl>

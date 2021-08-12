@@ -183,6 +183,10 @@
     <Compile Include="Migrations\202107131521184_AddPosEtiteleiPersonalaColumn.designer.cs">
       <DependentUpon>202107131521184_AddPosEtiteleiPersonalaColumn.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202108110833540_add new field in Equipment.cs" />
+    <Compile Include="Migrations\202108110833540_add new field in Equipment.designer.cs">
+      <DependentUpon>202108110833540_add new field in Equipment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CsvModels\UploadToCsvModel.cs" />
     <Compile Include="Models\DbModels\Base\MainDbContext.cs" />
@@ -355,6 +359,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202107131521184_AddPosEtiteleiPersonalaColumn.resx">
       <DependentUpon>202107131521184_AddPosEtiteleiPersonalaColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108110833540_add new field in Equipment.resx">
+      <DependentUpon>202108110833540_add new field in Equipment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

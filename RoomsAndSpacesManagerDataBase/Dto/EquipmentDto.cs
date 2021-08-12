@@ -13,7 +13,7 @@ namespace RoomsAndSpacesManagerDataBase.Dto
     public class EquipmentDto : ViewModel
     {
         private bool mandatory;
-
+        private bool currently;
         public EquipmentDto()
         {
 
@@ -27,6 +27,7 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             Name = roomEquipment.Name;
             Count = roomEquipment.Count;
             Mandatory = roomEquipment.Mandatory;
+            Currently = roomEquipment.Mandatory;
         }
 
 
@@ -38,6 +39,7 @@ namespace RoomsAndSpacesManagerDataBase.Dto
         public string Name { get; set; }
         public int Count { get; set; }
         public bool Mandatory { get => mandatory; set => Set(ref mandatory, value); }
+        public bool Currently { get => currently; set => Set(ref currently, value); }
         public string Discription { get; set; }
 
         public int RoomId { get; set; }

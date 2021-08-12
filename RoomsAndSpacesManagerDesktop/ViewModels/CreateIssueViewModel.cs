@@ -43,7 +43,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
 
             PushToDbCommand = new RelayCommand(OnPushToDbCommandExecutde, CanPushToDbCommandExecute);
             UploadProgramToExcelCommand = new RelayCommand(OnUploadProgramToExcelCommandExecutde, CanUploadProgramToExcelCommandExecute);
-            UploadEquipmentToExcelCommand = new RelayCommand(OnUploadEquipmentToExcelCommandExecutde, CanUploadEquipmentToExcelCommandExecute);
+            UploadStandartEquipmentToExcelCommand = new RelayCommand(OnUploadStandartEquipmentToExcelCommandExecutde, CanUploadStandartEquipmentToExcelCommandExecute);
             AddNewRowCommand = new RelayCommand(OnAddNewRowCommandExecutde, CanAddNewRowCommandExecute);
             AddNewProjectCommand = new RelayCommand(OnAddNewProjectCommandExecutde, CanAddNewProjectCommandExecute);
             AddNewBuildingCommand = new RelayCommand(OnAddNewBuildingCommandExecutde, CanAddNewBuildingCommandExecute);
@@ -59,7 +59,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             ClearTextboxCommand = new RelayCommand(OnClearTextboxCommandExecuted, CanClearTextboxCommandExecute);
             GetEquipmentCommand = new RelayCommand(OnGetEquipmentCommandExecutde, CanGetEquipmentCommandExecute);
             PushToDbSaveChangesCommand = new RelayCommand(OnPushToDbSaveChangesCommandExecutde, CanPushToDbSaveChangesCommandExecute);
-
+            UploadAllEquipmentToExcelCommand = new RelayCommand(OnUploadAllEquipmentToExcelCommandExecuted, CanUploadAllEquipmentToExcelCommandExecute);
             #endregion
         }
 
@@ -678,11 +678,8 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             equipmentsWindow.DataContext = vm;
 
             equipmentsWindow.ShowDialog();
-
-
         }
         private bool CanGetEquipmentCommandExecute(object p) => true;
-
 
         #endregion
 
@@ -775,16 +772,43 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         {
             MainExcelModel.UploadProgramToExcel(projContext.GetRooms(SelectedSubdivision));
         }
-        private bool CanUploadProgramToExcelCommandExecute(object p) => true;
+        private bool CanUploadProgramToExcelCommandExecute(object p) 
+        {
+            if (SelectedSubdivision != null) return true;
+            return false;
+        }
         #endregion
 
-        #region Комманд. Выгрузить список оборудвания в эксель
-        public ICommand UploadEquipmentToExcelCommand { get; set; }
-        private void OnUploadEquipmentToExcelCommandExecutde(object p)
+        #region Комманд. Выгрузить стандарт список оборудвания в эксель
+
+        public ICommand UploadStandartEquipmentToExcelCommand { get; set; }
+        private void OnUploadStandartEquipmentToExcelCommandExecutde(object p)
         {
-            SqlMainModel.GetEqupmentByProjects(SelectedProject);
+            //SqlMainModel.GetEqupmentByProjects(SelectedProject);
+            SqlMainModel.GetStandartEquipmnetByProject(SelectedProject);
         }
-        private bool CanUploadEquipmentToExcelCommandExecute(object p) => true;
+        private bool CanUploadStandartEquipmentToExcelCommandExecute(object p) 
+        {
+            if (SelectedProject != null) return true;
+            return false;
+        }
+
+        #endregion
+
+        #region Комманд. Выгрузить список оборудования целиком в эксель
+
+        public ICommand UploadAllEquipmentToExcelCommand { get; set; }
+        private void OnUploadAllEquipmentToExcelCommandExecuted(object obj)
+        {
+            SqlMainModel.GetAllEquipmnetByProject(SelectedProject);
+        }
+        private bool CanUploadAllEquipmentToExcelCommandExecute(object obj)
+        {
+            if (SelectedProject != null) return true;
+
+            return false;
+        }
+
         #endregion
 
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

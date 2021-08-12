@@ -68,7 +68,8 @@
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Количество (не менее), шт"  Binding="{Binding Count}"  Width="90"/>
-                <DataGridTemplateColumn Header="Обязательный">
+                <DataGridCheckBoxColumn Header="Обязательный" Binding="{Binding Currently, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+                <DataGridTemplateColumn Header="Текущее оборудование">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <CheckBox IsChecked="{Binding Mandatory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">

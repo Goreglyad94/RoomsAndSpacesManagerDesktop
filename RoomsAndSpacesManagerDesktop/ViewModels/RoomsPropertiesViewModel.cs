@@ -141,7 +141,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                     Rooms.Filter = delegate (object item)
                     {
                         RoomNameDto user = item as RoomNameDto;
-                        if (user != null && user.Name.ToLower().Contains(RoomNameFiltering.ToLower())) return true;
+                        if (user != null && user.Name != null && user.Name.ToLower().Contains(RoomNameFiltering.ToLower())) return true;
                         return false;
                     };
                     Rooms.Refresh();

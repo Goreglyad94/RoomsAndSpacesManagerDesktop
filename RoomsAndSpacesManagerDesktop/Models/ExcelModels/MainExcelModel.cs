@@ -60,7 +60,8 @@ namespace RoomsAndSpacesManagerDesktop.Models.ExcelModels
 
 
 
-                string ddd = worksheet.Cells[rowCount, 7].Value.ToString();
+                string ddd = worksheet.Cells[rowCount, 7].Value?.ToString();
+
 
                 if (worksheet.Cells[rowCount, 7].Value != null)
                 {
@@ -75,19 +76,19 @@ namespace RoomsAndSpacesManagerDesktop.Models.ExcelModels
 
             EquipmentDbContext context = new EquipmentDbContext();
             context.AddNewEquipments(equipnets);
-
-
         }
 
-        public static void UploadProgramToExcel (List<RoomDto> rooms)
+        public static bool UploadProgramToExcel (List<RoomDto> rooms)
         {
             ExcelPackage excel = new ExcelPackage();
 
             FolderBrowserDialog openFileDialog = new FolderBrowserDialog();
             openFileDialog.ShowDialog();
+
             string path;
             path = openFileDialog.SelectedPath + "\\" + rooms.First().Subdivision.Name + ".xlsx";
-
+            
+            
 
             if (File.Exists(path))
                 File.Delete(path);
@@ -230,7 +231,6 @@ namespace RoomsAndSpacesManagerDesktop.Models.ExcelModels
                 worksheet.Cells[rowCount, colCount].Value = item.Class_chistoti_SP_158?.ToString();
                 colCount++;
 
-
                 worksheet.Cells[rowCount, colCount].Value = item.Class_chistoti_GMP?.ToString();
                 colCount++;
 
@@ -301,20 +301,22 @@ namespace RoomsAndSpacesManagerDesktop.Models.ExcelModels
 
             FileInfo excelFile = new FileInfo(path);
             excel.SaveAs(excelFile);
+
+            return true;
         }
 
         /// <summary>
         /// Выгрузка списка оборудования по проекту в Эксель
         /// </summary>
         /// <param name="project"></param>
-        public static void UploadEquipmentToExcel(SqlDataReader sqlDataReader, string projectName)
+        public static void UploadStandartEquipmentToExcel(SqlDataReader sqlDataReader, string projectName)
         {
             ExcelPackage excel = new ExcelPackage();
 
             FolderBrowserDialog openFileDialog = new FolderBrowserDialog();
             openFileDialog.ShowDialog();
             string path;
-            path = openFileDialog.SelectedPath + "\\" + projectName + ".xlsx";
+            path = openFileDialog.SelectedPath + "\\" + "Стандарт оборудования по" + projectName + ".xlsx";
 
             if (File.Exists(path))
                 File.Delete(path);
@@ -326,7 +328,7 @@ namespace RoomsAndSpacesManagerDesktop.Models.ExcelModels
             int colCount = 1;
 
 
-            worksheet.Cells[rowCount, colCount].Value = "Id оборудования";
+            worksheet.Cells[rowCount, colCount].Value = "Проект";
             colCount++;
 
             worksheet.Cells[rowCount, colCount].Value = "Здание";
@@ -335,16 +337,25 @@ namespace RoomsAndSpacesManagerDesktop.Models.ExcelModels
             worksheet.Cells[rowCount, colCount].Value = "Подразделение";
             colCount++;
 
-            worksheet.Cells[rowCount, colCount].Value = "Наименование помещения";
+            worksheet.Cells[rowCount, colCount].Value = "Id помещения";
             colCount++;
 
-            worksheet.Cells[rowCount, colCount].Value = "Код классификатора";
+            worksheet.Cells[rowCount, colCount].Value = "Имя помещения";
             colCount++;
 
-            worksheet.Cells[rowCount, colCount].Value = "Наименование оборудования";
+            worksheet.Cells[rowCount, colCount].Value = "Id оборудования";
             colCount++;
 
-            worksheet.Cells[rowCount, colCount].Value = "Кол-во";
+            worksheet.Cells[rowCount, colCount].Value = "Номер";
+            colCount++;
+
+            worksheet.Cells[rowCount, colCount].Value = "Код по классификатору";
+            colCount++;
+
+            worksheet.Cells[rowCount, colCount].Value = "Имя оборудования";
+            colCount++;
+
+            worksheet.Cells[rowCount, colCount].Value = "Количество";
             colCount++;
 
             rowCount++;
@@ -352,28 +363,156 @@ namespace RoomsAndSpacesManagerDesktop.Models.ExcelModels
 
             while (sqlDataReader.Read())
             {
-                worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(0);
-                colCount++;
+                string o1 = sqlDataReader.GetValue(10).ToString().ToLower();
+                string o2 = sqlDataReader.GetValue(11).ToString().ToLower();
 
-                worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(1);
-                colCount++;
 
-                worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(2);
-                colCount++;
 
-                worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(3);
-                colCount++;
+                if ((o1 == "true" && o2 == "true") | (o1 == "" && o2 == ""))
+                {
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(0);
+                    colCount++;
 
-                worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(4);
-                colCount++;
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(1);
+                    colCount++;
 
-                worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(5);
-                colCount++;
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(2);
+                    colCount++;
 
-                worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(6);
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(3);
+                    colCount++;
+
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(4);
+                    colCount++;
+
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(5);
+                    colCount++;
+
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(9);
+                    colCount++;
+
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(6);
+                    colCount++;
+
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(7);
+                    colCount++;
+
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(8);
+                    colCount++;
+
+                    colCount = 1;
+                    rowCount++;
+                }
+                else
+                {
+                    continue;
+                }
+
                 
-                colCount = 1;
-                rowCount++;
+            }
+            FileInfo excelFile = new FileInfo(path);
+            excel.SaveAs(excelFile);
+        }
+
+
+        public static void UploadAllEquipmentToExcel(SqlDataReader sqlDataReader, string projectName)
+        {
+            ExcelPackage excel = new ExcelPackage();
+
+            FolderBrowserDialog openFileDialog = new FolderBrowserDialog();
+            openFileDialog.ShowDialog();
+            string path;
+            path = openFileDialog.SelectedPath + "\\" + "Все оборудование по" + projectName + ".xlsx";
+
+            if (File.Exists(path))
+                File.Delete(path);
+
+            excel.Workbook.Worksheets.Add("Оборудование");
+
+            ExcelWorksheet worksheet = excel.Workbook.Worksheets["Оборудование"];
+            int rowCount = 1;
+            int colCount = 1;
+
+
+            worksheet.Cells[rowCount, colCount].Value = "Проект";
+            colCount++;
+
+            worksheet.Cells[rowCount, colCount].Value = "Здание";
+            colCount++;
+
+            worksheet.Cells[rowCount, colCount].Value = "Подразделение";
+            colCount++;
+
+            worksheet.Cells[rowCount, colCount].Value = "Id помещения";
+            colCount++;
+
+            worksheet.Cells[rowCount, colCount].Value = "Имя помещения";
+            colCount++;
+
+            worksheet.Cells[rowCount, colCount].Value = "Id оборудования";
+            colCount++;
+
+            worksheet.Cells[rowCount, colCount].Value = "Номер";
+            colCount++;
+
+            worksheet.Cells[rowCount, colCount].Value = "Код по классификатору";
+            colCount++;
+
+            worksheet.Cells[rowCount, colCount].Value = "Имя оборудования";
+            colCount++;
+
+            worksheet.Cells[rowCount, colCount].Value = "Количество";
+            colCount++;
+
+            rowCount++;
+            colCount = 1;
+
+            while (sqlDataReader.Read())
+            {
+                string o1 = sqlDataReader.GetValue(10).ToString().ToLower();
+                string o2 = sqlDataReader.GetValue(11).ToString().ToLower();
+
+
+
+                if ( o2 == "true" |  o2 == "")
+                {
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(0);
+                    colCount++;
+
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(1);
+                    colCount++;
+
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(2);
+                    colCount++;
+
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(3);
+                    colCount++;
+
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(4);
+                    colCount++;
+
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(5);
+                    colCount++;
+
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(9);
+                    colCount++;
+
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(6);
+                    colCount++;
+
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(7);
+                    colCount++;
+
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(8);
+                    colCount++;
+
+                    colCount = 1;
+                    rowCount++;
+                }
+                else
+                {
+                    continue;
+                }
             }
             FileInfo excelFile = new FileInfo(path);
             excel.SaveAs(excelFile);

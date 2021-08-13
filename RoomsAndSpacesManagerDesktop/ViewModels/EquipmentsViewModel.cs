@@ -28,8 +28,6 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             RoomEquipmentsList = CollectionViewSource.GetDefaultView(equipmentsList);
             RoomEquipmentsList.Refresh();
 
-            
-
             #region Комманды
             AddNewRowCommand = new RelayCommand(OnAddNewRowCommandExecuted, CanAddNewRowCommandExecute);
             SaveChangesCommand = new RelayCommand(OnSaveChangesCommandExecuted, CanSaveChangesCommandExecute);

@@ -6,7 +6,6 @@
              xmlns:local="clr-namespace:RoomsAndSpacesManagerDesktop.Views.UserControls"
              xmlns:vm="clr-namespace:RoomsAndSpacesManagerDesktop.ViewModels"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-             
              xmlns:customControls="clr-namespace:RoomsAndSpacesManagerDesktop.Infrastructure.CustomControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="1100">
@@ -71,6 +70,16 @@
         <DockPanel Grid.Row="0" Grid.Column="2">
             <TextBlock Width="90" Text="Подразделение: " DockPanel.Dock="Left"  VerticalAlignment="Center"/>
             <ComboBox ItemsSource="{Binding Subdivisions}" SelectedItem="{Binding SelectedSubdivision}" DockPanel.Dock="Left" Width="150" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 2 20 2" Height="25">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <DockPanel>
+                            <TextBox Height="20" Text="{Binding Name}" BorderBrush="Transparent" IsEnabled="{Binding IsReadOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Button BorderBrush="Transparent" Background="Transparent" Height="20" Width="20" Command="{Binding Path=DataContext.RenameSubdivisionCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding }">
+                                <Image Source="../../Resources/pen.png"/>
+                            </Button>
+                        </DockPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
                 <ComboBox.ItemContainerStyle>
                     <Style TargetType="ComboBoxItem">
                         <Setter Property="Tag" Value="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ComboBox}}}" />
@@ -210,8 +219,7 @@
                                 <customControls:CustomTextBlockColumnTemplate PropertyName="Class_chistoti_SanPin"
                                     SecondValue="{Binding RoomName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     Text="{Binding Class_chistoti_SanPin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                       
-                                    FirstValue="{Binding Class_chistoti_SanPin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                   
-                                    />
+                                    FirstValue="{Binding Class_chistoti_SanPin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                         <DataGridTemplateColumn.CellEditingTemplate>
@@ -241,8 +249,7 @@
                                 <customControls:CustomTextBlockColumnTemplate PropertyName="Class_chistoti_GMP" TextWrapping="Wrap"
                                                                               SecondValue="{Binding RoomName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     Text="{Binding Class_chistoti_GMP, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                       
-                                    FirstValue="{Binding Class_chistoti_GMP, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                   
-                                    />
+                                    FirstValue="{Binding Class_chistoti_GMP, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                         <DataGridTemplateColumn.CellEditingTemplate>
@@ -292,7 +299,7 @@
                         </DataGridTemplateColumn.CellTemplate>
                         <DataGridTemplateColumn.CellEditingTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding T_min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  AcceptsReturn="True" TextWrapping="Wrap"/>
+                                <TextBox Text="{Binding T_min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
@@ -307,7 +314,7 @@
                         </DataGridTemplateColumn.CellTemplate>
                         <DataGridTemplateColumn.CellEditingTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding T_max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  AcceptsReturn="True" TextWrapping="Wrap"/>
+                                <TextBox Text="{Binding T_max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
@@ -341,7 +348,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Относительная влажность,%" Width="100">
+                    <DataGridTemplateColumn Header="Относительная влажность, %" Width="100">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <customControls:CustomTextBlockColumnTemplate PropertyName="Ot_vlazhnost"

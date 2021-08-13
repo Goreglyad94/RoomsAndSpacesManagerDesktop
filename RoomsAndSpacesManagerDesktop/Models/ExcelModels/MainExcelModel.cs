@@ -331,18 +331,6 @@ namespace RoomsAndSpacesManagerDesktop.Models.ExcelModels
             worksheet.Cells[rowCount, colCount].Value = "Проект";
             colCount++;
 
-            worksheet.Cells[rowCount, colCount].Value = "Здание";
-            colCount++;
-
-            worksheet.Cells[rowCount, colCount].Value = "Подразделение";
-            colCount++;
-
-            worksheet.Cells[rowCount, colCount].Value = "Id помещения";
-            colCount++;
-
-            worksheet.Cells[rowCount, colCount].Value = "Имя помещения";
-            colCount++;
-
             worksheet.Cells[rowCount, colCount].Value = "Id оборудования";
             colCount++;
 
@@ -418,6 +406,97 @@ namespace RoomsAndSpacesManagerDesktop.Models.ExcelModels
         /// Выгрузка всего списка оборудования в Excel по проекту
         /// </summary>
         /// <param name="project"></param>
+        public static void UploadAllEquipmentToExcel(SqlDataReader sqlDataReader, string projectName)
+        {
+            ExcelPackage excel = new ExcelPackage();
+
+            FolderBrowserDialog openFileDialog = new FolderBrowserDialog();
+            openFileDialog.ShowDialog();
+            string path;
+            path = openFileDialog.SelectedPath + "\\" + "Все оборудование по" + projectName + ".xlsx";
+
+            if (File.Exists(path))
+                File.Delete(path);
+
+            excel.Workbook.Worksheets.Add("Оборудование");
+
+            ExcelWorksheet worksheet = excel.Workbook.Worksheets["Оборудование"];
+            int rowCount = 1;
+            int colCount = 1;
+
+
+            worksheet.Cells[rowCount, colCount].Value = "Проект";
+            colCount++;
+
+            worksheet.Cells[rowCount, colCount].Value = "Номер";
+            colCount++;
+
+            worksheet.Cells[rowCount, colCount].Value = "Код по классификатору";
+            colCount++;
+
+            worksheet.Cells[rowCount, colCount].Value = "Имя оборудования";
+            colCount++;
+
+            worksheet.Cells[rowCount, colCount].Value = "Количество";
+            colCount++;
+
+            rowCount++;
+            colCount = 1;
+
+            while (sqlDataReader.Read())
+            {
+                string o1 = sqlDataReader.GetValue(10).ToString().ToLower();
+                string o2 = sqlDataReader.GetValue(11).ToString().ToLower();
+
+
+
+                if ((o1 == "true" && o2 == "true") | (o1 == "" && o2 == ""))
+                {
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(0);
+                    colCount++;
+
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(1);
+                    colCount++;
+
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(2);
+                    colCount++;
+
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(3);
+                    colCount++;
+
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(4);
+                    colCount++;
+
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(5);
+                    colCount++;
+
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(9);
+                    colCount++;
+
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(6);
+                    colCount++;
+
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(7);
+                    colCount++;
+
+                    worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(8);
+                    colCount++;
+
+                    colCount = 1;
+                    rowCount++;
+                }
+                else
+                {
+                    continue;
+                }
+
+                
+            }
+            FileInfo excelFile = new FileInfo(path);
+            excel.SaveAs(excelFile);
+        }
+
+
         public static void UploadAllEquipmentToExcel(SqlDataReader sqlDataReader, string projectName)
         {
             ExcelPackage excel = new ExcelPackage();

@@ -312,46 +312,6 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         private bool CanDeleteCommandExecute(object p) => true;
         #endregion
 
-        #region Комманд. Переименвоание подразделений
-
-        public ICommand RenameSubdivisionCommand { get; set; }
-        private void OnRenameSubdivisionCommandExecuted(object obj)
-        {
-            var renamedSubdivision = obj as SubdivisionDto;
-            if (renamedSubdivision.IsReadOnly)
-            {
-                projContext.SaveChanges();
-            }
-
-
-            if (renamedSubdivision.IsReadOnly)
-                renamedSubdivision.IsReadOnly = false;
-            else
-                renamedSubdivision.IsReadOnly = true;
-        }
-
-        #endregion
-
-        #region Комманд. Переименвоание зданий
-
-        public ICommand RenameBuildingCommand { get; set; }
-        private void OnRenameBuildingCommandExecuted(object obj)
-        {
-            var renamedSubdivision = obj as BuildingDto;
-            if (renamedSubdivision.IsReadOnly)
-            {
-                projContext.SaveChanges();
-            }
-
-
-            if (renamedSubdivision.IsReadOnly)
-                renamedSubdivision.IsReadOnly = false;
-            else
-                renamedSubdivision.IsReadOnly = true;
-        }
-
-        #endregion
-
         /*Верхняя панель. Список категорий~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
         #region Combobox - Список категорий

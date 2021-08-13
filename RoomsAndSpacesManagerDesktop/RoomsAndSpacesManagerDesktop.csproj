@@ -146,6 +146,8 @@
     <Compile Include="Infrastructure\Behaviors\DataGridCellColorBehavior.cs" />
     <Compile Include="Infrastructure\Commands\Base\Command.cs" />
     <Compile Include="Infrastructure\Commands\RelayCommand.cs" />
+    <Compile Include="Infrastructure\CustomControls\ComboBoxTemplateSelector.cs" />
+    <Compile Include="Infrastructure\CustomControls\ComboBoxTemplateSelectorExtension.cs" />
     <Compile Include="Infrastructure\CustomControls\CustomColumnTemplate.cs" />
     <Compile Include="Infrastructure\CustomControls\CustomTextBlockColumnTemplate.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -391,6 +393,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\pen.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

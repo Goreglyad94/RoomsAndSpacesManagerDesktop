@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace RoomsAndSpacesManagerDataBase.Dto
 {
     [Table("RaSM_Buildings")]
-    public class BuildingDto
+    public class BuildingDto : ViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -17,6 +17,10 @@ namespace RoomsAndSpacesManagerDataBase.Dto
 
         [NotMapped]
         public int? SunnuryArea { get; set; }
+
+        private bool isReadOnly = false;
+        [NotMapped]
+        public bool IsReadOnly { get => isReadOnly; set => Set(ref isReadOnly, value); }
 
 
         public virtual ProjectDto Project { get; set; }

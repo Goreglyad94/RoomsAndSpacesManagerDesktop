@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 namespace RoomsAndSpacesManagerDataBase.Dto
 {
     [Table("RaSM_SubdivisionDto")]
-    public class SubdivisionDto
+    public class SubdivisionDto : ViewModel
     {
+        
+
         public int Id { get; set; }
         public string Name { get; set; }
 
@@ -18,6 +20,10 @@ namespace RoomsAndSpacesManagerDataBase.Dto
         public bool IsChecked { get; set; } = false;
         [NotMapped]
         public int? SunnuryArea { get; set; }
+
+        private bool isReadOnly = false;
+        [NotMapped]
+        public bool IsReadOnly { get => isReadOnly; set => Set(ref isReadOnly, value); }
 
 
         public int BuildingId { get; set; }
@@ -37,6 +43,10 @@ namespace RoomsAndSpacesManagerDataBase.Dto
         public SubdivisionDto(SubdivisionDto subdivision)
         {
             this.Name = subdivision.Name;
+
         }
+
+        
+
     }
 }

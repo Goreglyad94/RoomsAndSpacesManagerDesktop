@@ -30,7 +30,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         RoomsDbContext roomsContext = new RoomsDbContext();
         UploadToCsvModel uploadToCsvModel = new UploadToCsvModel();
         List<RoomNameDto> roomsNamesList;
-        
+
         #endregion
 
         public CreateIssueViewModel()
@@ -60,6 +60,8 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             GetEquipmentCommand = new RelayCommand(OnGetEquipmentCommandExecutde, CanGetEquipmentCommandExecute);
             PushToDbSaveChangesCommand = new RelayCommand(OnPushToDbSaveChangesCommandExecutde, CanPushToDbSaveChangesCommandExecute);
             UploadAllEquipmentToExcelCommand = new RelayCommand(OnUploadAllEquipmentToExcelCommandExecuted, CanUploadAllEquipmentToExcelCommandExecute);
+            RenameSubdivisionCommand = new RelayCommand(OnRenameSubdivisionCommandExecuted);
+            RenameBuildingCommand = new RelayCommand(OnRenameBuildingCommandExecuted);
             #endregion
         }
 
@@ -310,6 +312,46 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         private bool CanDeleteCommandExecute(object p) => true;
         #endregion
 
+        #region Комманд. Переименвоание подразделений
+
+        public ICommand RenameSubdivisionCommand { get; set; }
+        private void OnRenameSubdivisionCommandExecuted(object obj)
+        {
+            var renamedSubdivision = obj as SubdivisionDto;
+            if (renamedSubdivision.IsReadOnly)
+            {
+                projContext.SaveChanges();
+            }
+
+
+            if (renamedSubdivision.IsReadOnly)
+                renamedSubdivision.IsReadOnly = false;
+            else
+                renamedSubdivision.IsReadOnly = true;
+        }
+
+        #endregion
+
+        #region Комманд. Переименвоание зданий
+
+        public ICommand RenameBuildingCommand { get; set; }
+        private void OnRenameBuildingCommandExecuted(object obj)
+        {
+            var renamedSubdivision = obj as BuildingDto;
+            if (renamedSubdivision.IsReadOnly)
+            {
+                projContext.SaveChanges();
+            }
+
+
+            if (renamedSubdivision.IsReadOnly)
+                renamedSubdivision.IsReadOnly = false;
+            else
+                renamedSubdivision.IsReadOnly = true;
+        }
+
+        #endregion
+
         /*Верхняя панель. Список категорий~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
         #region Combobox - Список категорий
@@ -405,7 +447,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                             activeNumber = eq.Number;
                             eq.Mandatory = true;
                         }
-                    } 
+                    }
                     #endregion
 
                     //List<EquipmentDto> equipment = equipmentDbContext.GetEquipmentsWithSortItems(SelectedRoomName);
@@ -485,7 +527,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                 RoomsNames.Filter = delegate (object item)
                 {
                     RoomNameDto user = item as RoomNameDto;
-                    if (user != null && user.Name.ToLower().StartsWith(RoomNameFiltering.ToLower())) return true;
+                    if (user != null && user.Name != null && user.Name.ToLower().StartsWith(RoomNameFiltering.ToLower())) return true;
                     return false;
                 };
                 RoomsNames.Refresh();
@@ -772,7 +814,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         {
             MainExcelModel.UploadProgramToExcel(projContext.GetRooms(SelectedSubdivision));
         }
-        private bool CanUploadProgramToExcelCommandExecute(object p) 
+        private bool CanUploadProgramToExcelCommandExecute(object p)
         {
             if (SelectedSubdivision != null) return true;
             return false;
@@ -787,7 +829,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             //SqlMainModel.GetEqupmentByProjects(SelectedProject);
             SqlMainModel.GetStandartEquipmnetByProject(SelectedProject);
         }
-        private bool CanUploadStandartEquipmentToExcelCommandExecute(object p) 
+        private bool CanUploadStandartEquipmentToExcelCommandExecute(object p)
         {
             if (SelectedProject != null) return true;
             return false;
@@ -834,7 +876,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         {
             projContext.SaveChanges();
         }
-        private bool CanPushToDbSaveChangesCommandExecute(object obj) 
+        private bool CanPushToDbSaveChangesCommandExecute(object obj)
         {
             if (AllRooms != null && AllRooms.Count != 0) return true;
             else return false;
@@ -843,7 +885,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         #endregion
 
         /*Таблица "Сводная"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-        
+
         #region Список всех помещений для проекта
         private List<BuildingDto> _summury;
         public List<BuildingDto> _Summury

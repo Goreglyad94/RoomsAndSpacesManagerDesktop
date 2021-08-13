@@ -11,11 +11,11 @@ namespace RoomsAndSpacesManagerDataBase.Dto.RoomInfrastructure
     [Table("RaSM_RoomNames")]
     public class RoomNameDto : ViewModel
     {
-
+        RoomAndSpacesDbContext roomAndSpacesDbContext = new RoomAndSpacesDbContext();
 
         public RoomNameDto()
         {
-
+            //this.SubCategoryDtoName = roomAndSpacesDbContext.RaSM_RoomSubCategories.First(x => x.Id == this.SubCategotyId)?.Name;
         }
 
         private int id;
@@ -25,7 +25,7 @@ namespace RoomsAndSpacesManagerDataBase.Dto.RoomInfrastructure
             set
             {
                 id = value;
-                RoomAndSpacesDbContext roomAndSpacesDbContext = new RoomAndSpacesDbContext();
+                
                 var edee = roomAndSpacesDbContext.RaSM_RoomEquipments.Where(x => x.RoomNameId == Id).ToList();
                 if (edee.Count == 0)
                 {
@@ -91,6 +91,8 @@ namespace RoomsAndSpacesManagerDataBase.Dto.RoomInfrastructure
             }
         }
         public virtual SubCategoryDto SubCategory { get; set; }
+        [NotMapped]
+        public string SubCategoryDtoName { get; set; }
 
         public override string ToString()
         {

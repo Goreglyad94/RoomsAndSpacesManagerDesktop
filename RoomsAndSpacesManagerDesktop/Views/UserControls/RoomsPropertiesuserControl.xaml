@@ -79,8 +79,15 @@
                     </Style>
                 </DataGrid.ItemContainerStyle>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="auto"/>
-                    <DataGridTextColumn Header="Оборудование" Binding="{Binding EquipmentAvailability}" Width="auto"/>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="auto" IsReadOnly="True"/>
+                    <DataGridTemplateColumn Header="Подкатегория" Width="auto"  IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding SubCategory}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Оборудование" Binding="{Binding EquipmentAvailability}" Width="auto" IsReadOnly="True"/>
 
                     <DataGridTemplateColumn Header="Наименвоание помещений" Width="auto">
                         <DataGridTemplateColumn.CellTemplate>

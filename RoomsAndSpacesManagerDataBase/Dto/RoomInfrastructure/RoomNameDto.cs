@@ -15,8 +15,10 @@ namespace RoomsAndSpacesManagerDataBase.Dto.RoomInfrastructure
 
         public RoomNameDto()
         {
-            //this.SubCategoryDtoName = roomAndSpacesDbContext.RaSM_RoomSubCategories.First(x => x.Id == this.SubCategotyId)?.Name;
+            var eee = SubCategotyId;
+            var ddererr = SubCategory;
         }
+           
 
         private int id;
         public int Id

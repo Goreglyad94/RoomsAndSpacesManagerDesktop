@@ -30,6 +30,19 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             Currently = roomEquipment.Mandatory;
         }
 
+        public EquipmentDto(EquipmentDto equipmentDto, int roomId)
+        {
+            Number = equipmentDto.Number;
+            ClassificationCode = equipmentDto.ClassificationCode;
+            TypeName = equipmentDto.TypeName;
+            Name = equipmentDto.Name;
+            Count = equipmentDto.Count;
+            Mandatory = equipmentDto.Mandatory;
+            Currently = equipmentDto.Currently;
+            Discription = equipmentDto.Discription;
+            RoomId = roomId;
+        }
+
 
         [Key]
         public int Id { get; set; }

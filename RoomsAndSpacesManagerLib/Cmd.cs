@@ -26,6 +26,7 @@ namespace RoomsAndSpacesManagerLib
             ExternalEvent ExEventSelectRoom = ExternalEvent.Create(evHendSelectRoom);
             ExternalEvent ExEventAddParameters = ExternalEvent.Create(addParametersIntoSpacies);
 
+            
 
             MainWindow mainWindow = new MainWindow();
             MainWindowViewModel vm = new MainWindowViewModel();

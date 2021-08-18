@@ -1,5 +1,6 @@
 ﻿using RoomsAndSpacesManagerDataBase.Dto;
 using RoomsAndSpacesManagerDataBase.Dto.RoomInfrastructure;
+using RoomsAndSpacesManagerDesktop.Infrastructure.Repositories;
 using RoomsAndSpacesManagerDesktop.Models.DbModels.Base;
 using System;
 using System.Collections.Generic;
@@ -68,16 +69,59 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
             return context.RaSM_Equipments.Where(x => x.RoomId == room.Id).ToList();
         }
 
-        public void AddNewEquipments(List<EquipmentDto> equipments, RoomDto room)
+        public List<EquipmentDto> AddEquipmentsByRoomNameId(RoomDto room)
+        {
+            var roomEqupments = context.RaSM_RoomEquipments.Where(x => x.RoomNameId == room.RoomNameId).ToList();
+            var equpments = roomEqupments.Select(x => new EquipmentDto(x)
+            {
+                RoomId = room.Id,
+                Currently = false
+            }).ToList();
+
+            EquipmentRep equipments = new EquipmentRep(equpments);
+            context.RaSM_Equipments.AddRange(equipments.Equipments);
+
+            context.SaveChanges();
+
+            return equipments.Equipments;
+        }
+
+
+        public void CopyRoomNameEquipmentsToRoomIssue(RoomNameDto roomName, RoomDto room)
         {
             //context.RaSM_Equipments.RemoveRange(context.RaSM_Equipments.Where(x => x.RoomId == room.Id));
+            List<EquipmentDto> equpmets = context.RaSM_RoomEquipments
+                        .Where(x => x.RoomNameId == roomName.Id).ToList()
+                        .Select(x => new EquipmentDto(x) { RoomId = room.Id, Mandatory = x.Mandatory, Currently = false })
+                        .ToList();
+
+            EquipmentRep equipments = new EquipmentRep(equpmets);
+
+
+            context.RaSM_Equipments.AddRange(equpmets);
+            context.SaveChanges();
+        }
+
+        public void CopyEquipmentBetweenRoomIssue(RoomDto defaultRoom, RoomDto currentRoom)
+        {
+            var equipments = context.RaSM_Equipments
+                .Where(x => x.RoomId == defaultRoom.Id).ToList()
+                .Select(x => new EquipmentDto(x, currentRoom.Id)).ToList();
+
             context.RaSM_Equipments.AddRange(equipments);
             context.SaveChanges();
         }
 
+
         public void AddNewEquipment(RoomDto room)
         {
             context.RaSM_Equipments.Add(new EquipmentDto() { RoomId = room.Id });
+            context.SaveChanges();
+        }
+
+        public void AddNewEquipment(EquipmentDto eq)
+        {
+            context.RaSM_Equipments.Add(eq);
             context.SaveChanges();
         }
 

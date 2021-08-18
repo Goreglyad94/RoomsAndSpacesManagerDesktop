@@ -30,6 +30,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             DeleteRoomCommand = new RelayCommand(OnDeleteRoomCommandExecutde, CanDeleteRoomCommandExecute);
             GetRoomEquipments = new RelayCommand(OnGetRoomEquipmentsExecutde, CanGetRoomEquipmentsExecute);
             LoadedCommand = new RelayCommand(OnLoadedCommandExecutde, CanLoadedCommandExecute);
+            AddNewCategoryCommand= new RelayCommand(OnAddNewCategoryCommandExecutde, CanAddNewCategoryCommandExecute);
             #endregion
         }
 
@@ -151,6 +152,34 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             }
         }
 
+
+        #endregion
+
+        /*Верхняя панель. Новые картеории и подкатегрии~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+        #region Новая категория. Комманд на добавление и текстбокс с именем
+
+        private string newCategoryName;
+
+        public string NewCategoryName
+        {
+            get { return newCategoryName; }
+            set { newCategoryName = value; }
+        }
+
+
+        public ICommand AddNewCategoryCommand { get; set; }
+
+        private void OnAddNewCategoryCommandExecutde(object obj)
+        {
+
+        }
+
+        private bool CanAddNewCategoryCommandExecute(object obj)
+        {
+            if (NewCategoryName != null && NewCategoryName != "") return true;
+            return false;
+        }
 
         #endregion
 

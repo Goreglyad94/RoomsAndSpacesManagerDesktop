@@ -16,6 +16,9 @@
     <UserControl.DataContext>
         <vm:RoomsPropertiesViewModel/>
     </UserControl.DataContext>
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="b2v" />
+    </UserControl.Resources>
     <Grid>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -25,6 +28,7 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="30"/>
                 <RowDefinition/>
                 <RowDefinition Height="30"/>
@@ -32,7 +36,7 @@
 
             <DockPanel Grid.Row="0" Grid.Column="0">
                 <TextBlock Text="Категория: " DockPanel.Dock="Left"  VerticalAlignment="Center"/>
-                <ComboBox ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategoties}" DockPanel.Dock="Left" Height="25" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <ComboBox ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategoties}" Margin="18 0 0 0" DockPanel.Dock="Left" Height="25" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             </DockPanel>
 
             <DockPanel Grid.Row="0" Grid.Column="1">
@@ -40,7 +44,21 @@
                 <ComboBox ItemsSource="{Binding SubCategories}" SelectedItem="{Binding SelectedSubCategoties}" DockPanel.Dock="Left" Width="150" HorizontalAlignment="Left" Height="25" VerticalAlignment="Center"/>
             </DockPanel>
 
-            <DockPanel Grid.Row="1" Grid.Column="0">
+            <DockPanel Grid.Row="0" Grid.Column="3">
+                <TextBlock VerticalAlignment="Center" Text="Добавить новый категорию/подкатегорию: "/>
+                <CheckBox x:Name="chk" VerticalAlignment="Center" IsChecked="True"/>
+            </DockPanel>
+
+            <DockPanel Grid.Row="1" Grid.Column="0" Visibility="{Binding IsChecked,ElementName=chk,Converter={StaticResource b2v}}">
+                <Button Command="{Binding AddNewCategoryCommand}" Content="+"  Margin="50 0 0 0" Width="20" Height="20" DockPanel.Dock="Left"  VerticalAlignment="Center"/>
+                <TextBox Text="{Binding NewCategoryName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Left" Height="25" Width="150" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 2 20 2"/>
+            </DockPanel>
+            <DockPanel Grid.Row="1" Grid.Column="1" Visibility="{Binding IsChecked,ElementName=chk,Converter={StaticResource b2v}}">
+                <Button Command="{Binding AddNewSubcategoryCommand}" Content="+"  Margin="50 0 0 0" Width="20" Height="20" DockPanel.Dock="Left"  VerticalAlignment="Center" CommandParameter="{Binding ElementName=ProjectList,Path=SelectedItem}"/>
+                <TextBox Text="{Binding NewSubcategoryName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  DockPanel.Dock="Left" Height="25" Width="150" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 2 17 2"/>
+            </DockPanel>
+
+            <DockPanel Grid.Row="2" Grid.Column="0">
                 <TextBlock Text="Фильтр:      " DockPanel.Dock="Left"  VerticalAlignment="Center"/>
                 <TextBox Text="{Binding RoomNameFiltering, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="150" DockPanel.Dock="Left" HorizontalAlignment="Left" Height="25" VerticalAlignment="Center"/>
             </DockPanel>
@@ -50,7 +68,7 @@
                           SelectionMode="Extended"  
                           EnableRowVirtualization="True"
                           CanUserAddRows="False"
-                          Grid.Row="2" Grid.ColumnSpan="3"
+                          Grid.Row="3" Grid.ColumnSpan="3"
                           SelectedItem="{Binding SelectedRoom}" 
                           ItemsSource="{Binding Rooms, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                           AutoGenerateColumns="False">
@@ -391,13 +409,13 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <DockPanel Grid.Row="3" Grid.Column="2">
+            <DockPanel Grid.Row="4" Grid.Column="2">
                 <Button Command="{Binding PushToDbCommand}" Content="Отправить изменения в БД" Width="170" Height="25" DockPanel.Dock="Right" Margin="0 0 10 0"/>
                 <Button Command="{Binding PullFromDbCommand}" Content="Pull" Width="50" Height="25" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"/>
                 <TextBlock Text="{Binding Status}" VerticalAlignment="Center" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"/>
             </DockPanel>
 
-            <Button Command="{Binding AddNewRowCommand}" Content="Добавить строку" Width="100" Height="25" HorizontalAlignment="Left" Grid.Row="3" Margin="0 0 10 0" />
+            <Button Command="{Binding AddNewRowCommand}" Content="Добавить строку" Width="100" Height="25" HorizontalAlignment="Left" Grid.Row="4" Margin="0 0 10 0" />
             
         </Grid>
     </Grid>

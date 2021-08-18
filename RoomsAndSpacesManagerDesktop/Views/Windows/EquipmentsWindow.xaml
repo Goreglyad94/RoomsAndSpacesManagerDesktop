@@ -68,11 +68,11 @@
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Количество (не менее), шт"  Binding="{Binding Count}"  Width="90"/>
-                <DataGridCheckBoxColumn Header="Обязательный" Binding="{Binding Currently, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+                <DataGridCheckBoxColumn Header="Обязательный" Binding="{Binding Mandatory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
                 <DataGridTemplateColumn Header="Текущее оборудование">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <CheckBox IsChecked="{Binding Mandatory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <CheckBox IsChecked="{Binding Currently, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Checked">
                                         <i:InvokeCommandAction Command="{Binding DataContext.ClickCheckboxCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding }"/>
@@ -101,5 +101,6 @@
         </DataGrid>
         <Button Command="{Binding AddNewRowCommand}" Content="Добавить строку" Margin="3 3 3 3" Width="150" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="1"/>
         <Button Command="{Binding SaveChangesCommand}" Content="Сохранить изменения" Margin="3 3 3 3" Width="150" HorizontalAlignment="Right" Grid.Column="0" Grid.Row="1"/>
+        <Button Command="{Binding SetDefaultEquipmentsCommand}" Content="Оборудование по умолчанию" Margin="3 3 3 3" Width="175" HorizontalAlignment="Right" Grid.Column="1" Grid.Row="1"/>
     </Grid>
 </Window>

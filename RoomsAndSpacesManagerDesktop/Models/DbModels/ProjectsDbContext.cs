@@ -56,6 +56,12 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
             context.SaveChanges();
         }
 
+        public void AddNewRoom(RoomDto room)
+        {
+            context.RaSM_Rooms.Add(room);
+            context.SaveChanges();
+        }
+
         #endregion
 
 

@@ -12,6 +12,7 @@ using RoomsAndSpacesManagerDataBase.Dto;
 using RoomsAndSpacesManagerDataBase.Dto.RoomInfrastructure;
 using RoomsAndSpacesManagerDesktop.Data.DataBaseContext;
 using RoomsAndSpacesManagerDesktop.Infrastructure.Commands;
+using RoomsAndSpacesManagerDesktop.Infrastructure.Repositories;
 using RoomsAndSpacesManagerDesktop.Models.CsvModels;
 using RoomsAndSpacesManagerDesktop.Models.DbModels;
 using RoomsAndSpacesManagerDesktop.Models.DbModels.Base;
@@ -433,25 +434,28 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                 if (SelectedRoom.Id != 0)
                 {
                     equipmentDbContext.RemoveAllEquipment(SelectedRoom);
+                    equipmentDbContext.CopyRoomNameEquipmentsToRoomIssue(SelectedRoomName, SelectedRoom);
 
-                    #region Сортировка списка. Чтобы были только первые позиции в списке
-                    List<EquipmentDto> equpmets = equipmentDbContext.GetEquipments(SelectedRoomName).Where(x => x.RoomNameId == SelectedRoomName.Id).Select(x => new EquipmentDto(x) { RoomId = SelectedRoom.Id, Mandatory = false }).ToList();
-                    equpmets.Sort((x, y) => x.Number.CompareTo(y.Number));
+                    //#region Сортировка списка. Чтобы были только первые позиции в списке
+                    //List<EquipmentDto> equpmets = equipmentDbContext.GetEquipments(SelectedRoomName)
+                    //    .Where(x => x.RoomNameId == SelectedRoomName.Id)
+                    //    .Select(x => new EquipmentDto(x) { RoomId = SelectedRoom.Id, Mandatory = x.Mandatory, Currently = false })
+                    //    .ToList();
+                    //EquipmentRep equipments = new EquipmentRep(equpmets);
+                    ////equpmets.Sort((x, y) => x.Number.CompareTo(y.Number));
+                    ////int activeNumber = default;
+                    ////foreach (EquipmentDto eq in equpmets)
+                    ////{
+                    ////    if (!activeNumber.Equals(eq.Number))
+                    ////    {
+                    ////        activeNumber = eq.Number;
+                    ////        eq.Mandatory = true; 
+                    ////    }
+                    ////}
+                    //#endregion
+                    ////List<EquipmentDto> equipment = equipmentDbContext.GetEquipmentsWithSortItems(SelectedRoomName);
+                    //var eee = equipments.GetEquipments();
 
-                    int activeNumber = default;
-
-                    foreach (EquipmentDto eq in equpmets)
-                    {
-                        if (!activeNumber.Equals(eq.Number))
-                        {
-                            activeNumber = eq.Number;
-                            eq.Mandatory = true;
-                        }
-                    }
-                    #endregion
-
-                    //List<EquipmentDto> equipment = equipmentDbContext.GetEquipmentsWithSortItems(SelectedRoomName);
-                    equipmentDbContext.AddNewEquipments(equpmets, SelectedRoom);
                 }
 
                 selectedRoomName = null;
@@ -988,6 +992,5 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         #endregion
 
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
     }
 }

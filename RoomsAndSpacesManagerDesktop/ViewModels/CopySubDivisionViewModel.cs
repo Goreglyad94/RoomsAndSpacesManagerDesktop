@@ -1,5 +1,6 @@
 ﻿using RoomsAndSpacesManagerDataBase.Dto;
 using RoomsAndSpacesManagerDesktop.Infrastructure.Commands;
+using RoomsAndSpacesManagerDesktop.Infrastructure.Repositories;
 using RoomsAndSpacesManagerDesktop.Models.DbModels;
 using RoomsAndSpacesManagerDesktop.ViewModels.Base;
 using RoomsAndSpacesManagerDesktop.Views.Windows;
@@ -16,6 +17,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
     {
         public CopySubdivisionWindow copySubdivisionWindow;
         public static ProjectsDbContext projContext;
+        EquipmentDbContext equipmentDbContext = new EquipmentDbContext();
         public static int selectedBuildingId;
         public CopySubDivisionViewModel()
         {
@@ -51,9 +53,11 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
 
             }
         }
+
         #endregion
 
         #region Список зданий. Выбранное здание
+
         private List<BuildingDto> buildings;
         /// <summary> Список проектов. Из БД </summary>
         public List<BuildingDto> Buildings
@@ -61,9 +65,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             get => buildings;
             set => Set(ref buildings, value);
         }
-
         private BuildingDto selectedBuilding;
-
         public BuildingDto SelectedBuilding
         {
             get { return selectedBuilding; }
@@ -79,9 +81,11 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                     Subdivisions = null;
             }
         }
+
         #endregion
 
         #region Список подразделений. Выбранное подразделение
+
         private List<SubdivisionDto> subdivisions;
         /// <summary> Список проектов. Из БД </summary>
         public List<SubdivisionDto> Subdivisions
@@ -100,41 +104,50 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                 Set(ref selectedSubdivision, value);
             }
         }
+
         #endregion
 
+        #region Комманд. Копирование
 
-        #region Комманда Apply
         public ICommand CopySubdivisionCommand { get; set; }
         private void OnCopySubdivisionCommandExecuted(object obj)
         {
-            List<SubdivisionDto> copyListOfSubdivision = new List<SubdivisionDto>();
-            foreach (SubdivisionDto subdivision in Subdivisions)
+            EquipmentDbContext eqContext = new EquipmentDbContext();
+            List<SubdivisionDto> newSubDivivsions = Subdivisions.Where(x => x.IsChecked).Select(x => new SubdivisionDto(x) { BuildingId = selectedBuildingId }).ToList();
+            Subdivisions.Where(x => x.IsChecked).Select(x => projContext.GetRooms(x)).ToList();
+
+            foreach (SubdivisionDto subdivision in Subdivisions.Where(x => x.IsChecked))
             {
-                if (subdivision.IsChecked)
+                SubdivisionDto newSubdivision = new SubdivisionDto(subdivision) { BuildingId = selectedBuildingId };
+
+                projContext.AddNewSubdivision(newSubdivision);
+
+                List<RoomDto> newRooms = new List<RoomDto>();
+
+                foreach (RoomDto room in projContext.GetRooms(subdivision))
                 {
-                    SubdivisionDto newSubdivision = new SubdivisionDto(subdivision)
-                    {
-                        BuildingId = selectedBuildingId
-                    };
-                    projContext.AddNewSubdivision(newSubdivision);
+                    var newRom = new RoomDto(room) { SubdivisionId = newSubdivision.Id };
+                    projContext.AddNewRoom(newRom);
 
+                    if (room.Equipments != null & room.Equipments.Count != 0)
+                        eqContext.CopyEquipmentBetweenRoomIssue(room, newRom);
 
-                    List<RoomDto> newRooms = new List<RoomDto>();
-                    foreach (RoomDto rooms in projContext.GetRooms(subdivision))
-                    {
-                        newRooms.Add(new RoomDto(rooms) { 
-                            SubdivisionId = newSubdivision.Id
-                        });
-                    }
-
-                    projContext.AddNewRooms(newRooms);
+                    //foreach (var currnetEquipment in room.Equipments)
+                    //{
+                    //    equipmentDbContext.AddNewEquipment(new EquipmentDto(currnetEquipment, newRom.Id));
+                    //}
+                    //var newEq = equipmentDbContext.GetEquipments(newRom);
+                    //EquipmentRep equipment = new EquipmentRep(newEq);
 
                 }
+                projContext.AddNewRooms(newRooms);
+
             }
             copySubdivisionWindow.Close();
         }
 
         private bool CanCopySubdivisionCommandExecute(object obj) => true;
+
         #endregion
     }
 }

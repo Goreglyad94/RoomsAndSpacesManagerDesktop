@@ -331,6 +331,18 @@ namespace RoomsAndSpacesManagerDesktop.Models.ExcelModels
             worksheet.Cells[rowCount, colCount].Value = "Проект";
             colCount++;
 
+            worksheet.Cells[rowCount, colCount].Value = "Здание";
+            colCount++;
+
+            worksheet.Cells[rowCount, colCount].Value = "Подразделение";
+            colCount++;
+
+            worksheet.Cells[rowCount, colCount].Value = "Id помещения";
+            colCount++;
+
+            worksheet.Cells[rowCount, colCount].Value = "Имя помещения";
+            colCount++;
+
             worksheet.Cells[rowCount, colCount].Value = "Id оборудования";
             colCount++;
 
@@ -465,7 +477,7 @@ namespace RoomsAndSpacesManagerDesktop.Models.ExcelModels
 
 
 
-                if ( o2 == "true" |  o2 == "")
+                if ( o1 == "true" |  o1 == "")
                 {
                     worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(0);
                     colCount++;

@@ -20,6 +20,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         public static RoomDto Room { get; set; }
 
         EquipmentDbContext context = new EquipmentDbContext();
+        RoomsDbContext roomsContext = new RoomsDbContext();
         List<EquipmentDto> equipmentsList { get; set; }
 
         public EquipmentsViewModel()
@@ -33,6 +34,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             SaveChangesCommand = new RelayCommand(OnSaveChangesCommandExecuted, CanSaveChangesCommandExecute);
             ClickCheckboxCommand = new RelayCommand(OnClickCheckboxCommandExecuted, CanClickCheckboxCommandExecute);
             DeleteEquipmentCommand = new RelayCommand(OnDeleteEquipmentCommandExecuted, CanDeleteEquipmentCommandExecute);
+            SetDefaultEquipmentsCommand = new RelayCommand(OnSetDefaultEquipmentsCommandExecuted, CanSetDefaultEquipmentsCommandExecute);
             #endregion
         }
 
@@ -86,22 +88,41 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         private void OnClickCheckboxCommandExecuted(object obj)
         {
             EquipmentDto equipmentDto = obj as EquipmentDto;
-            if (!equipmentDto.Mandatory)
+            if (!equipmentDto.Currently)
             {
                 if (equipmentsList.Where(x => x.Number == equipmentDto.Number).Count() > 1)
                 {
-                    if (equipmentsList.Where(x => x.Number == equipmentDto.Number).Where(y => y.Mandatory == true).Count() == 0)
+                    if (equipmentsList.Where(x => x.Number == equipmentDto.Number).Where(y => y.Currently == true).Count() == 0)
                     {
-                        equipmentDto.Mandatory = true;
+                        equipmentDto.Currently = true;
                     }
                 }
                 else
                 {
-                    equipmentDto.Mandatory = true;
+                    equipmentDto.Currently = true;
                 }
             }
         }
         private bool CanClickCheckboxCommandExecute(object obj) => true;
         #endregion
+
+        #region Комманд. Сделать список оборудование по умолчанию
+
+        public ICommand SetDefaultEquipmentsCommand { get; set; }
+
+        private void OnSetDefaultEquipmentsCommandExecuted(object obj)
+        {
+            context.RemoveAllEquipment(Room);
+            equipmentsList = context.AddEquipmentsByRoomNameId(Room);
+            RoomEquipmentsList = CollectionViewSource.GetDefaultView(equipmentsList);
+            RoomEquipmentsList.Refresh();
+        }
+        private bool CanSetDefaultEquipmentsCommandExecute(object obj)
+        {
+            return true;
+        }
+
+        #endregion
+
     }
 }

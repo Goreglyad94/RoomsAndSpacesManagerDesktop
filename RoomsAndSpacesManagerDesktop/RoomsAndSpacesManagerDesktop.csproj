@@ -150,6 +150,7 @@
     <Compile Include="Infrastructure\CustomControls\ComboBoxTemplateSelectorExtension.cs" />
     <Compile Include="Infrastructure\CustomControls\CustomColumnTemplate.cs" />
     <Compile Include="Infrastructure\CustomControls\CustomTextBlockColumnTemplate.cs" />
+    <Compile Include="Infrastructure\Repositories\EquipmentRep.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>

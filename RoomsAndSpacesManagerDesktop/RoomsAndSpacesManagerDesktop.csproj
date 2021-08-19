@@ -190,6 +190,10 @@
     <Compile Include="Migrations\202108110833540_add new field in Equipment.designer.cs">
       <DependentUpon>202108110833540_add new field in Equipment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202108181317520_addSubdivisionForseFieldToSubdivision.cs" />
+    <Compile Include="Migrations\202108181317520_addSubdivisionForseFieldToSubdivision.designer.cs">
+      <DependentUpon>202108181317520_addSubdivisionForseFieldToSubdivision.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CsvModels\UploadToCsvModel.cs" />
     <Compile Include="Models\DbModels\Base\MainDbContext.cs" />
@@ -202,6 +206,7 @@
     <Compile Include="ViewModels\CopySubDivisionViewModel.cs" />
     <Compile Include="ViewModels\CreateIssueViewModel.cs" />
     <Compile Include="ViewModels\EquipmentsViewModel.cs" />
+    <Compile Include="ViewModels\ProjectSettingsViewModel.cs" />
     <Compile Include="ViewModels\RoomEquipmentsViewModel.cs" />
     <Compile Include="ViewModels\RoomsPropertiesViewModel.cs" />
     <Compile Include="Views\UserControls\CreateIssueMainWindow.xaml.cs">
@@ -252,6 +257,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\Windows\ProjectSettingsWindow.xaml.cs">
+      <DependentUpon>ProjectSettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\RoomEquipmentsWindow.xaml.cs">
       <DependentUpon>RoomEquipmentsWindow.xaml</DependentUpon>
@@ -320,6 +328,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Windows\ProjectSettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Windows\RoomEquipmentsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -365,6 +377,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202108110833540_add new field in Equipment.resx">
       <DependentUpon>202108110833540_add new field in Equipment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108181317520_addSubdivisionForseFieldToSubdivision.resx">
+      <DependentUpon>202108181317520_addSubdivisionForseFieldToSubdivision.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -25,6 +25,7 @@ namespace RoomsAndSpacesManagerDataBase.Dto
         [NotMapped]
         public bool IsReadOnly { get => isReadOnly; set => Set(ref isReadOnly, value); }
 
+        public int SubdivisionForce { get; set; }
 
         public int BuildingId { get; set; }
 

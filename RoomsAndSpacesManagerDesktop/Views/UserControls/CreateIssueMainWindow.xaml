@@ -108,6 +108,7 @@
         <DockPanel Grid.Row="0" Grid.Column="3">
             <TextBlock VerticalAlignment="Center" Text="Добавить новый проект/модель: "/>
             <CheckBox x:Name="chk" VerticalAlignment="Center" IsChecked="False"/>
+            <Button Width="25" Height="25" Content="Set" Command="{Binding ProjectSettingsCommand}"/>
         </DockPanel>
         <DockPanel Grid.Row="1" Grid.Column="0" Visibility="{Binding IsChecked,ElementName=chk,Converter={StaticResource b2v}}">
             <Button Command="{Binding AddNewProjectCommand}" Content="+"  Margin="50 0 0 0" Width="20" Height="20" DockPanel.Dock="Left"  VerticalAlignment="Center"/>

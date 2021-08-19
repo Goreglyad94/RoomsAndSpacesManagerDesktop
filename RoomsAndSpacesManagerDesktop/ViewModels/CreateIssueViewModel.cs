@@ -63,6 +63,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             UploadAllEquipmentToExcelCommand = new RelayCommand(OnUploadAllEquipmentToExcelCommandExecuted, CanUploadAllEquipmentToExcelCommandExecute);
             RenameSubdivisionCommand = new RelayCommand(OnRenameSubdivisionCommandExecuted);
             RenameBuildingCommand = new RelayCommand(OnRenameBuildingCommandExecuted);
+            ProjectSettingsCommand = new RelayCommand(OnProjectSettingsCommandExecuted, CanProjectSettingsCommandExecute);
             #endregion
         }
 
@@ -186,6 +187,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
                     Subdivisions = null;
             }
         }
+
         #endregion
 
         #region Список подразделений. Выбранное подразделение
@@ -311,6 +313,30 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
 
         }
         private bool CanDeleteCommandExecute(object p) => true;
+        #endregion
+
+        #region Комманд. Открыть окно настроек для проектов
+
+        public ICommand ProjectSettingsCommand { get; set; }
+
+        private void OnProjectSettingsCommandExecuted(object obj)
+        {
+            ProjectSettingsWindow projectSettingsWindow = new ProjectSettingsWindow();
+            ProjectSettingsViewModel projectSettingsViewModel = new ProjectSettingsViewModel(Subdivisions, ref projContext, projectSettingsWindow);
+            projectSettingsWindow.DataContext = projectSettingsViewModel;
+            projectSettingsWindow.ShowDialog();
+
+            if (SelectedBuilding != null)
+            {
+                if (SelectedBuilding.Subdivisions != null)
+                    Subdivisions = projContext.GetSubdivisions(SelectedBuilding);
+            }
+            else
+                Subdivisions = null;
+        }
+
+        private bool CanProjectSettingsCommandExecute(object obj) => true;
+
         #endregion
 
         #region Комманд. Переименвоание подразделений

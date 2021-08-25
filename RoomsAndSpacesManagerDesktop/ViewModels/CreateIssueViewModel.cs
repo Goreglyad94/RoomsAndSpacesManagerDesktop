@@ -64,7 +64,9 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             RenameSubdivisionCommand = new RelayCommand(OnRenameSubdivisionCommandExecuted);
             RenameBuildingCommand = new RelayCommand(OnRenameBuildingCommandExecuted);
             ProjectSettingsCommand = new RelayCommand(OnProjectSettingsCommandExecuted, CanProjectSettingsCommandExecute);
+
             #endregion
+
         }
 
         /*MainWindow~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -266,20 +268,27 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         #endregion
 
         #region Комманда. Создать новое подразделение
+
         public ICommand AddNewSubdivisionCommand { get; set; }
         private void OnAddNewSubdivisionCommandExecutde(object p)
         {
             if (p != null)
             {
+                int nextOrder;
+                if ((p as BuildingDto).Subdivisions != null && (p as BuildingDto).Subdivisions.Count !=  0)
+                    nextOrder = (p as BuildingDto).Subdivisions.Select(x => x.Order).Max() + 1;
+                else
+                    nextOrder = 1;
+
                 projContext.AddNewSubdivision(new SubdivisionDto()
                 {
                     BuildingId = (p as BuildingDto).Id,
-                    Name = NewSubdivisionName
+                    Name = NewSubdivisionName,
+                    Order = nextOrder
                 });
                 Subdivisions = projContext.GetSubdivisions(p as BuildingDto);
             }
             NewBuildingName = string.Empty;
-
         }
         private bool CanAddNewSubdivisionCommandExecute(object p)
         {
@@ -289,6 +298,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             }
             else { return false; }
         }
+
         #endregion
 
         #region Комманда удаления проектов и зданий
@@ -797,6 +807,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         {
             CopySubDivisionViewModel.projContext = projContext;
             CopySubDivisionViewModel.selectedBuildingId = SelectedBuilding.Id;
+            CopySubDivisionViewModel.Building = SelectedBuilding;
             CopySubdivisionWindow copySubdivisionWindow = new CopySubdivisionWindow();
             CopySubDivisionViewModel copySubDivisionViewModel = new CopySubDivisionViewModel();
             copySubDivisionViewModel.copySubdivisionWindow = copySubdivisionWindow;
@@ -888,14 +899,15 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
         #region Список помещений для целого проекта с сортировкой. Помещения получаются при выборе проекта. 
-        private List<RoomDto> allRooms;
 
+        private List<RoomDto> allRooms;
 
         public List<RoomDto> AllRooms
         {
             get { return allRooms; }
             set { Set(ref allRooms, value); }
         }
+
         #endregion
 
         #region Комманд. Сохранить изменения в номерах помещений

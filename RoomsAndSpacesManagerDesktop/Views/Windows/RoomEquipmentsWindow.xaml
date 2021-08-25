@@ -15,7 +15,6 @@
             <RowDefinition/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-
         <DataGrid ItemsSource="{Binding RoomEquipmentsList}" AutoGenerateColumns="False" Grid.ColumnSpan="2" CanUserAddRows="False">
             <DataGrid.ItemContainerStyle>
                 <Style TargetType="DataGridRow">
@@ -68,9 +67,8 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
-                
-                
                 <DataGridTextColumn Header="Количество (не менее), шт"  Binding="{Binding Count}"  Width="90"/>
+                <DataGridTextColumn Header="Расчетное значение" Binding="{Binding CalcCount}"/>
                 <DataGridCheckBoxColumn Header="Обязательный" Binding="{Binding Mandatory}"/>
                 <DataGridTemplateColumn Header="Описание" Width="250">
                     <DataGridTemplateColumn.CellTemplate>
@@ -86,7 +84,6 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-
         <Button Command="{Binding AddNewRowCommand}" Content="Добавить строку" Margin="3 3 3 3" Width="150" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="1"/>
         <Button Command="{Binding SaveChangesCommand}" Content="Сохранить изменения" Margin="3 3 3 3" Width="150" HorizontalAlignment="Right" Grid.Column="0" Grid.Row="1"/>
         <Button Command="{Binding ChangeDataFromExcelCommand}"  Content="Заменить данные из Excel" Margin="3 3 3 3" Width="150" HorizontalAlignment="Right" Grid.Column="1" Grid.Row="1"/>

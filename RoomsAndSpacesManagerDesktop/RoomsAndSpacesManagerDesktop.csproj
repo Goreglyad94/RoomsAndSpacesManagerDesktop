@@ -194,6 +194,22 @@
     <Compile Include="Migrations\202108181317520_addSubdivisionForseFieldToSubdivision.designer.cs">
       <DependentUpon>202108181317520_addSubdivisionForseFieldToSubdivision.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202108191245177_addCalcCountFieldToRoomEquipment.cs" />
+    <Compile Include="Migrations\202108191245177_addCalcCountFieldToRoomEquipment.designer.cs">
+      <DependentUpon>202108191245177_addCalcCountFieldToRoomEquipment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108191419083_addCalcCountFieldToEquipment.cs" />
+    <Compile Include="Migrations\202108191419083_addCalcCountFieldToEquipment.designer.cs">
+      <DependentUpon>202108191419083_addCalcCountFieldToEquipment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108230915171_AddOrderFieldToSubdivision.cs" />
+    <Compile Include="Migrations\202108230915171_AddOrderFieldToSubdivision.designer.cs">
+      <DependentUpon>202108230915171_AddOrderFieldToSubdivision.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108250837398_AddSubdivTypeFieldToSubdivision.cs" />
+    <Compile Include="Migrations\202108250837398_AddSubdivTypeFieldToSubdivision.designer.cs">
+      <DependentUpon>202108250837398_AddSubdivTypeFieldToSubdivision.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CsvModels\UploadToCsvModel.cs" />
     <Compile Include="Models\DbModels\Base\MainDbContext.cs" />
@@ -380,6 +396,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202108181317520_addSubdivisionForseFieldToSubdivision.resx">
       <DependentUpon>202108181317520_addSubdivisionForseFieldToSubdivision.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108191245177_addCalcCountFieldToRoomEquipment.resx">
+      <DependentUpon>202108191245177_addCalcCountFieldToRoomEquipment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108191419083_addCalcCountFieldToEquipment.resx">
+      <DependentUpon>202108191419083_addCalcCountFieldToEquipment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108230915171_AddOrderFieldToSubdivision.resx">
+      <DependentUpon>202108230915171_AddOrderFieldToSubdivision.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108250837398_AddSubdivTypeFieldToSubdivision.resx">
+      <DependentUpon>202108250837398_AddSubdivTypeFieldToSubdivision.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

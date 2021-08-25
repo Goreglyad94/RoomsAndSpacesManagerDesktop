@@ -19,6 +19,7 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
         public static ProjectsDbContext projContext;
         EquipmentDbContext equipmentDbContext = new EquipmentDbContext();
         public static int selectedBuildingId;
+        public static BuildingDto Building;
         public CopySubDivisionViewModel()
         {
             Projects = projContext.GetProjects();
@@ -116,9 +117,16 @@ namespace RoomsAndSpacesManagerDesktop.ViewModels
             List<SubdivisionDto> newSubDivivsions = Subdivisions.Where(x => x.IsChecked).Select(x => new SubdivisionDto(x) { BuildingId = selectedBuildingId }).ToList();
             Subdivisions.Where(x => x.IsChecked).Select(x => projContext.GetRooms(x)).ToList();
 
+            int nextOrder;
+            if (Building.Subdivisions != null && Building.Subdivisions.Count != 0)
+                nextOrder = Building.Subdivisions.Select(x => x.Order).Max() + 1;
+            else
+                nextOrder = 1;
+
             foreach (SubdivisionDto subdivision in Subdivisions.Where(x => x.IsChecked))
             {
-                SubdivisionDto newSubdivision = new SubdivisionDto(subdivision) { BuildingId = selectedBuildingId };
+                SubdivisionDto newSubdivision = new SubdivisionDto(subdivision) { BuildingId = selectedBuildingId, Order = nextOrder };
+                nextOrder++;
 
                 projContext.AddNewSubdivision(newSubdivision);
 

@@ -13,14 +13,28 @@
             <RowDefinition/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <DataGrid Grid.Row="1" ItemsSource="{Binding Subdivisions}" CanUserAddRows="False" AutoGenerateColumns="False">
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Subdivisions}" SelectedItem="{Binding SelectedSubdivision}" CanUserAddRows="False" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Имя подразделения" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Мощность подразделения" Binding="{Binding SubdivisionForce}"/>
+                <DataGridTemplateColumn  Header="Тип подразделения">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding SubdivisionType}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding Path=DataContext.SubdivisionTypes, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" SelectedItem="{Binding SubdivisionType}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
         <DockPanel Grid.Row="2" >
             <Button Width="150" Margin="0 2 0 2" DockPanel.Dock="Right" HorizontalAlignment="Right" Command="{Binding ApplyChangesCommand }" Content="Сохранить изменения"/>
+            <Button Width="150" Margin="0 2 0 2" DockPanel.Dock="Left" HorizontalAlignment="Left" Command="{Binding UpCommand}" CommandParameter="{Binding SelectedSubdivision}" Content="Вверх"/>
+            <Button Width="150" Margin="0 2 0 2" DockPanel.Dock="Left" HorizontalAlignment="Left" Command="{Binding DownCommand}"  CommandParameter="{Binding SelectedSubdivision}" Content="Вниз"/>
         </DockPanel>
     </Grid>
 </Window>

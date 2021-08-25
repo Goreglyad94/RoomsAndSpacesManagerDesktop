@@ -14,12 +14,14 @@ namespace RoomsAndSpacesManagerDataBase.Dto
     {
         private bool mandatory;
         private bool currently;
+
+
         public EquipmentDto()
         {
 
         }
 
-        public EquipmentDto(RoomEquipmentDto roomEquipment)
+        public EquipmentDto(RoomEquipmentDto roomEquipment, int? SubdivisionForse)
         {
             Number = roomEquipment.Number;
             ClassificationCode = roomEquipment.ClassificationCode;
@@ -28,9 +30,10 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             Count = roomEquipment.Count;
             Mandatory = roomEquipment.Mandatory;
             Currently = roomEquipment.Mandatory;
+            CalcCount = roomEquipment.CalcCount;
         }
 
-        public EquipmentDto(EquipmentDto equipmentDto, int roomId)
+        public EquipmentDto(EquipmentDto equipmentDto, int roomId, int? SubdivisionForse)
         {
             Number = equipmentDto.Number;
             ClassificationCode = equipmentDto.ClassificationCode;
@@ -41,8 +44,8 @@ namespace RoomsAndSpacesManagerDataBase.Dto
             Currently = equipmentDto.Currently;
             Discription = equipmentDto.Discription;
             RoomId = roomId;
+            CalcCount = equipmentDto.CalcCount;
         }
-
 
         [Key]
         public int Id { get; set; }
@@ -51,14 +54,27 @@ namespace RoomsAndSpacesManagerDataBase.Dto
         public string TypeName { get; set; }
         public string Name { get; set; }
         public int Count { get; set; }
+        public string CalcCount { get; set; }
+
         public bool Mandatory { get => mandatory; set => Set(ref mandatory, value); }
         public bool Currently { get => currently; set => Set(ref currently, value); }
         public string Discription { get; set; }
 
-        public int RoomId { get; set; }
+        private int roomId;
+        public int RoomId 
+        { 
+            get => roomId;
+            set => roomId = value; 
+        }
 
-        public virtual RoomDto Room { get; set; }
+        private RoomDto room;
+        
 
+        public virtual RoomDto Room
+        {
+            get => room;
+            set => room = value;
+        }
 
         public override string ToString()
         {

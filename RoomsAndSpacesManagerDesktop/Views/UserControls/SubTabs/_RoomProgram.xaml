@@ -67,8 +67,6 @@
         <DockPanel Grid.Row="1" >
             <Button Command="{Binding PushToDbSaveChangesCommand}" Content="Отправить изменения в ДБ" Width="180" HorizontalAlignment="Right" Margin="3 3 3 3" DockPanel.Dock="Right"/>
             <Button Command="{Binding UploadProgramToCsv}" Content="Выгрузить программу в CSV" Width="180" HorizontalAlignment="Right" Margin="3 3 3 3" DockPanel.Dock="Right"/>
-            
         </DockPanel>
-        
     </Grid>
 </UserControl>

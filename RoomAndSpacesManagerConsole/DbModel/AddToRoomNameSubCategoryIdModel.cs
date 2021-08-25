@@ -12,6 +12,24 @@ namespace RoomAndSpacesManagerConsole.DbModel
 {
     class AddToRoomNameSubCategoryIdModel
     {
+
+        public void AddOrderCountToSubdivision()
+        {
+            RoomAndSpacesDbContext roomAndSpacesDbContext = new RoomAndSpacesDbContext();
+
+            foreach (BuildingDto build in roomAndSpacesDbContext.RaSM_Buildings)
+            {
+                int orderCount = 1;
+                foreach (SubdivisionDto subdiv in build.Subdivisions)
+                {
+                    subdiv.Order = orderCount;
+                    orderCount++;
+                }
+                orderCount = 1;
+            }
+            roomAndSpacesDbContext.SaveChanges();
+        }
+
         public void AddToRoomNameSubCategoryIdModelMain()
         {
             RoomAndSpacesDbContext roomAndSpacesDbContext = new RoomAndSpacesDbContext();
@@ -40,6 +58,8 @@ namespace RoomAndSpacesManagerConsole.DbModel
             roomAndSpacesDbContext.SaveChanges();
 
         }
+
+        
 
         public void Change_1_Field()
         {

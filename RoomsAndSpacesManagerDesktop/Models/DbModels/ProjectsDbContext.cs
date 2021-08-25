@@ -92,7 +92,7 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
         /// <returns></returns>
         public List<SubdivisionDto> GetSubdivisions(BuildingDto building)
         {
-            return context.RaSM_Subdivisions.Where(x => x.BuildingId == building.Id).ToList();
+            return context.RaSM_Subdivisions.Where(x => x.BuildingId == building.Id).OrderBy(x => x.Order).ToList();
 
         }
 
@@ -115,18 +115,16 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
             {
                 List<int> subDivsIds = new List<int>();
 
-                foreach (var item in project.Buildings)
+                foreach (BuildingDto build in project.Buildings)
                 {
-                    foreach (var subdiv in item.Subdivisions)
+                    foreach (SubdivisionDto subdiv in build.Subdivisions.OrderBy(x => x.Order))
                     {
                         subDivsIds.Add(subdiv.Id);
                     }
                 }
 
-
-                return context.RaSM_Rooms.Where(x => subDivsIds.Contains(x.SubdivisionId)).ToList();
+                return context.RaSM_Rooms.Where(x => subDivsIds.Contains(x.SubdivisionId)).OrderBy(x => x.Subdivision.Order).ToList();
             }
-
             return null;
         }
 
@@ -183,6 +181,5 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
         {
             context.SaveChanges();
         }
-
     }
 }

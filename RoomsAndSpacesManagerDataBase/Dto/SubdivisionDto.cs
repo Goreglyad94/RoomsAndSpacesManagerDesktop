@@ -27,7 +27,11 @@ namespace RoomsAndSpacesManagerDataBase.Dto
 
         public int SubdivisionForce { get; set; }
 
+        public string SubdivisionType { get; set; }
+
         public int BuildingId { get; set; }
+
+        public int Order { get; set; }
 
         public virtual BuildingDto Building { get; set; }
 
@@ -44,10 +48,6 @@ namespace RoomsAndSpacesManagerDataBase.Dto
         public SubdivisionDto(SubdivisionDto subdivision)
         {
             this.Name = subdivision.Name;
-
         }
-
-        
-
     }
 }

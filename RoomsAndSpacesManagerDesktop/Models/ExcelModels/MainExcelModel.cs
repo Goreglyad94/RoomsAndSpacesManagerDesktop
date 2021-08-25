@@ -366,8 +366,6 @@ namespace RoomsAndSpacesManagerDesktop.Models.ExcelModels
                 string o1 = sqlDataReader.GetValue(10).ToString().ToLower();
                 string o2 = sqlDataReader.GetValue(11).ToString().ToLower();
 
-
-
                 if ((o1 == "true" && o2 == "true") | (o1 == "" && o2 == ""))
                 {
                     worksheet.Cells[rowCount, colCount].Value = sqlDataReader.GetValue(0);
@@ -407,8 +405,6 @@ namespace RoomsAndSpacesManagerDesktop.Models.ExcelModels
                 {
                     continue;
                 }
-
-                
             }
             FileInfo excelFile = new FileInfo(path);
             excel.SaveAs(excelFile);

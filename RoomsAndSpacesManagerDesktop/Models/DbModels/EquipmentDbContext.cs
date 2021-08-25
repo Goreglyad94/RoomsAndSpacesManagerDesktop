@@ -27,7 +27,7 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
         {
             List<EquipmentDto> equpmets = context.RaSM_RoomEquipments
                 .Where(x => x.RoomNameId == roomName.Id)
-                .Select(x => new EquipmentDto(x) { RoomId = room.Id, Mandatory = false })
+                .Select(x => new EquipmentDto(x, 0) { RoomId = room.Id, Mandatory = false })
                 .ToList();
             equpmets.Sort((x, y) => x.Number.CompareTo(y.Number));
 
@@ -72,7 +72,7 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
         public List<EquipmentDto> AddEquipmentsByRoomNameId(RoomDto room)
         {
             var roomEqupments = context.RaSM_RoomEquipments.Where(x => x.RoomNameId == room.RoomNameId).ToList();
-            var equpments = roomEqupments.Select(x => new EquipmentDto(x)
+            var equpments = roomEqupments.Select(x => new EquipmentDto(x, room.Subdivision?.SubdivisionForce)
             {
                 RoomId = room.Id,
                 Currently = false
@@ -92,7 +92,7 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
             //context.RaSM_Equipments.RemoveRange(context.RaSM_Equipments.Where(x => x.RoomId == room.Id));
             List<EquipmentDto> equpmets = context.RaSM_RoomEquipments
                         .Where(x => x.RoomNameId == roomName.Id).ToList()
-                        .Select(x => new EquipmentDto(x) { RoomId = room.Id, Mandatory = x.Mandatory, Currently = false })
+                        .Select(x => new EquipmentDto(x, room.Subdivision?.SubdivisionForce) { RoomId = room.Id, Mandatory = x.Mandatory, Currently = false })
                         .ToList();
 
             EquipmentRep equipments = new EquipmentRep(equpmets);
@@ -106,7 +106,7 @@ namespace RoomsAndSpacesManagerDesktop.Models.DbModels
         {
             var equipments = context.RaSM_Equipments
                 .Where(x => x.RoomId == defaultRoom.Id).ToList()
-                .Select(x => new EquipmentDto(x, currentRoom.Id)).ToList();
+                .Select(x => new EquipmentDto(x, currentRoom.Id, currentRoom.Subdivision?.SubdivisionForce)).ToList();
 
             context.RaSM_Equipments.AddRange(equipments);
             context.SaveChanges();

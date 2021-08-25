@@ -21,6 +21,8 @@ namespace RoomsAndSpacesManagerDataBase.Dto.RoomInfrastructure
         public bool Mandatory { get; set; }
         public string Discription { get; set; }
 
+        public string CalcCount { get; set; }
+
         public int RoomNameId { get; set; }
 
         public virtual RoomNameDto RoomName { get; set; }
